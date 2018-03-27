@@ -1,4 +1,21 @@
-(in-package :IAE)
+;============================================================================
+; OM-IAE (ISMM Audio Engine)
+; Author: Jean Bresson, Diemo Schwarz
+;============================================================================
+;
+;   This program is free software. For information on usage 
+;   and redistribution, see the "LICENSE" file in this distribution.
+;
+;   This program is distributed in the hope that it will be useful,
+;   but WITHOUT ANY WARRANTY; without even the implied warranty of
+;   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
+;
+;============================================================================
+; File author: J. Bresson
+;============================================================================
+
+(defpackage :iae-lib)
+(in-package :iae-lib)
 
 (cffi::defcfun ("iae_new" iae_new) :POINTER (SR :INT) (BSIZE :INT) (NCHAN :INT) (NVOICE :INT))
 (cffi::defcfun ("iae_delete" iae_delete) :VOID (SELF :POINTER))

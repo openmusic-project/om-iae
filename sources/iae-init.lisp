@@ -1,18 +1,26 @@
 
-;;;===================================================
-;;;
-;;; OM-IAE (ISMM Audio Engine)
-;;; Author: Jean Bresson, Diemo Schwarz
-;;;
-;;;===================================================
+;============================================================================
+; OM-IAE (ISMM Audio Engine)
+; Author: Jean Bresson, Diemo Schwarz
+;============================================================================
+;
+;   This program is free software. For information on usage 
+;   and redistribution, see the "LICENSE" file in this distribution.
+;
+;   This program is distributed in the hope that it will be useful,
+;   but WITHOUT ANY WARRANTY; without even the implied warranty of
+;   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
+;
+;============================================================================
+; File author: J. Bresson
+;============================================================================
 
 (in-package :om)
 
 (defpackage :IAE 
-  (:use :common-lisp :cl-user))
+  (:use :common-lisp :om :cl-user))
 
 (om::require-om-package "sound")
-
 
 (defun load-iae-lib ()
   (let ((libpath (merge-pathnames 

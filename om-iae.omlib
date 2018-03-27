@@ -7,22 +7,15 @@
 ;;;===================================================
 
 (:om-lib
- (:version 1.0)
+ (:version 0.1)
  (:source-files 
   (:pathname (:directory (:relative "sources")) (:name "iae-init"))
   (:pathname (:directory (:relative "sources")) (:name "iae-bindings"))
   (:pathname (:directory (:relative "sources")) (:name "iae-om-objects"))
   )
- (:symbols (:classes IAE IAE-Grain IAE-Request))
+ (:symbols 
+  (:classes "iae::IAE" "iae::IAE-Grain" "iae::IAE-Request")
+  (:functions "iae::iae-synth" "iae::iae-synth-desc"))
  (:author "J. Bresson, D. Schwarz (2016)")
  )
-
-
-
-
-
-
-
-
-
 
