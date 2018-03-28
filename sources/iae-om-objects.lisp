@@ -102,7 +102,7 @@
       (om::om-print "Error initializing PiPo" "IAE"))))
 
 
-;; not all descriptors seem good
+
 (defparameter *default-ircamdescriptors*
   '("TotalEnergy"
     "FundamentalFrequency"
@@ -123,7 +123,10 @@
     
     (loop for param-i from 0 to (1- nparams) do
           (let ((name (iae-lib::iae_pipo_param_get_name *iae param-i)))
-            ;(print (string+ "--> " (iae-lib::iae_pipo_param_get_description *iae param-i)))
+            ;(om-print-format "-- ~A = ~A" 
+            ;                 (iae-lib::iae_pipo_param_get_description *iae param-i)
+            ;                 (iae-lib::iae_pipo_param_get_ *iae param-i)
+            ;                 )
             (when (string-equal name "ircamdescriptor.descriptors")
             ;(print (iae-lib::iae_pipo_param_get_type *iae param-i))
             ;(let ((numdesc (iae-lib::iae_pipo_param_enum_get_num *iae name)))
@@ -145,20 +148,23 @@
 (defun iae-info (iae)
   (iae-lib::iae_info_get_string (iaeengine-ptr iae) (oa::om-make-null-pointer)))
 
-(defmethod get-sound-descriptors ((self iae) src-index)
+(defmethod get-sound-descriptors ((self iae) src-index &optional (t1 0) (t2 nil))
   (let* ((*iae (iaeengine-ptr self))
          (numdesc (length (descriptors self)))
          (framedescbuffer (fli::allocate-foreign-object :type :float :nelems numdesc))
          (size (iae-lib::iae_get_track_size *iae src-index (nth src-index (desc-tracks self)))))
     (unwind-protect 
-        (loop for i from 0 to (1- size) collect
-              (let ((time (iae-lib::iae_get_descriptor_data *iae src-index i framedescbuffer)))
-                (cons time
+        (let ((curr-time -1))
+          (loop for i from 0 to (1- size) 
+                while (or (null t2) (<= curr-time t2))
+                do (setq curr-time (iae-lib::iae_get_descriptor_data *iae src-index i framedescbuffer))
+                when (and (>= curr-time t1) (or (null t2) (<= curr-time t2)))
+                collect
+                (cons (- curr-time t1)
                       (loop for x from 0 to (1- numdesc) collect 
                             (fli:dereference framedescbuffer :index x :type :float)))))
       (fli:free-foreign-object framedescbuffer))
     ))
-
 
 ;;; Returns a sound buffer with a grain from given pos in IAE
 (defmethod iae-synth ((self iae) source pos dur)
