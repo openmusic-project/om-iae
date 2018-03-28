@@ -5,8 +5,8 @@
  (:doc "")
  (:info
   (:created "2017/12/22 16:32:44")
-  (:modified "2018/03/27 17:34:08"))
- (:window (:size (1063 644)) (:position (604 163)))
+  (:modified "2018/03/28 14:55:07"))
+ (:window (:size (1063 644)) (:position (745 317)))
  (:grid nil)
  (:lock nil)
  (:boxes
@@ -85,7 +85,7 @@
      (:reactive nil))
     (:input
      (:type :key)
-     (:name "file-pathname")
+     (:name "FILE-PATHNAME")
      (:value nil)
      (:reactive nil)))
    (:outputs
@@ -1119,7 +1119,7 @@
         (:pathname
          (:directory (:absolute "Users" "bresson" "OM" "out-files"))
          (:device :unspecific)
-         (:host :unspecific)
+         (:host nil)
          (:name "Bassclarinet1-descriptors")
          (:type "sdif")))))))
    (:id 4))
@@ -10188,7 +10188,7 @@
      (:reactive nil))
     (:input
      (:type :key)
-     (:name "pipo-module")
+     (:name "PIPO-MODULE")
      (:value "basic")
      (:reactive nil)))
    (:outputs

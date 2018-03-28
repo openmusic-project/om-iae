@@ -1,0 +1,768 @@
+
+(:patch
+ (:om-version 1.7E-5)
+ (:name "iae-batch-analysis")
+ (:doc "")
+ (:info
+  (:created "2018/01/14 17:40:06")
+  (:modified "2018/03/28 15:07:28"))
+ (:window (:size (1100 558)) (:position (780 186)))
+ (:grid nil)
+ (:lock nil)
+ (:boxes
+  (:box
+   (:reference
+    (:patch-from-file
+     (:pathname
+      (:directory (:relative))
+      (:device :unspecific)
+      (:host :unspecific)
+      (:name "iae-descriptors-sdif")
+      (:type "opat"))))
+   (:type :patch)
+   (:group-id nil)
+   (:name "iae-descriptors-sdif")
+   (:x 84)
+   (:y 112)
+   (:w 137)
+   (:h 36)
+   (:color nil)
+   (:border nil)
+   (:roundness nil)
+   (:text-font nil)
+   (:align :center)
+   (:display :hidden)
+   (:group-id nil)
+   (:lock nil)
+   (:lambda :lambda)
+   (:pre-delay 0)
+   (:inputs
+    (:input
+     (:type :standard)
+     (:name "in")
+     (:value nil)
+     (:reactive nil)))
+   (:outputs (:output (:name "out") (:reactive nil)))
+   (:id 0))
+  (:box
+   (:reference om-directory)
+   (:type :function)
+   (:group-id nil)
+   (:name "om-directory")
+   (:x 373)
+   (:y 121)
+   (:w 103)
+   (:h 28)
+   (:color nil)
+   (:border nil)
+   (:roundness nil)
+   (:text-font nil)
+   (:align nil)
+   (:lock nil)
+   (:lambda nil)
+   (:inputs
+    (:input
+     (:type :standard)
+     (:name "PATH")
+     (:value nil)
+     (:reactive nil))
+    (:input (:type :key) (:name "TYPE") (:value nil) (:reactive nil))
+    (:input
+     (:type :key)
+     (:name "DIRECTORIES")
+     (:value nil)
+     (:reactive nil)))
+   (:outputs (:output (:name "out") (:reactive nil)))
+   (:id 1))
+  (:box
+   (:reference file-chooser)
+   (:type :function)
+   (:group-id nil)
+   (:name "file-chooser")
+   (:x 294)
+   (:y 45)
+   (:w 97)
+   (:h 28)
+   (:color nil)
+   (:border nil)
+   (:roundness nil)
+   (:text-font nil)
+   (:align nil)
+   (:lock nil)
+   (:lambda nil)
+   (:inputs
+    (:input
+     (:type :key)
+     (:name "TYPE")
+     (:value directory)
+     (:reactive nil)))
+   (:outputs (:output (:name "out") (:reactive nil)))
+   (:id 2))
+  (:box
+   (:reference cons)
+   (:type :value)
+   (:group-id nil)
+   (:name "value box")
+   (:x 429)
+   (:y 84)
+   (:w 110)
+   (:h 28)
+   (:color nil)
+   (:border nil)
+   (:roundness nil)
+   (:text-font nil)
+   (:align nil)
+   (:lock nil)
+   (:inputs)
+   (:outputs (:output (:name "value") (:reactive nil)))
+   (:value (:list "aiff" "aif" "wav"))
+   (:id 3))
+  (:box
+   (:reference mapcar)
+   (:type :function)
+   (:group-id nil)
+   (:name "mapcar")
+   (:x 249)
+   (:y 198)
+   (:w 119)
+   (:h 28)
+   (:color nil)
+   (:border nil)
+   (:roundness nil)
+   (:text-font nil)
+   (:align nil)
+   (:lock nil)
+   (:lambda nil)
+   (:inputs
+    (:input
+     (:type :standard)
+     (:name "FUNCTION")
+     (:value nil)
+     (:reactive nil))
+    (:input
+     (:type :standard)
+     (:name "LIST")
+     (:value nil)
+     (:reactive nil)))
+   (:outputs (:output (:name "out") (:reactive nil)))
+   (:id 4))
+  (:box
+   (:reference collection)
+   (:type :object)
+   (:group-id nil)
+   (:name "...")
+   (:x 117)
+   (:y 251)
+   (:w 251)
+   (:h 74)
+   (:color nil)
+   (:border nil)
+   (:roundness nil)
+   (:text-font (:font (:face "Verdana") (:size 10) (:style :italic)))
+   (:name "...")
+   (:display :hidden)
+   (:showname nil)
+   (:group-id nil)
+   (:lock nil)
+   (:inputs
+    (:input
+     (:type :standard)
+     (:name "SELF")
+     (:value nil)
+     (:reactive nil))
+    (:input
+     (:type :standard)
+     (:name "OBJ-LIST")
+     (:value nil)
+     (:reactive nil)))
+   (:outputs
+    (:output (:name "SELF") (:reactive nil))
+    (:output (:name "OBJ-LIST") (:reactive nil)))
+   (:window (:size (1111 461)) (:position (360 449)))
+   (:edition-params)
+   (:value
+    (:object
+     (:class collection)
+     (:slots
+      ((:obj-list
+        (:list
+         (:object
+          (:class sdiffile)
+          (:slots nil)
+          (:add-slots
+           ((:file-pathname
+             (:pathname
+              (:directory
+               (:absolute "Users" "bresson" "OM" "out-files"))
+              (:device :unspecific)
+              (:host nil)
+              (:name "add-synth-4ch-sas-descriptors")
+              (:type "sdif"))))))
+         (:object
+          (:class sdiffile)
+          (:slots nil)
+          (:add-slots
+           ((:file-pathname
+             (:pathname
+              (:directory
+               (:absolute "Users" "bresson" "OM" "out-files"))
+              (:device :unspecific)
+              (:host nil)
+              (:name "eroica-descriptors")
+              (:type "sdif"))))))
+         (:object
+          (:class sdiffile)
+          (:slots nil)
+          (:add-slots
+           ((:file-pathname
+             (:pathname
+              (:directory
+               (:absolute "Users" "bresson" "OM" "out-files"))
+              (:device :unspecific)
+              (:host nil)
+              (:name "Violoncelle-descriptors")
+              (:type "sdif"))))))
+         (:object
+          (:class sdiffile)
+          (:slots nil)
+          (:add-slots
+           ((:file-pathname
+             (:pathname
+              (:directory
+               (:absolute "Users" "bresson" "OM" "out-files"))
+              (:device :unspecific)
+              (:host nil)
+              (:name "pluck-synth-4ch-circle-descriptors")
+              (:type "sdif"))))))
+         (:object
+          (:class sdiffile)
+          (:slots nil)
+          (:add-slots
+           ((:file-pathname
+             (:pathname
+              (:directory
+               (:absolute "Users" "bresson" "OM" "out-files"))
+              (:device :unspecific)
+              (:host nil)
+              (:name "bach-4ch-descriptors")
+              (:type "sdif"))))))
+         (:object
+          (:class sdiffile)
+          (:slots nil)
+          (:add-slots
+           ((:file-pathname
+             (:pathname
+              (:directory
+               (:absolute "Users" "bresson" "OM" "out-files"))
+              (:device :unspecific)
+              (:host nil)
+              (:name "sinesweep-descriptors")
+              (:type "sdif"))))))
+         (:object
+          (:class sdiffile)
+          (:slots nil)
+          (:add-slots
+           ((:file-pathname
+             (:pathname
+              (:directory
+               (:absolute "Users" "bresson" "OM" "out-files"))
+              (:device :unspecific)
+              (:host nil)
+              (:name "basmba-descriptors")
+              (:type "sdif"))))))
+         (:object
+          (:class sdiffile)
+          (:slots nil)
+          (:add-slots
+           ((:file-pathname
+             (:pathname
+              (:directory
+               (:absolute "Users" "bresson" "OM" "out-files"))
+              (:device :unspecific)
+              (:host nil)
+              (:name "sinewave-descriptors")
+              (:type "sdif"))))))
+         (:object
+          (:class sdiffile)
+          (:slots nil)
+          (:add-slots
+           ((:file-pathname
+             (:pathname
+              (:directory
+               (:absolute "Users" "bresson" "OM" "out-files"))
+              (:device :unspecific)
+              (:host nil)
+              (:name "A#3-descriptors")
+              (:type "sdif"))))))
+         (:object
+          (:class sdiffile)
+          (:slots nil)
+          (:add-slots
+           ((:file-pathname
+             (:pathname
+              (:directory
+               (:absolute "Users" "bresson" "OM" "out-files"))
+              (:device :unspecific)
+              (:host nil)
+              (:name "Bell_Westminster_A-descriptors")
+              (:type "sdif"))))))
+         (:object
+          (:class sdiffile)
+          (:slots nil)
+          (:add-slots
+           ((:file-pathname
+             (:pathname
+              (:directory
+               (:absolute "Users" "bresson" "OM" "out-files"))
+              (:device :unspecific)
+              (:host nil)
+              (:name "pluck-synth-4ch-random-descriptors")
+              (:type "sdif"))))))
+         (:object
+          (:class sdiffile)
+          (:slots nil)
+          (:add-slots
+           ((:file-pathname
+             (:pathname
+              (:directory
+               (:absolute "Users" "bresson" "OM" "out-files"))
+              (:device :unspecific)
+              (:host nil)
+              (:name "Rissetex-descriptors")
+              (:type "sdif"))))))
+         (:object
+          (:class sdiffile)
+          (:slots nil)
+          (:add-slots
+           ((:file-pathname
+             (:pathname
+              (:directory
+               (:absolute "Users" "bresson" "OM" "out-files"))
+              (:device :unspecific)
+              (:host nil)
+              (:name "cello-f2-descriptors")
+              (:type "sdif"))))))
+         (:object
+          (:class sdiffile)
+          (:slots nil)
+          (:add-slots
+           ((:file-pathname
+             (:pathname
+              (:directory
+               (:absolute "Users" "bresson" "OM" "out-files"))
+              (:device :unspecific)
+              (:host nil)
+              (:name "Bach_Goldberg_Aria-descriptors")
+              (:type "sdif"))))))
+         (:object
+          (:class sdiffile)
+          (:slots nil)
+          (:add-slots
+           ((:file-pathname
+             (:pathname
+              (:directory
+               (:absolute "Users" "bresson" "OM" "out-files"))
+              (:device :unspecific)
+              (:host nil)
+              (:name "GKInvite-descriptors")
+              (:type "sdif"))))))
+         (:object
+          (:class sdiffile)
+          (:slots nil)
+          (:add-slots
+           ((:file-pathname
+             (:pathname
+              (:directory
+               (:absolute "Users" "bresson" "OM" "out-files"))
+              (:device :unspecific)
+              (:host nil)
+              (:name "bruitblanc-descriptors")
+              (:type "sdif"))))))
+         (:object
+          (:class sdiffile)
+          (:slots nil)
+          (:add-slots
+           ((:file-pathname
+             (:pathname
+              (:directory
+               (:absolute "Users" "bresson" "OM" "out-files"))
+              (:device :unspecific)
+              (:host nil)
+              (:name "santuri-descriptors")
+              (:type "sdif"))))))
+         (:object
+          (:class sdiffile)
+          (:slots nil)
+          (:add-slots
+           ((:file-pathname
+             (:pathname
+              (:directory
+               (:absolute "Users" "bresson" "OM" "out-files"))
+              (:device :unspecific)
+              (:host nil)
+              (:name "Basédeàclarinet2-descriptors")
+              (:type "sdif"))))))
+         (:object
+          (:class sdiffile)
+          (:slots nil)
+          (:add-slots
+           ((:file-pathname
+             (:pathname
+              (:directory
+               (:absolute "Users" "bresson" "OM" "out-files"))
+              (:device :unspecific)
+              (:host nil)
+              (:name "Take 6-descriptors")
+              (:type "sdif"))))))
+         (:object
+          (:class sdiffile)
+          (:slots nil)
+          (:add-slots
+           ((:file-pathname
+             (:pathname
+              (:directory
+               (:absolute "Users" "bresson" "OM" "out-files"))
+              (:device :unspecific)
+              (:host nil)
+              (:name "pluck-synth-4ch-pitch-descriptors")
+              (:type "sdif"))))))
+         (:object
+          (:class sdiffile)
+          (:slots nil)
+          (:add-slots
+           ((:file-pathname
+             (:pathname
+              (:directory
+               (:absolute "Users" "bresson" "OM" "out-files"))
+              (:device :unspecific)
+              (:host nil)
+              (:name "207176__jimimod__bottles-and-cans-descriptors")
+              (:type "sdif"))))))
+         (:object
+          (:class sdiffile)
+          (:slots nil)
+          (:add-slots
+           ((:file-pathname
+             (:pathname
+              (:directory
+               (:absolute "Users" "bresson" "OM" "out-files"))
+              (:device :unspecific)
+              (:host nil)
+              (:name "cherokee-descriptors")
+              (:type "sdif"))))))
+         (:object
+          (:class sdiffile)
+          (:slots nil)
+          (:add-slots
+           ((:file-pathname
+             (:pathname
+              (:directory
+               (:absolute "Users" "bresson" "OM" "out-files"))
+              (:device :unspecific)
+              (:host nil)
+              (:name "guitar-lick-descriptors")
+              (:type "sdif"))))))
+         (:object
+          (:class sdiffile)
+          (:slots nil)
+          (:add-slots
+           ((:file-pathname
+             (:pathname
+              (:directory
+               (:absolute "Users" "bresson" "OM" "out-files"))
+              (:device :unspecific)
+              (:host nil)
+              (:name "cowbell-descriptors")
+              (:type "sdif"))))))
+         (:object
+          (:class sdiffile)
+          (:slots nil)
+          (:add-slots
+           ((:file-pathname
+             (:pathname
+              (:directory
+               (:absolute "Users" "bresson" "OM" "out-files"))
+              (:device :unspecific)
+              (:host nil)
+              (:name "02-XYLO1-descriptors")
+              (:type "sdif"))))))
+         (:object
+          (:class sdiffile)
+          (:slots nil)
+          (:add-slots
+           ((:file-pathname
+             (:pathname
+              (:directory
+               (:absolute "Users" "bresson" "OM" "out-files"))
+              (:device :unspecific)
+              (:host nil)
+              (:name "speech-descriptors")
+              (:type "sdif"))))))
+         (:object
+          (:class sdiffile)
+          (:slots nil)
+          (:add-slots
+           ((:file-pathname
+             (:pathname
+              (:directory
+               (:absolute "Users" "bresson" "OM" "out-files"))
+              (:device :unspecific)
+              (:host nil)
+              (:name "add-synth-4ch-1tour-descriptors")
+              (:type "sdif"))))))
+         (:object
+          (:class sdiffile)
+          (:slots nil)
+          (:add-slots
+           ((:file-pathname
+             (:pathname
+              (:directory
+               (:absolute "Users" "bresson" "OM" "out-files"))
+              (:device :unspecific)
+              (:host nil)
+              (:name "add-synth-4ch-ntour-descriptors")
+              (:type "sdif"))))))
+         (:object
+          (:class sdiffile)
+          (:slots nil)
+          (:add-slots
+           ((:file-pathname
+             (:pathname
+              (:directory
+               (:absolute "Users" "bresson" "OM" "out-files"))
+              (:device :unspecific)
+              (:host nil)
+              (:name "trumpetgold-descriptors")
+              (:type "sdif"))))))
+         (:object
+          (:class sdiffile)
+          (:slots nil)
+          (:add-slots
+           ((:file-pathname
+             (:pathname
+              (:directory
+               (:absolute "Users" "bresson" "OM" "out-files"))
+              (:device :unspecific)
+              (:host nil)
+              (:name "tango_4ch-1-descriptors")
+              (:type "sdif"))))))
+         (:object
+          (:class sdiffile)
+          (:slots nil)
+          (:add-slots
+           ((:file-pathname
+             (:pathname
+              (:directory
+               (:absolute "Users" "bresson" "OM" "out-files"))
+              (:device :unspecific)
+              (:host nil)
+              (:name "207225__jimimod__life-on-venus-loop-descriptors")
+              (:type "sdif"))))))
+         (:object
+          (:class sdiffile)
+          (:slots nil)
+          (:add-slots
+           ((:file-pathname
+             (:pathname
+              (:directory
+               (:absolute "Users" "bresson" "OM" "out-files"))
+              (:device :unspecific)
+              (:host nil)
+              (:name "inv4-quad-vfund-descriptors")
+              (:type "sdif"))))))
+         (:object
+          (:class sdiffile)
+          (:slots nil)
+          (:add-slots
+           ((:file-pathname
+             (:pathname
+              (:directory
+               (:absolute "Users" "bresson" "OM" "out-files"))
+              (:device :unspecific)
+              (:host nil)
+              (:name "chords-4ch-descriptors")
+              (:type "sdif"))))))
+         (:object
+          (:class sdiffile)
+          (:slots nil)
+          (:add-slots
+           ((:file-pathname
+             (:pathname
+              (:directory
+               (:absolute "Users" "bresson" "OM" "out-files"))
+              (:device :unspecific)
+              (:host nil)
+              (:name "anton-descriptors")
+              (:type "sdif"))))))
+         (:object
+          (:class sdiffile)
+          (:slots nil)
+          (:add-slots
+           ((:file-pathname
+             (:pathname
+              (:directory
+               (:absolute "Users" "bresson" "OM" "out-files"))
+              (:device :unspecific)
+              (:host nil)
+              (:name "drumloop-descriptors")
+              (:type "sdif"))))))
+         (:object
+          (:class sdiffile)
+          (:slots nil)
+          (:add-slots
+           ((:file-pathname
+             (:pathname
+              (:directory
+               (:absolute "Users" "bresson" "OM" "out-files"))
+              (:device :unspecific)
+              (:host nil)
+              (:name "Bassclarinet1-descriptors")
+              (:type "sdif"))))))
+         (:object
+          (:class sdiffile)
+          (:slots nil)
+          (:add-slots
+           ((:file-pathname
+             (:pathname
+              (:directory
+               (:absolute "Users" "bresson" "OM" "out-files"))
+              (:device :unspecific)
+              (:host nil)
+              (:name "PianoOriginal-descriptors")
+              (:type "sdif"))))))
+         (:object
+          (:class sdiffile)
+          (:slots nil)
+          (:add-slots
+           ((:file-pathname
+             (:pathname
+              (:directory
+               (:absolute "Users" "bresson" "OM" "out-files"))
+              (:device :unspecific)
+              (:host nil)
+              (:name "FOF-synth-f0-descriptors")
+              (:type "sdif"))))))
+         (:object
+          (:class sdiffile)
+          (:slots nil)
+          (:add-slots
+           ((:file-pathname
+             (:pathname
+              (:directory
+               (:absolute "Users" "bresson" "OM" "out-files"))
+              (:device :unspecific)
+              (:host nil)
+              (:name "jongly-descriptors")
+              (:type "sdif"))))))))))))
+   (:id 5))
+  (:box
+   (:reference textbuffer)
+   (:type :object)
+   (:group-id nil)
+   (:name nil)
+   (:x 597)
+   (:y 21)
+   (:w 457)
+   (:h 485)
+   (:color nil)
+   (:border nil)
+   (:roundness nil)
+   (:text-font (:font (:face "Verdana") (:size 10) (:style :italic)))
+   (:name nil)
+   (:display :mini-view)
+   (:showname nil)
+   (:group-id nil)
+   (:lock nil)
+   (:inputs
+    (:input
+     (:type :standard)
+     (:name "SELF")
+     (:value nil)
+     (:reactive nil))
+    (:input
+     (:type :standard)
+     (:name "CONTENTS")
+     (:value nil)
+     (:reactive nil))
+    (:input
+     (:type :key)
+     (:name "READ-MODE")
+     (:value :text-list)
+     (:reactive :read-mode)))
+   (:outputs
+    (:output (:name "SELF") (:reactive nil))
+    (:output (:name "CONTENTS") (:reactive nil))
+    (:output (:name "read-mode") (:reactive nil)))
+   (:window (:size (754 714)) (:position (941 274)))
+   (:edition-params (:read-mode :text-list))
+   (:value
+    (:object
+     (:class textbuffer)
+     (:slots ((:contents nil)))
+     (:add-slots ((:input-mode :lines-cols)))))
+   (:id 6))
+  (:box
+   (:reference pathname)
+   (:type :value)
+   (:group-id nil)
+   (:name "value box")
+   (:x 288)
+   (:y 76)
+   (:w 110)
+   (:h 28)
+   (:color nil)
+   (:border nil)
+   (:roundness nil)
+   (:text-font nil)
+   (:align nil)
+   (:lock :locked)
+   (:inputs
+    (:input
+     (:type :optional)
+     (:name "in")
+     (:value nil)
+     (:reactive nil)))
+   (:outputs (:output (:name "value") (:reactive nil)))
+   (:value
+    (:pathname
+     (:directory
+      (:absolute
+       "Users"
+       "bresson"
+       "_SHARED-FILES"
+       "IN-FILES"
+       "SOUNDFILES"))
+     (:device :unspecific)
+     (:host nil)
+     (:name nil)
+     (:type nil)))
+   (:id 7)))
+ (:connections
+  (:connection
+   (:from (:box 0 :out 0))
+   (:to (:box 4 :in 0))
+   (:attributes (:color nil :style nil :modif nil)))
+  (:connection
+   (:from (:box 1 :out 0))
+   (:to (:box 6 :in 1))
+   (:attributes (:color nil :style nil :modif (-5428/48513 0))))
+  (:connection
+   (:from (:box 1 :out 0))
+   (:to (:box 4 :in 1))
+   (:attributes (:color nil :style nil :modif nil)))
+  (:connection
+   (:from (:box 2 :out 0))
+   (:to (:box 7 :in 0))
+   (:attributes (:color nil :style nil :modif nil)))
+  (:connection
+   (:from (:box 3 :out 0))
+   (:to (:box 1 :in 1))
+   (:attributes (:color nil :style nil :modif nil)))
+  (:connection
+   (:from (:box 4 :out 0))
+   (:to (:box 5 :in 1))
+   (:attributes (:color nil :style nil :modif nil)))
+  (:connection
+   (:from (:box 7 :out 0))
+   (:to (:box 1 :in 0))
+   (:attributes (:color nil :style nil :modif nil)))))
