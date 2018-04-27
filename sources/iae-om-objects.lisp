@@ -83,6 +83,12 @@
           (when (string-equal module-name "ircamdescriptor")
             (iae-set-pipo-ircamdescriptors self ircamdescriptors-list))
           
+          (iae-lib::iae_pipo_param_set_int *iae "mvavrg.size" 0 10)
+          
+          (iae-lib::iae_pipo_param_set_int *iae "descr.hopsize" 0 512)
+          (iae-lib::iae_pipo_param_set_int *iae "ircamdescriptor.hopsize" 0 512)
+          (iae-lib::iae_pipo_param_set_int *iae "mfcc.hopsize" 0 512)
+          
           (setf (desc-tracks self) ;;; compute descriptors and collect track indices
                 (loop for i from 0 to (1- (length (sounds self))) 
                       collect (iae-lib::iae_pipo_run *iae i)))
