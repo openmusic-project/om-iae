@@ -25,7 +25,7 @@
 (defun load-iae-lib ()
   (let ((libpath (merge-pathnames 
                   "lib/mac/iaeom.framework/iaeom" 
-                  (om::mypathname (om::find-om-library "om-iae")))))
+                  (om::mypathname (om::find-library "om-iae")))))
     (om-fi::om-load-foreign-library
            "LIBIAEOM"
            `((:macosx ,libpath)
