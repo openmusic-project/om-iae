@@ -5,8 +5,8 @@
  (:doc "")
  (:info
   (:created "2017/12/22 16:32:44")
-  (:modified "2018/03/28 14:55:32"))
- (:window (:size (904 835)) (:position (732 28)))
+  (:modified "2018/06/22 1:03:27"))
+ (:window (:size (965 1003)) (:position (732 28)))
  (:grid nil)
  (:lock nil)
  (:boxes
@@ -110,7 +110,8 @@
      (:reactive nil)))
    (:outputs
     (:output (:name "SELF") (:reactive nil))
-    (:output (:name "DATA") (:reactive nil)))
+    (:output (:name "DATA") (:reactive nil))
+    (:output (:name "field-names") (:reactive nil)))
    (:window (:size (nil nil)) (:position (nil nil)))
    (:edition-params)
    (:value
@@ -5767,7 +5768,7 @@
    (:x 298)
    (:y 366)
    (:w 88)
-   (:h 28)
+   (:h 30)
    (:color nil)
    (:border nil)
    (:roundness nil)
@@ -5791,7 +5792,7 @@
    (:x 315)
    (:y 397)
    (:w 54)
-   (:h 28)
+   (:h 30)
    (:color nil)
    (:border nil)
    (:roundness nil)
@@ -5858,7 +5859,8 @@
      (:reactive nil)))
    (:outputs
     (:output (:name "SELF") (:reactive nil))
-    (:output (:name "SOUNDS") (:reactive nil)))
+    (:output (:name "SOUNDS") (:reactive nil))
+    (:output (:name "pipo-module") (:reactive nil)))
    (:window (:size (262 149)) (:position (21 45)))
    (:edition-params)
    (:value
@@ -5911,32 +5913,8 @@
        (:max-dur 10000)
        (:grains nil)
        (:markers nil)
-       (:pipo-module "basic")))))
+       (:pipo-module "descr")))))
    (:id 5))
-  (:box
-   (:reference (:symbol "DESCRIPTORS" "IAE"))
-   (:type :function)
-   (:group-id nil)
-   (:name "descriptors")
-   (:x 53)
-   (:y 242)
-   (:w 93)
-   (:h 28)
-   (:color nil)
-   (:border nil)
-   (:roundness nil)
-   (:text-font nil)
-   (:align nil)
-   (:lock nil)
-   (:lambda nil)
-   (:inputs
-    (:input
-     (:type :standard)
-     (:name "IAE")
-     (:value nil)
-     (:reactive nil)))
-   (:outputs (:output (:name "out") (:reactive nil)))
-   (:id 6))
   (:box
    (:reference (:symbol "GET-SOUND-DESCRIPTORS" "IAE"))
    (:type :function)
@@ -5945,7 +5923,7 @@
    (:x 166)
    (:y 269)
    (:w 149)
-   (:h 28)
+   (:h 30)
    (:color nil)
    (:border nil)
    (:roundness nil)
@@ -5965,7 +5943,7 @@
      (:value nil)
      (:reactive nil)))
    (:outputs (:output (:name "out") (:reactive nil)))
-   (:id 7))
+   (:id 6))
   (:box
    (:reference fixnum)
    (:type :value)
@@ -5984,7 +5962,7 @@
    (:inputs)
    (:outputs (:output (:name "value") (:reactive nil)))
    (:value 0)
-   (:id 8))
+   (:id 7))
   (:box
    (:reference simple-base-string)
    (:type :value)
@@ -6003,7 +5981,7 @@
    (:inputs)
    (:outputs (:output (:name "value") (:reactive nil)))
    (:value "mfcc")
-   (:id 9))
+   (:id 8))
   (:box
    (:reference simple-base-string)
    (:type :value)
@@ -6022,7 +6000,7 @@
    (:inputs)
    (:outputs (:output (:name "value") (:reactive nil)))
    (:value "ircamdescriptor")
-   (:id 10))
+   (:id 9))
   (:box
    (:reference textbuffer)
    (:type :object)
@@ -6059,7 +6037,8 @@
      (:reactive :read-mode)))
    (:outputs
     (:output (:name "SELF") (:reactive nil))
-    (:output (:name "CONTENTS") (:reactive nil)))
+    (:output (:name "CONTENTS") (:reactive nil))
+    (:output (:name "read-mode") (:reactive nil)))
    (:window (:size (573 696)) (:position (859 179)))
    (:edition-params (:read-mode :text-list))
    (:value
@@ -6114,7 +6093,7 @@
          "HarmonicSpectralSlope"
          "HarmonicSpectralRolloff"))))
      (:add-slots ((:input-mode :lines-cols)))))
-   (:id 11))
+   (:id 10))
   (:box
    (:reference simple-base-string)
    (:type :value)
@@ -6123,7 +6102,7 @@
    (:x 401)
    (:y 103)
    (:w 64)
-   (:h 28)
+   (:h 30)
    (:color nil)
    (:border nil)
    (:roundness nil)
@@ -6132,8 +6111,8 @@
    (:lock nil)
    (:inputs)
    (:outputs (:output (:name "value") (:reactive nil)))
-   (:value "basic")
-   (:id 12))
+   (:value "descr")
+   (:id 11))
   (:comment
    (:x 296)
    (:y 25)
@@ -6151,7 +6130,7 @@
 - \"ircamdescriptors\" (a list of 9 default Ircam descriptors...)
 - Another list of available Ircam descrioptors...
 - \"mfcc\"")
-   (:id 13))
+   (:id 12))
   (:comment
    (:x 663)
    (:y 18)
@@ -6164,13 +6143,13 @@
    (:text-font nil)
    (:align nil)
    (:text "list of known IrcamDescriptors")
-   (:id 14))
+   (:id 13))
   (:box
    (:reference textbuffer)
    (:type :object)
    (:group-id nil)
    (:name nil)
-   (:x 17)
+   (:x 2)
    (:y 398)
    (:w 122)
    (:h 186)
@@ -6205,20 +6184,17 @@
      (:slots
       ((:contents
         (:list
-         "desc_1"
-         "desc_2"
-         "desc_3"
-         "desc_4"
-         "desc_5"
-         "desc_6"
-         "desc_7"
-         "desc_8"
-         "desc_9"
-         "desc_10"
-         "desc_11"
-         "desc_12"))))
+         "Frequency"
+         "Energy"
+         "Periodicity"
+         "AC1"
+         "Loudness"
+         "Centroid"
+         "Spread"
+         "Skewness"
+         "Kurtosis"))))
      (:add-slots ((:input-mode :lines-cols)))))
-   (:id 15))
+   (:id 14))
   (:comment
    (:x 322)
    (:y 272)
@@ -6231,6 +6207,31 @@
    (:text-font nil)
    (:align nil)
    (:text "Get the sound descriptors for a given source in IAE")
+   (:id 15))
+  (:box
+   (:library "om-iae")
+   (:reference (:symbol "IAE-DESCRIPTORS" "IAE"))
+   (:type :function)
+   (:group-id nil)
+   (:name "iae-descriptors")
+   (:x 38)
+   (:y 270)
+   (:w 111)
+   (:h 30)
+   (:color nil)
+   (:border nil)
+   (:roundness nil)
+   (:text-font nil)
+   (:align nil)
+   (:lock nil)
+   (:lambda nil)
+   (:inputs
+    (:input
+     (:type :standard)
+     (:name "SELF")
+     (:value nil)
+     (:reactive nil)))
+   (:outputs (:output (:name "out") (:reactive nil)))
    (:id 16)))
  (:connections
   (:connection
@@ -6251,25 +6252,25 @@
    (:attributes (:color nil :style nil :modif nil)))
   (:connection
    (:from (:box 5 :out 0))
-   (:to (:box 7 :in 0))
+   (:to (:box 16 :in 0))
    (:attributes (:color nil :style nil :modif nil)))
   (:connection
    (:from (:box 6 :out 0))
-   (:to (:box 1 :in 2))
-   (:attributes (:color nil :style nil :modif nil)))
-  (:connection
-   (:from (:box 6 :out 0))
-   (:to (:box 15 :in 1))
-   (:attributes (:color nil :style nil :modif nil)))
-  (:connection
-   (:from (:box 7 :out 0))
    (:to (:box 2 :in 0))
    (:attributes (:color nil :style nil :modif nil)))
   (:connection
-   (:from (:box 8 :out 0))
-   (:to (:box 7 :in 1))
+   (:from (:box 7 :out 0))
+   (:to (:box 6 :in 1))
    (:attributes (:color nil :style nil :modif nil)))
   (:connection
-   (:from (:box 12 :out 0))
+   (:from (:box 11 :out 0))
    (:to (:box 5 :in 2))
+   (:attributes (:color nil :style nil :modif nil)))
+  (:connection
+   (:from (:box 16 :out 0))
+   (:to (:box 14 :in 1))
+   (:attributes (:color nil :style nil :modif nil)))
+  (:connection
+   (:from (:box 16 :out 0))
+   (:to (:box 1 :in 2))
    (:attributes (:color nil :style nil :modif nil)))))

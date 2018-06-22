@@ -15,7 +15,6 @@
   )
  (:symbols 
   (:classes "iae::IAE" "iae::IAE-Grain" "iae::IAE-Request")
-  (:functions "iae::iae-synth" "iae::iae-synth-desc"))
+  (:functions "iae::iae-synth" "iae::iae-synth-desc" "iae::ircam-descriptors-names" "iae::iae-descriptors"))
  (:author "J. Bresson, D. Schwarz (2016)")
  )
-
