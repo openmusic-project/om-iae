@@ -5,7 +5,7 @@
  (:doc "")
  (:info
   (:created "2017/12/22 16:32:44")
-  (:modified "2018/03/28 15:04:38"))
+  (:modified "2018/03/28 15:14:43"))
  (:window (:size (839 892)) (:position (794 100)))
  (:grid nil)
  (:lock nil)
@@ -657,7 +657,7 @@
    (:showname nil)
    (:show-markers t)
    (:group-id nil)
-   (:lock nil)
+   (:lock :eval-once)
    (:inputs
     (:input
      (:type :standard)
