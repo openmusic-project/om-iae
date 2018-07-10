@@ -28,7 +28,7 @@
   (samplerate :accessor samplerate :initform 44100)
   (grains :accessor grains :initform nil)
   (markers :accessor markers :initform nil)
-  (pipo-module :accessor pipo-module :initform "basic")
+  (pipo-module :accessor pipo-module :initform "descr")
   (descriptors :accessor descriptors :initform nil)
   (desc-tracks :accessor desc-tracks :initform nil)
   ;;; needed for play
@@ -336,7 +336,7 @@ Note: some desciptor names used at initialization (e.g. MFCC, SpectralCrest, ...
                         :source (random (1- nsources))
                         :pos (random maxpos)
                         :duration (+ mindur (random (- maxdur mindur)))))
-   '< :key 'date))
+   '< :key 'om::date))
 
 (defun gen-random-requests (n &key (descriptor 0) (minval 100) (maxval 1000) (durtot 10000) (mindur 50) (maxdur 300))
   (sort 
@@ -345,7 +345,7 @@ Note: some desciptor names used at initialization (e.g. MFCC, SpectralCrest, ...
                         :descriptor descriptor
                         :value (+ minval (random (- maxval minval)))
                         :duration (+ mindur (random (- maxdur mindur)))))
-   '< :key 'date))
+   '< :key 'om::date))
 
 
 ;;; OM wrappers:
@@ -356,7 +356,7 @@ Note: some desciptor names used at initialization (e.g. MFCC, SpectralCrest, ...
 
 (defmethod om::y-range-for-object ((self iae::IAE)) '(-1000 3000))
 
-(defmethod om::get-frame-color ((self iae::IAE-grain)) (om-make-color-alpha (get-midi-channel-color (1+ (iae::source self))) 0.5))
+(defmethod om::get-frame-color ((self iae::IAE-grain)) (oa::om-make-color-alpha (om::get-midi-channel-color (1+ (iae::source self))) 0.5))
 (defmethod om::get-frame-posy ((self iae::IAE-grain)) (+ 50 (iae::pos self)))
 (defmethod om::get-frame-sizey ((self iae::IAE-grain)) 
   (or (getf (om::attributes self) :posy)
@@ -376,7 +376,7 @@ Note: some desciptor names used at initialization (e.g. MFCC, SpectralCrest, ...
            (nsamples (ceiling (* dur (iae::samplerate self) 0.001)))
            (omsnd (make-instance 'om::om-internal-sound :n-channels (channels self) :smpl-type :float
                                  :n-samples nsamples :sample-rate 44100))
-           (**samples (make-audio-buffer (channels self) nsamples)))
+           (**samples (om::make-audio-buffer (channels self) nsamples)))
 
 ;   Granular = 0,    asynchronous granular synthesis
 ;   Segmented = 1,   concatenative synthesis (needs at least 1 marker)
@@ -385,6 +385,7 @@ Note: some desciptor names used at initialization (e.g. MFCC, SpectralCrest, ...
 
       (when (< source (length (sounds self)))
         (iae-lib::iae_set_sourceindex *iae source))
+
       (iae-lib::iae_set_Cyclic *iae nil)
       (iae-lib::iae_set_CenteredGrains *iae nil)
       (iae-lib::iae_set_Attack *iae 0.0d0 0.5d0)
@@ -405,7 +406,7 @@ Note: some desciptor names used at initialization (e.g. MFCC, SpectralCrest, ...
            (nsamples (ceiling (* (max dur 500) (iae::samplerate self) 0.001)))
            (omsnd (make-instance 'om::om-internal-sound :n-channels (channels self) :smpl-type :float
                                  :n-samples nsamples :sample-rate 44100))
-           (**samples (make-audio-buffer (channels self) nsamples))
+           (**samples (om::make-audio-buffer (channels self) nsamples))
            (framedescbuffer (fli::allocate-foreign-object :type :float :nelems (length (descriptors self)))))
       
 ;   Granular = 0,    asynchronous granular synthesis
@@ -460,13 +461,13 @@ Note: some desciptor names used at initialization (e.g. MFCC, SpectralCrest, ...
         (dotimes (i size)
           (unless (>= i (om::bp-size (iae::buffer-player iae)))
             (setf (fli:dereference 
-                   (fli:dereference (bp-buffer (iae::buffer-player iae)) :index c :type :pointer)
+                   (fli:dereference (om::bp-buffer (iae::buffer-player iae)) :index c :type :pointer)
                    :index (+ pos i) :type :float)
                   (+ (fli:dereference 
-                      (fli:dereference (bp-buffer (iae::buffer-player iae)) :index c :type :pointer) 
+                      (fli:dereference (om::bp-buffer (iae::buffer-player iae)) :index c :type :pointer) 
                       :index (+ pos i) :type :float)
                      (fli:dereference 
-                      (fli:dereference (om-sound-buffer-ptr (om::buffer audiobuffer)) :index c :type :pointer)
+                      (fli:dereference (om::om-sound-buffer-ptr (om::buffer audiobuffer)) :index c :type :pointer)
                       :index i :type :float)))
             ))))))
 
@@ -481,10 +482,10 @@ Note: some desciptor names used at initialization (e.g. MFCC, SpectralCrest, ...
 (defmethod om::get-computation-list-for-play ((object iae::IAE) &optional interval)
   (loop for frame in (remove-if #'(lambda (date) (or (< date (car interval)) (>= date (cadr interval))))
                                 (om::data-stream-get-frames object) 
-                                :key 'date)
+                                :key 'om::date)
         do (iae-add-grain object
                           (make-grain-from-frame object frame)
-                          (duration frame) (date frame))
+                          (duration frame) (om::date frame))
         )
   nil)
 
@@ -509,7 +510,7 @@ Note: some desciptor names used at initialization (e.g. MFCC, SpectralCrest, ...
     (dotimes (c (iae::channels self))
       (dotimes (i (om::bp-size (iae::buffer-player self)))
         (setf (fli:dereference 
-               (fli:dereference (bp-buffer (iae::buffer-player self)) :index c :type :pointer) 
+               (fli:dereference (om::bp-buffer (iae::buffer-player self)) :index c :type :pointer) 
                :index i :type :float)
               0.0)))))
 
@@ -518,6 +519,7 @@ Note: some desciptor names used at initialization (e.g. MFCC, SpectralCrest, ...
 
 
 (defmethod om::player-play-object ((self om::scheduler) (object iae::IAE) caller &key parent interval)
+  (declare (ignore parent))
   (om::start-buffer-player (iae::buffer-player object) 
                        :start-frame (if (car interval)
                                         (round (* (car interval) (/ (iae::samplerate object) 1000.0)))
@@ -530,11 +532,11 @@ Note: some desciptor names used at initialization (e.g. MFCC, SpectralCrest, ...
   (call-next-method))
 
 (defmethod om::player-pause-object ((self om::scheduler) (object iae::IAE))
-  (pause-buffer-player (iae::buffer-player object))
+  (om::pause-buffer-player (iae::buffer-player object))
   (call-next-method))
 
 (defmethod player-continue-object ((self om::scheduler) (object iae::IAE))
-  (continue-buffer-player (iae::buffer-player object))
+  (om::continue-buffer-player (iae::buffer-player object))
   (call-next-method))
 
 (defmethod om::set-object-time ((self iae::IAE) time) 
