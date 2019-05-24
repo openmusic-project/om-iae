@@ -20,25 +20,6 @@
 
 (in-package :iae)
 
-(defclass! IAE (om::om-cleanup-mixin om::data-stream)
- ((iaeengine-ptr :accessor iaeengine-ptr :initform nil)
-  (sounds :initarg :sounds :accessor sounds :initform nil :documentation "a sound or list of sounds to build the IAE container on")
-  (channels :accessor channels :initform 1)
-  (max-dur :accessor max-dur :initform 10000)
-  (samplerate :accessor samplerate :initform 44100)
-  (grains :accessor grains :initform nil)
-  (markers :accessor markers :initform nil)
-  (pipo-module :accessor pipo-module :initform "descr")
-  (descriptors :accessor descriptors :initform nil)
-  (desc-tracks :accessor desc-tracks :initform nil)
-  ;;; needed for play
-  (buffer-player :accessor buffer-player :initform nil)
-  )
- (:default-initargs :default-frame-type 'IAE-grain))
-
-(defun iae-info (iae)
-  (iae-lib::iae_info_get_string (iaeengine-ptr iae) (oa::om-make-null-pointer)))
-
 ;;;==================================
 ;;; DESCRIPTORS
 ;;;==================================
@@ -110,35 +91,110 @@ Use items of this list to instancitate the :pipo-module attribute of IAE."
   *all-ircam-descriptiors*)
 
 
-(om::defmethod! iae-descriptors ((self iae))
-  :doc "Returns the list of all descriptor tracks computed in an IAE instance.
+;;;==================================
+;;; IAE
+;;;==================================
 
-Note: some desciptor names used at initialization (e.g. MFCC, SpectralCrest, ...) produce more than one descriptor tracks (e.g. MFCC by default produces 12 tracks corresponding to 12 MFCC coefficients)."
-
-  (descriptors self)
+(defclass! IAE (om::om-cleanup-mixin om::data-stream)
+ ((iaeengine-ptr :accessor iaeengine-ptr :initform nil)
+  (sounds :initarg :sounds :accessor sounds :initform nil :documentation "a sound or list of sounds to build the IAE container on")
+  (channels :accessor channels :initform 1)
+  (max-dur :accessor max-dur :initform 10000)
+  (samplerate :accessor samplerate :initform 44100)
+  (grains :accessor grains :initform nil)
+  (markers :accessor markers :initform nil)
+  (pipo-module :accessor pipo-module :initform "descr") 
+  (descriptors :accessor descriptors :initform nil)
+  (desc-tracks :accessor desc-tracks :initform nil)
+  (chop :accessor chop :initform nil)
+  ;;; needed for play
+  (buffer-player :accessor buffer-player :initform nil)
   )
+ (:default-initargs :default-frame-type 'IAE-grain))
+
+
+(defmethod om::om-cleanup ((self iae::IAE))
+  (when (iae::iaeengine-ptr self)
+    (om::om-print (format nil "deleting engine of ~A [~A]" self (iae::iaeengine-ptr self)) "GC")
+    (iae-lib::iae_delete (iae::iaeengine-ptr self))
+    (when (iae::buffer-player self) (om::free-buffer-player (iae::buffer-player self)))
+  ))
+
+;;; called each time an instance is created
+;;; => mostly memory allocations
+(defmethod initialize-instance :after ((self iae::IAE) &rest initargs)
+  
+  (om::om-print (format nil "Initializing IAE for ~A" self) "IAE")
+  
+  (let* ((sr (iae::samplerate self))
+         (size (round (* (iae::max-dur self) sr) 1000))
+         (nch (iae::channels self)))
+    
+    (setf (iae::iaeengine-ptr self) (iae-lib::iae_new  (iae::samplerate self) 512 nch 1))
+    
+    (om::set-object-time-window self 100)
+
+    (let ((audio-buffer (fli::allocate-foreign-object  
+                         :type :pointer :nelems nch
+                         :initial-contents (loop for c from 1 to nch
+                                                 collect
+                                                 (fli::allocate-foreign-object :type :float :nelems size :initial-element 0.0)))))
+  
+      (setf (iae::buffer-player self) 
+            (om::make-player-from-buffer audio-buffer size nch sr))
+      )))
 
 
 ;;======================================================
 ;; INITIALIZATION OF THE PIPO MODULE
 ;; module-name can be: "desc" "ircamdescriptor" "slice:fft" "mfcc" "<desc,mfcc>" "...:chop"
 ;;======================================================
-(defmethod iae-init-pipo ((self iae) (module-name string) &optional ircamdescriptors-list)
 
-  (let ((*iae (iaeengine-ptr self)))
-    
-    (if (= 1 (iae-lib::iae_pipo_create *iae module-name))   
+(defmethod iae-init-pipo ((self iae))
+
+  (let* ((*iae (iaeengine-ptr self))
+         (main-pipo (if (listp (iae::pipo-module self)) "ircamdescriptor" (iae::pipo-module self)))
+         (pipo-string (if (chop self) (concatenate 'string main-pipo ":chop") main-pipo)))
+
+    (if (= 1 (iae-lib::iae_pipo_create *iae pipo-string))  ;;;  ; "basic" "ircamdescriptor" "mfcc" "slice:fft"  "...:chop"
         
-        (progn
+        (let ()
           
-          (when (string-equal module-name "ircamdescriptor")
-            (iae-set-pipo-ircamdescriptors self ircamdescriptors-list))
+          (when (string-equal main-pipo "ircamdescriptor")
+            
+            ;;; Set the PiPo ircamdescriptors we want to use (if we use this option with IAE)
+            (let ((nparams (iae-lib::iae_pipo_param_num *iae))
+                  (desc-list (if (listp (iae::pipo-module self)) (iae::pipo-module self) *default-ircamdescriptors*)))
+    
+              (loop for param-i from 0 to (1- nparams) do
+                    (let ((name (iae-lib::iae_pipo_param_get_name *iae param-i)))
+                      ;(om::om-print-dbg  "-- ~A (~A) = ~A" 
+                      ;                   (list (iae-lib::iae_pipo_param_get_description *iae param-i)
+                      ;                         (iae-lib::iae_pipo_param_get_type *iae param-i)
+                      ;                         (iae-lib::iae_pipo_param_get_ *iae param-i))
+                      ;                   "OM-IAE")
+                      (when (string-equal name "ircamdescriptor.descriptors")
+            
+            ;(let ((numdesc (iae-lib::iae_pipo_param_enum_get_num *iae name)))
+            ;   (loop for d from 0 to (1- numdesc) do
+            ;      (print  (iae-lib::iae_pipo_param_enum_get_element *iae name d))))
+                        (loop for desc in desc-list 
+                              for d = 0 then (+ d 1) do
+                              (iae-lib::iae_pipo_param_set_string *iae name d desc)
+                              )
+                        )
+                      ))
+              ))    ;;;  END SPECIFIC IrcamDescriptor SECTION
+          
           
           ;(iae-lib::iae_pipo_param_set_int *iae "mvavrg.size" 0 10)
           
           (iae-lib::iae_pipo_param_set_int *iae "descr.hopsize" 0 512)
          ; (iae-lib::iae_pipo_param_set_int *iae "ircamdescriptor.hopsize" 0 512)
           (iae-lib::iae_pipo_param_set_int *iae "mfcc.hopsize" 0 512)
+          
+          (when (chop self)
+            (iae-lib::iae_pipo_param_set_int *iae "chop.size" 0 (chop self)))
           
           (setf (desc-tracks self) ;;; compute descriptors and collect track indices
                 (loop for i from 0 to (1- (length (sounds self))) 
@@ -158,42 +214,69 @@ Note: some desciptor names used at initialization (e.g. MFCC, SpectralCrest, ...
             )
           )
  
-      (om::om-print "Error initializing PiPo" "IAE"))))
-
-
-;;; Set the PiPo ircamdescriptors we want to use (if we use this option with IAE)
-(defmethod iae-set-pipo-ircamdescriptors ((self iae) ircamdescriptors-list)
-  (let* ((*iae (iaeengine-ptr self))
-         (nparams (iae-lib::iae_pipo_param_num *iae))
-         (desc-list (or ircamdescriptors-list *default-ircamdescriptors*)))
-    
-    (loop for param-i from 0 to (1- nparams) do
-          (let ((name (iae-lib::iae_pipo_param_get_name *iae param-i)))
-            ;(om-print-format "-- ~A = ~A" 
-            ;                 (iae-lib::iae_pipo_param_get_description *iae param-i)
-            ;                 (iae-lib::iae_pipo_param_get_ *iae param-i)
-            ;                 )
-            (when (string-equal name "ircamdescriptor.descriptors")
-            ;(print (iae-lib::iae_pipo_param_get_type *iae param-i))
-            ;(let ((numdesc (iae-lib::iae_pipo_param_enum_get_num *iae name)))
-            ;   (loop for d from 0 to (1- numdesc) do
-            ;      (print  (iae-lib::iae_pipo_param_enum_get_element *iae name d))))
-              (loop for desc in desc-list 
-                    for d = 0 then (+ d 1) do
-                    (iae-lib::iae_pipo_param_set_string *iae name d desc)
-                    )
-              )
-            ))
+      (om::om-print "Error initializing PiPo" "IAE"))
     ))
+
+
+;;; called additionally (and later) when an instance is created 
+;;; or updated in the visual program execution/manipulations
+(defmethod om::om-init-instance ((self iae::IAE) &optional args)
+  
+  (setf (iae::sounds self) (om::list! (iae::sounds self)))
+    
+  (when (iae::sounds self)
+    ;;; can be called several times for the different sources
+    (loop for s in (iae::sounds self) when (om::get-sound-file s) do
+          (iae-lib::iae_read (iae::iaeengine-ptr self) (namestring (om::get-sound-file s)) (cffi-sys::null-pointer)))
+    
+    ;(iae-lib::iae_set_MarkerTrackSdif (iaeengine-ptr self) -1 "XCUD" "XCUD")
+    ;(iae-lib::iae_set_DescriptorTrackSdif (iaeengine-ptr self) -1 "XCUD" "XCUD")
+   
+    (iae-init-pipo self)     
+    
+    (om::om-print (iae::iae-info self) "IAE")
+  
+    (iae-lib::iae_update_kdtree (iae::iaeengine-ptr self) T)
+    (om::om-print "KDTree updated." "IAE")
+    (iae-lib::iae_set_SynthMode (iae::iaeengine-ptr self) 1)
+    (om::om-print "IAE engine ready!" "IAE"))
+    
+  self)
+
+
+; (gc-all)
+
+
+;;;==============================================================================
+;;; Connections with OM visual environment
+;;;==============================================================================
+
+(defmethod om::additional-class-attributes ((self iae::IAE)) 
+  '(iae::channels iae::max-dur iae::grains iae::markers iae::pipo-module iae::chop))
+
+(defmethod om::data-stream-frames-slot ((self iae::IAE)) 'iae::grains)
+
+(defmethod om::play-obj? ((self iae::IAE)) t)
+
+(defmethod om::get-obj-dur ((self iae::IAE)) (iae::max-dur self))
 
 
 ;;;======================================================
 ;;; READ FROM IAE
 ;;;======================================================
 
+(defun iae-info (iae)
+  (iae-lib::iae_info_get_string (iaeengine-ptr iae) (oa::om-make-null-pointer)))
 
 
-(defmethod get-sound-descriptors ((self iae) src-index &optional (t1 0) (t2 nil))
+(om::defmethod! iae-descriptors ((self iae))
+  :doc "Returns the list of all descriptor tracks computed in an IAE instance.
+
+Note: some desciptor names used at initialization (e.g. MFCC, SpectralCrest, ...) produce more than one descriptor tracks (e.g. MFCC by default produces 12 tracks corresponding to 12 MFCC coefficients)."
+
+  (descriptors self))
+
+(om::defmethod! get-sound-descriptors ((self iae) src-index &optional (t1 0) (t2 nil))
   (let* ((*iae (iaeengine-ptr self))
          (numdesc (length (descriptors self)))
          (framedescbuffer (fli::allocate-foreign-object :type :float :nelems numdesc))
@@ -211,84 +294,6 @@ Note: some desciptor names used at initialization (e.g. MFCC, SpectralCrest, ...
       (fli:free-foreign-object framedescbuffer))
     ))
 
-
-
-;;;==============================================================================
-;;; Connections with OM visual environment
-;;;==============================================================================
-
-
-(defmethod om::additional-class-attributes ((self iae::IAE)) 
-  '(iae::channels iae::max-dur iae::grains iae::markers iae::pipo-module))
-
-(defmethod om::data-stream-frames-slot ((self iae::IAE)) 'iae::grains)
-
-(defmethod om::play-obj? ((self iae::IAE)) t)
-
-(defmethod om::get-obj-dur ((self iae::IAE)) (iae::max-dur self))
-
-(defmethod om::om-cleanup ((self iae::IAE))
-  (when (iae::iaeengine-ptr self)
-    (om::om-print (format nil "deleting engine of ~A [~A]" self (iae::iaeengine-ptr self)) "GC")
-    (iae-lib::iae_delete (iae::iaeengine-ptr self))
-    (when (iae::buffer-player self) (om::free-buffer-player (iae::buffer-player self)))
-  ))
-
-;;; called each time an instance is created
-;;; => mostly memory allocations
-(defmethod initialize-instance :after ((self iae::IAE) &rest initargs)
-  
-  (om::om-print (format nil "Initializing IAE for ~A" self) "IAE")
-  
-  (let* ((sr (iae::samplerate self))
-         (size (round (* (iae::max-dur self) sr) 1000))
-         (nch (iae::channels self)))
-    
-    (setf (iae::iaeengine-ptr self) (iae-lib::iae_new (iae::samplerate self) 512 (iae::channels self) 1))
-    
-    (om::set-object-time-window self 100)
-
-    (let ((audio-buffer (fli::allocate-foreign-object 
-                         :type :pointer :nelems nch
-                         :initial-contents (loop for c from 1 to nch
-                                                 collect
-                                                 (fli::allocate-foreign-object :type :float :nelems size :initial-element 0.0)))))
-  
-      (setf (iae::buffer-player self) 
-            (om::make-player-from-buffer audio-buffer size nch sr)))))
-
-
-;;; called additionally (and later) when an instance is created 
-;;; or updated in the visual program execution/manipulations
-(defmethod om::om-init-instance ((self iae::IAE) &optional args)
-  
-  (setf (iae::sounds self) (om::list! (iae::sounds self)))
-    
-  (when (iae::sounds self)
-    ;;; can be called several times for the different sources
-    (loop for s in (iae::sounds self) when (om::get-sound-file s) do
-          (iae-lib::iae_read (iae::iaeengine-ptr self) (namestring (om::get-sound-file s)) (cffi-sys::null-pointer)))
-    
-    ;(iae-lib::iae_set_MarkerTrackSdif (iaeengine-ptr self) -1 "XCUD" "XCUD")
-    ;(iae-lib::iae_set_DescriptorTrackSdif (iaeengine-ptr self) -1 "XCUD" "XCUD")
-   
-    
-    ;(iae::init-pipo self "basic")     ;;  options: "basic" "ircamdescriptor" "mfcc" "slice:fft"  "...:chop"
-    (if (listp (iae::pipo-module self))
-        (iae::iae-init-pipo self "ircamdescriptor" (iae::pipo-module self))
-      (iae::iae-init-pipo self (iae::pipo-module self)))
-
-    (om::om-print (iae::iae-info self) "IAE")
-  
-    (iae-lib::iae_update_kdtree (iae::iaeengine-ptr self) T)
-    (om::om-print "KDTree updated." "IAE")
-    (iae-lib::iae_set_SynthMode (iae::iaeengine-ptr self) 1)
-    (om::om-print "IAE engine ready!" "IAE"))
-    
-  self)
-
-;; (om-init-instance (make-instance 'iae::iae))
-; (gc-all)
 
 ;;;=========================
 ;;; DISPLAY
@@ -507,7 +512,7 @@ Note: some desciptor names used at initialization (e.g. MFCC, SpectralCrest, ...
 
 (defmethod iae-reset ((self iae::IAE))
   (when (iae::buffer-player self)
-    (dotimes (c (iae::channels self))
+    (dotimes (c (om::bp-channels (iae::buffer-player self)))
       (dotimes (i (om::bp-size (iae::buffer-player self)))
         (setf (fli:dereference 
                (fli:dereference (om::bp-buffer (iae::buffer-player self)) :index c :type :pointer) 
@@ -527,9 +532,11 @@ Note: some desciptor names used at initialization (e.g. MFCC, SpectralCrest, ...
   (call-next-method))
 
 (defmethod om::player-stop-object ((self om::scheduler) (object iae::IAE))
-  (om::stop-buffer-player (iae::buffer-player object))
-  (iae-reset object)
-  (call-next-method))
+  (let ((current-state (om::bp-state self)))
+    (om::stop-buffer-player (iae::buffer-player object))
+    (unless (eq current-state :stop) 
+      (iae-reset object))
+    (call-next-method)))
 
 (defmethod om::player-pause-object ((self om::scheduler) (object iae::IAE))
   (om::pause-buffer-player (iae::buffer-player object))
