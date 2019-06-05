@@ -225,6 +225,7 @@ Use items of this list to instancitate the :pipo-module attribute of IAE."
   (setf (iae::sounds self) (om::list! (iae::sounds self)))
     
   (when (iae::sounds self)
+    
     ;;; can be called several times for the different sources
     (loop for s in (iae::sounds self) when (om::get-sound-file s) do
           (iae-lib::iae_read (iae::iaeengine-ptr self) (namestring (om::get-sound-file s)) (cffi-sys::null-pointer)))
@@ -532,7 +533,7 @@ Note: some desciptor names used at initialization (e.g. MFCC, SpectralCrest, ...
   (call-next-method))
 
 (defmethod om::player-stop-object ((self om::scheduler) (object iae::IAE))
-  (let ((current-state (om::bp-state self)))
+  (let ((current-state (om::state self)))
     (om::stop-buffer-player (iae::buffer-player object))
     (unless (eq current-state :stop) 
       (iae-reset object))
