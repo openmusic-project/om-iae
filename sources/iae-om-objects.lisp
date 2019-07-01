@@ -115,7 +115,7 @@ Use items of this list to instancitate the :pipo-module attribute of IAE."
 
 (defmethod om::om-cleanup ((self iae::IAE))
   (when (iae::iaeengine-ptr self)
-    (om::om-print (format nil "deleting engine of ~A [~A]" self (iae::iaeengine-ptr self)) "GC")
+    (om::om-print-dbg "deleting engine of ~A [~A]" (list self (iae::iaeengine-ptr self)) "GC")
     (iae-lib::iae_delete (iae::iaeengine-ptr self))
     (when (iae::buffer-player self) (om::free-buffer-player (iae::buffer-player self)))
   ))
@@ -124,7 +124,7 @@ Use items of this list to instancitate the :pipo-module attribute of IAE."
 ;;; => mostly memory allocations
 (defmethod initialize-instance :after ((self iae::IAE) &rest initargs)
   
-  (om::om-print (format nil "Initializing IAE for ~A" self) "IAE")
+  (om::om-print-dbg "Initializing IAE for ~A" (list self) "IAE")
   
   (let* ((sr (iae::samplerate self))
          (size (round (* (iae::max-dur self) sr) 1000))
@@ -201,7 +201,7 @@ Use items of this list to instancitate the :pipo-module attribute of IAE."
                       collect (iae-lib::iae_pipo_run *iae i)))
           
           (let ((num (iae-lib::iae_get_numdescriptors *iae)))
-            (om::om-print-format  "[~D] descriptors" (list num) "IAE")
+            (om::om-print-dbg  "[~D] descriptors" (list num) "IAE")
             (setf (descriptors self)
                   (loop for i from 0 to (1- num) 
                         collect (let ((desc-name 
@@ -238,9 +238,9 @@ Use items of this list to instancitate the :pipo-module attribute of IAE."
     (om::om-print (iae::iae-info self) "IAE")
   
     (iae-lib::iae_update_kdtree (iae::iaeengine-ptr self) T)
-    (om::om-print "KDTree updated." "IAE")
+    (om::om-print-dbg "KDTree updated." nil "IAE")
     (iae-lib::iae_set_SynthMode (iae::iaeengine-ptr self) 1)
-    (om::om-print "IAE engine ready!" "IAE"))
+    (om::om-print-dbg "IAE engine ready!" nil "IAE"))
     
   self)
 
