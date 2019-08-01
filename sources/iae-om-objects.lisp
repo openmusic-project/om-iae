@@ -98,19 +98,27 @@ Use items of this list to instancitate the :pipo-module attribute of IAE."
 (defclass! IAE (om::om-cleanup-mixin om::data-stream)
  ((iaeengine-ptr :accessor iaeengine-ptr :initform nil)
   (sounds :initarg :sounds :accessor sounds :initform nil :documentation "a sound or list of sounds to build the IAE container on")
-  (channels :accessor channels :initform 1)
-  (max-dur :accessor max-dur :initform 10000)
-  (samplerate :accessor samplerate :initform 44100)
-  (grains :accessor grains :initform nil)
-  (markers :accessor markers :initform nil)
-  (pipo-module :accessor pipo-module :initform "descr") 
+  (channels :accessor channels :initform 1 :documentation "number of channels for audio output")
+  (max-dur :accessor max-dur :initform 10000 :documentation "max duration fo the audio output buffer [ms]")
+  (samplerate :accessor samplerate :initform 44100 :documentation "sample rate for audio output")
+  (grains :accessor grains :initform nil :documentation "a list of timed-requests for granular synthesis")
+  ; (markers :accessor markers :initform nil :documentation "markers in audio buffers")
+  (pipo-module :accessor pipo-module :initform "descr" :documentation "name of a pipo module for sound analysis") 
   (descriptors :accessor descriptors :initform nil)
   (desc-tracks :accessor desc-tracks :initform nil)
-  (chop :accessor chop :initform nil)
+  (chop :accessor chop :initform nil :documentation "chop size for pipo segmentation [number of samples]")
   ;;; needed for play
   (buffer-player :accessor buffer-player :initform nil)
   )
- (:default-initargs :default-frame-type 'IAE-grain))
+ (:default-initargs :default-frame-type 'IAE-grain)
+ (:documentation "IAE is a multi-track container for sounds and sound descriptions are stored data. 
+
+At the same time it is a container for granular synthesis events that are computed dynamically from the audio buffers.
+
+Tracks can be computed and segmented using 'pipo' modules: \"desc\" \"ircamdescriptor\" \"slice:fft\" \"mfcc\" \"<desc,mfcc>\" ... ") 
+)
+
+(defmethod om::data-stream-frames-slot ((self iae)) 'grains)
 
 
 (defmethod om::om-cleanup ((self iae::IAE))
@@ -253,7 +261,7 @@ Use items of this list to instancitate the :pipo-module attribute of IAE."
 ;;;==============================================================================
 
 (defmethod om::additional-class-attributes ((self iae::IAE)) 
-  '(iae::channels iae::max-dur iae::grains iae::markers iae::pipo-module iae::chop))
+  '(iae::channels iae::max-dur iae::grains iae::pipo-module iae::chop))
 
 (defmethod om::data-stream-frames-slot ((self iae::IAE)) 'iae::grains)
 
@@ -278,6 +286,7 @@ Note: some desciptor names used at initialization (e.g. MFCC, SpectralCrest, ...
   (descriptors self))
 
 (om::defmethod! get-sound-descriptors ((self iae) src-index &optional (t1 0) (t2 nil))
+  
   (let* ((*iae (iaeengine-ptr self))
          (numdesc (length (descriptors self)))
          (framedescbuffer (fli::allocate-foreign-object :type :float :nelems numdesc))
@@ -301,7 +310,8 @@ Note: some desciptor names used at initialization (e.g. MFCC, SpectralCrest, ...
 ;;;=========================
 
 ;;; do that better with IDs etc.
-(defmethod om::get-cache-display-for-draw ((self iae::IAE))
+(defmethod om::get-cache-display-for-draw ((self iae::IAE) box)
+  (declare (ignore box))
   (append (call-next-method)
           (list (iae::iae-info self))))
 
@@ -326,13 +336,16 @@ Note: some desciptor names used at initialization (e.g. MFCC, SpectralCrest, ...
    ((om::date :accessor om::date :initarg :date :initform 0 :documentation "date/time of the grain")
     (source :accessor source :initarg :source :initform 0 :documentation "source num inside IAE")
     (pos :accessor pos :initarg :pos :initform 0 :documentation "position in source")
-    (duration :accessor duration :initarg :duration :initform 100 :documentation "duration of the grain")))
+    (duration :accessor duration :initarg :duration :initform 100 :documentation "duration of the grain"))
+   (:documentation "A granular-synthesis request for IAE, based on source/position data."))
 
 (defclass! IAE-request (om::data-frame)
    ((om::date :accessor om::date :initarg :date :initform 0 :documentation "date/time of the grain")
     (descriptor :accessor descriptor :initarg :descriptor :initform 0 :documentation "the descriptor inside IAE/pipo")
     (value :accessor value :initarg :value :initform 0 :documentation "the value of the descriptor")
-    (duration :accessor duration :initarg :duration :initform 100 :documentation "duration of the grain")))
+    (duration :accessor duration :initarg :duration :initform 100 :documentation "duration of the grain"))
+   (:documentation "A granular-synthesis request for IAE, based on sound descritor value."))
+
 
 ;;; utils to generate random grains / requests
 (defun make-IAE-grains (n &key (nsources 1) (maxpos 2500) (durtot 10000) (mindur 100) (maxdur 600))
@@ -376,7 +389,11 @@ Note: some desciptor names used at initialization (e.g. MFCC, SpectralCrest, ...
 
 
 ;;; Returns a sound buffer with a grain from given pos in IAE
-(defmethod iae-synth ((self iae::IAE) source pos dur)
+(defmethod! iae-synth ((self iae::IAE) source pos dur)
+  :indoc '("An IAE instance" "source number" "position in source [ms]" "duration [ms]")
+  :doc "Synthesizes a grain (SOUND buffer) from IAE"
+  :initvals '(nil 0 0 200)
+  :outdoc '("sound")
   (when (iaeengine-ptr self)
     (let* ((*iae (iaeengine-ptr self))
            (nsamples (ceiling (* dur (iae::samplerate self) 0.001)))
@@ -406,14 +423,21 @@ Note: some desciptor names used at initialization (e.g. MFCC, SpectralCrest, ...
       omsnd)))
 
 ;;; Returns a sound buffer with a grain from given set of descriptor values in IAE
-(defmethod iae-synth-desc ((self iae::IAE) descriptor value dur)
+(defmethod! iae-synth-desc ((self iae::IAE) descriptor value dur)
+  
+  :indoc '("An IAE instance" "descriptor number" "requested value" "duration [ms]")
+  :initvals '(nil 0 0 200)
+  :outdoc '("sound")
+  :doc "Synthesizes a grain (SOUND buffer) from IAE, resquesting a given value for a given descriptor."
+
   (when (iaeengine-ptr self)
     (let* ((*iae (iaeengine-ptr self))
            (nsamples (ceiling (* (max dur 500) (iae::samplerate self) 0.001)))
            (omsnd (make-instance 'om::om-internal-sound :n-channels (channels self) :smpl-type :float
                                  :n-samples nsamples :sample-rate 44100))
            (**samples (om::make-audio-buffer (channels self) nsamples))
-           (framedescbuffer (fli::allocate-foreign-object :type :float :nelems (length (descriptors self)))))
+           ;; (framedescbuffer (fli::allocate-foreign-object :type :float :nelems (length (descriptors self))))
+           )
       
 ;   Granular = 0,    asynchronous granular synthesis
 ;   Segmented = 1,   concatenative synthesis (needs at least 1 marker)
