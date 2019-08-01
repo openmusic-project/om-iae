@@ -1,0 +1,3636 @@
+
+(:patch
+ (:om-version 1.14E-4)
+ (:name "iae-descriptors-segments")
+ (:doc "")
+ (:info
+  (:created "2017/12/22 16:32:44")
+  (:modified "2019/08/02 0:38:46"))
+ (:window (:size (849 863)) (:position (794 100)))
+ (:grid nil)
+ (:lock nil)
+ (:boxes
+  (:box
+   (:reference sound)
+   (:type :object)
+   (:group-id nil)
+   (:name nil)
+   (:x 178)
+   (:y 35)
+   (:w 362)
+   (:h 79)
+   (:color nil)
+   (:border nil)
+   (:roundness nil)
+   (:text-font (:font (:face "Verdana") (:size 10) (:style :italic)))
+   (:align :center)
+   (:name nil)
+   (:display :mini-view)
+   (:showname t)
+   (:show-markers t)
+   (:group-id nil)
+   (:lock :locked)
+   (:lambda nil)
+   (:inputs
+    (:input
+     (:type :standard)
+     (:name "SELF")
+     (:value :choose-file)
+     (:reactive nil))
+    (:input
+     (:type :key)
+     (:name "markers")
+     (:value nil)
+     (:reactive nil)))
+   (:outputs
+    (:output (:name "SELF") (:reactive nil))
+    (:output (:name "markers") (:reactive nil)))
+   (:window (:size (787 314)) (:position (1009 563)))
+   (:edition-params)
+   (:value
+    (:object
+     (:class sound)
+     (:slots
+      ((:onset 0)
+       (:duration 2565)
+       (:interpol (:number-or-nil (:number 50) (:t-or-nil nil)))
+       (:default-frame-type marker-frame)
+       (:frames
+        (:list
+         (:object
+          (:class marker-frame)
+          (:slots
+           ((:item-time nil)
+            (:item-internal-time 15)
+            (:item-type :master)
+            (:date 15)
+            (:attributes nil)
+            (:label nil))))
+         (:object
+          (:class marker-frame)
+          (:slots
+           ((:item-time nil)
+            (:item-internal-time 125)
+            (:item-type 125)
+            (:date 125)
+            (:attributes nil)
+            (:label nil))))
+         (:object
+          (:class marker-frame)
+          (:slots
+           ((:item-time nil)
+            (:item-internal-time 306)
+            (:item-type 306)
+            (:date 306)
+            (:attributes nil)
+            (:label nil))))
+         (:object
+          (:class marker-frame)
+          (:slots
+           ((:item-time nil)
+            (:item-internal-time 514)
+            (:item-type 514)
+            (:date 514)
+            (:attributes nil)
+            (:label nil))))
+         (:object
+          (:class marker-frame)
+          (:slots
+           ((:item-time nil)
+            (:item-internal-time 782)
+            (:item-type 782)
+            (:date 782)
+            (:attributes nil)
+            (:label nil))))
+         (:object
+          (:class marker-frame)
+          (:slots
+           ((:item-time nil)
+            (:item-internal-time 1084)
+            (:item-type 1084)
+            (:date 1084)
+            (:attributes nil)
+            (:label nil))))
+         (:object
+          (:class marker-frame)
+          (:slots
+           ((:item-time nil)
+            (:item-internal-time 1462)
+            (:item-type 1462)
+            (:date 1462)
+            (:attributes nil)
+            (:label nil))))
+         (:object
+          (:class marker-frame)
+          (:slots
+           ((:item-time nil)
+            (:item-internal-time 1775)
+            (:item-type 1775)
+            (:date 1775)
+            (:attributes nil)
+            (:label nil))))
+         (:object
+          (:class marker-frame)
+          (:slots
+           ((:item-time nil)
+            (:item-internal-time 2217)
+            (:item-type 2217)
+            (:date 2217)
+            (:attributes nil)
+            (:label nil))))
+         (:object
+          (:class marker-frame)
+          (:slots
+           ((:item-time nil)
+            (:item-internal-time 2565)
+            (:item-type :master)
+            (:date 2565)
+            (:attributes nil)
+            (:label nil))))))
+       (:buffer nil)
+       (:n-samples 124602)
+       (:n-channels 1)
+       (:sample-rate 44100)
+       (:smpl-type :float)
+       (:sample-size 16)))
+     (:add-slots
+      ((:markers (:list 15 125 306 514 782 1084 1462 1775 2217 2565))
+       (:file-pathname
+        (:pathname
+         (:directory
+          (:absolute
+           "Users"
+           "bresson"
+           "_SHARED-FILES"
+           "IN-FILES"
+           "SOUNDFILES"))
+         (:device :unspecific)
+         (:host nil)
+         (:name "Bassclarinet1")
+         (:type "aif")))
+       (:sample-rate 44100)
+       (:n-channels 1)
+       (:n-samples 124602)
+       (:gain 1.0)
+       (:access-from-file nil)))))
+   (:id 0))
+  (:box
+   (:reference 2d-array)
+   (:type :object)
+   (:group-id nil)
+   (:name nil)
+   (:x 141)
+   (:y 553)
+   (:w 283)
+   (:h 272)
+   (:color nil)
+   (:border nil)
+   (:roundness nil)
+   (:text-font (:font (:face "Verdana") (:size 10) (:style :italic)))
+   (:align :center)
+   (:name nil)
+   (:display :mini-view)
+   (:showname nil)
+   (:group-id nil)
+   (:lock nil)
+   (:lambda nil)
+   (:inputs
+    (:input
+     (:type :standard)
+     (:name "SELF")
+     (:value nil)
+     (:reactive nil))
+    (:input
+     (:type :standard)
+     (:name "DATA")
+     (:value nil)
+     (:reactive t))
+    (:input
+     (:type :key)
+     (:name "field-names")
+     (:value nil)
+     (:reactive nil)))
+   (:outputs
+    (:output (:name "SELF") (:reactive nil))
+    (:output (:name "DATA") (:reactive nil))
+    (:output (:name "field-names") (:reactive nil)))
+   (:window (:size (nil nil)) (:position (nil nil)))
+   (:edition-params)
+   (:value
+    (:object
+     (:class 2d-array)
+     (:slots
+      ((:field-names
+        (:list
+         "t"
+         "Frequency"
+         "Energy"
+         "Periodicity"
+         "AC1"
+         "Loudness"
+         "Centroid"
+         "Spread"
+         "Skewness"
+         "Kurtosis"))
+       (:data
+        (:list
+         (:list
+          4.616780045351447D0
+          16.22675736961446D0
+          27.836734693877588D0
+          39.4467120181406D0
+          51.056689342403615D0
+          62.66666666666663D0
+          74.27664399092976D0
+          85.88662131519277D0
+          97.49659863945579D0
+          109.1065759637188D0
+          120.71655328798193D0
+          132.32653061224494D0
+          143.93650793650795D0
+          155.54648526077097D0
+          167.15646258503398D0
+          178.7664399092971D0
+          190.37641723356012D0
+          201.98639455782313D0
+          213.59637188208615D0
+          225.20634920634927D0
+          236.8163265306123D0
+          248.4263038548753D0
+          260.0362811791383D0)
+         (:list
+          158.20783
+          143.80713
+          145.8157
+          146.40447
+          146.19007
+          145.96045
+          146.13037
+          146.7217
+          148.13108
+          155.5771
+          163.53028
+          163.04906
+          163.50209
+          164.59876
+          164.5593
+          163.85738
+          163.85764
+          164.30658
+          144.72028
+          144.04222
+          146.00917
+          147.07035
+          145.98972)
+         (:list
+          0.35162044
+          0.28591192
+          0.27705812
+          0.2995932
+          0.30539948
+          0.27642414
+          0.29586405
+          0.291986
+          0.2875735
+          0.27524155
+          0.27501395
+          0.31197926
+          0.34077945
+          0.3674592
+          0.39907542
+          0.40626028
+          0.393764
+          0.39637315
+          0.35016322
+          0.28087106
+          0.31309837
+          0.33211073
+          0.2963409)
+         (:list
+          0.51993454
+          0.5720169
+          0.57829226
+          0.5830122
+          0.60050047
+          0.5932529
+          0.5949252
+          0.60022414
+          0.5892771
+          0.58939577
+          0.62567407
+          0.60571224
+          0.6153983
+          0.62782884
+          0.63610864
+          0.6339992
+          0.6244956
+          0.62076974
+          0.4713521
+          0.5404568
+          0.57574267
+          0.595673
+          0.5908231)
+         (:list
+          1.001847
+          1.001029
+          0.99576355
+          1.0081229
+          0.99691356
+          1.0030873
+          1.010538
+          0.9953683
+          1.0077491
+          0.9923626
+          1.0030886
+          1.0116046
+          1.0019707
+          0.9950041
+          0.9968339
+          1.0083999
+          1.0073512
+          0.9982659
+          0.9897744
+          0.98595804
+          1.00471
+          0.9953993
+          1.0079517)
+         (:list
+          -20.603974
+          -22.12474
+          -23.132029
+          -23.314618
+          -23.450655
+          -23.756554
+          -23.890652
+          -23.40176
+          -22.50523
+          -22.900038
+          -23.441493
+          -22.26185
+          -21.515954
+          -21.021832
+          -20.62342
+          -19.985882
+          -19.51476
+          -18.792168
+          -17.333384
+          -19.82419
+          -22.096549
+          -22.526057
+          -22.264813)
+         (:list
+          730.9781
+          733.34436
+          608.52326
+          531.12525
+          575.1109
+          510.0748
+          489.13367
+          551.30524
+          662.4696
+          718.9656
+          524.90894
+          387.3303
+          333.817
+          347.19202
+          339.3928
+          374.30164
+          395.01727
+          619.8726
+          922.84717
+          773.6915
+          589.439
+          529.00306
+          555.91224)
+         (:list
+          743799.07
+          846911.5
+          1031561.44
+          913979.44
+          1008259.7
+          830082.75
+          910773.9
+          914156.8
+          1125819.0
+          1361318.0
+          1087378.9
+          640524.9
+          405678.25
+          382778.8
+          341421.22
+          299719.4
+          275081.5
+          606129.1
+          509667.3
+          462469.53
+          727303.07
+          760363.07
+          697233.2)
+         (:list
+          4.193639
+          4.0591354
+          3.905863
+          4.229999
+          3.8454812
+          4.432121
+          4.46667
+          4.079266
+          4.4786496
+          3.7518933
+          3.7452498
+          5.116202
+          6.4799814
+          6.1764245
+          6.760477
+          7.1946573
+          6.8702
+          4.793246
+          4.5414643
+          4.181856
+          4.272084
+          4.525235
+          4.7862263)
+         (:list
+          29.931317
+          26.291728
+          22.41458
+          26.139113
+          21.811169
+          28.660845
+          27.12983
+          24.303517
+          28.687508
+          20.595393
+          19.987305
+          35.95894
+          59.6741
+          56.331475
+          66.66462
+          83.193924
+          80.18948
+          39.54703
+          40.317395
+          38.18107
+          29.01868
+          30.192336
+          33.659077)))))
+     (:add-slots
+      ((:field-names
+        (:list
+         "t"
+         "Frequency"
+         "Energy"
+         "Periodicity"
+         "AC1"
+         "Loudness"
+         "Centroid"
+         "Spread"
+         "Skewness"
+         "Kurtosis"))))))
+   (:id 1))
+  (:box
+   (:reference mat-trans)
+   (:type :function)
+   (:group-id nil)
+   (:name "mat-trans")
+   (:x 233)
+   (:y 515)
+   (:w 88)
+   (:h 30)
+   (:color nil)
+   (:border nil)
+   (:roundness nil)
+   (:text-font nil)
+   (:align nil)
+   (:lock nil)
+   (:lambda nil)
+   (:inputs
+    (:input
+     (:type :standard)
+     (:name "MATRIX")
+     (:value nil)
+     (:reactive t)))
+   (:outputs (:output (:name "out") (:reactive t)))
+   (:id 2))
+  (:box
+   (:library "om-iae")
+   (:reference (:symbol "IAE" "IAE"))
+   (:type :object)
+   (:group-id nil)
+   (:name nil)
+   (:x 118)
+   (:y 187)
+   (:w 309)
+   (:h 55)
+   (:color nil)
+   (:border nil)
+   (:roundness nil)
+   (:text-font (:font (:face "Verdana") (:size 10) (:style :italic)))
+   (:align :center)
+   (:name nil)
+   (:display :mini-view)
+   (:showname nil)
+   (:show-markers t)
+   (:group-id nil)
+   (:lock :eval-once)
+   (:lambda nil)
+   (:inputs
+    (:input
+     (:type :standard)
+     (:name "SELF")
+     (:value nil)
+     (:reactive nil))
+    (:input
+     (:type :standard)
+     (:name "SOUNDS")
+     (:value nil)
+     (:reactive nil))
+    (:input
+     (:type :key)
+     (:name "pipo-module")
+     (:value "basic")
+     (:reactive nil)))
+   (:outputs
+    (:output (:name "SELF") (:reactive nil))
+    (:output (:name "SOUNDS") (:reactive nil))
+    (:output (:name "pipo-module") (:reactive nil)))
+   (:window (:size (262 149)) (:position (21 45)))
+   (:edition-params)
+   (:value
+    (:object
+     (:class (:symbol "IAE" "IAE"))
+     (:slots
+      ((:onset 0)
+       (:duration 0)
+       (:interpol (:number-or-nil (:number 50) (:t-or-nil nil)))
+       (:default-frame-type (:symbol "IAE-GRAIN" "IAE"))
+       (:frames nil)
+       (:sounds
+        (:list
+         (:object
+          (:class sound)
+          (:slots
+           ((:onset 0)
+            (:duration 2565)
+            (:interpol (:number-or-nil (:number 50) (:t-or-nil nil)))
+            (:default-frame-type marker-frame)
+            (:frames
+             (:list
+              (:object
+               (:class marker-frame)
+               (:slots
+                ((:item-time nil)
+                 (:item-internal-time 15)
+                 (:item-type :master)
+                 (:date 15)
+                 (:attributes nil)
+                 (:label nil))))
+              (:object
+               (:class marker-frame)
+               (:slots
+                ((:item-time nil)
+                 (:item-internal-time 125)
+                 (:item-type 125)
+                 (:date 125)
+                 (:attributes nil)
+                 (:label nil))))
+              (:object
+               (:class marker-frame)
+               (:slots
+                ((:item-time nil)
+                 (:item-internal-time 306)
+                 (:item-type 306)
+                 (:date 306)
+                 (:attributes nil)
+                 (:label nil))))
+              (:object
+               (:class marker-frame)
+               (:slots
+                ((:item-time nil)
+                 (:item-internal-time 514)
+                 (:item-type 514)
+                 (:date 514)
+                 (:attributes nil)
+                 (:label nil))))
+              (:object
+               (:class marker-frame)
+               (:slots
+                ((:item-time nil)
+                 (:item-internal-time 782)
+                 (:item-type 782)
+                 (:date 782)
+                 (:attributes nil)
+                 (:label nil))))
+              (:object
+               (:class marker-frame)
+               (:slots
+                ((:item-time nil)
+                 (:item-internal-time 1084)
+                 (:item-type 1084)
+                 (:date 1084)
+                 (:attributes nil)
+                 (:label nil))))
+              (:object
+               (:class marker-frame)
+               (:slots
+                ((:item-time nil)
+                 (:item-internal-time 1462)
+                 (:item-type 1462)
+                 (:date 1462)
+                 (:attributes nil)
+                 (:label nil))))
+              (:object
+               (:class marker-frame)
+               (:slots
+                ((:item-time nil)
+                 (:item-internal-time 1775)
+                 (:item-type 1775)
+                 (:date 1775)
+                 (:attributes nil)
+                 (:label nil))))
+              (:object
+               (:class marker-frame)
+               (:slots
+                ((:item-time nil)
+                 (:item-internal-time 2217)
+                 (:item-type 2217)
+                 (:date 2217)
+                 (:attributes nil)
+                 (:label nil))))
+              (:object
+               (:class marker-frame)
+               (:slots
+                ((:item-time nil)
+                 (:item-internal-time 2565)
+                 (:item-type :master)
+                 (:date 2565)
+                 (:attributes nil)
+                 (:label nil))))))
+            (:buffer nil)
+            (:n-samples 124602)
+            (:n-channels 1)
+            (:sample-rate 44100)
+            (:smpl-type :float)
+            (:sample-size 16)))
+          (:add-slots
+           ((:markers
+             (:list 15 125 306 514 782 1084 1462 1775 2217 2565))
+            (:file-pathname
+             (:pathname
+              (:directory
+               (:absolute
+                "Users"
+                "bresson"
+                "_SHARED-FILES"
+                "IN-FILES"
+                "SOUNDFILES"))
+              (:device :unspecific)
+              (:host nil)
+              (:name "Bassclarinet1")
+              (:type "aif")))
+            (:sample-rate 44100)
+            (:n-channels 1)
+            (:n-samples 124602)
+            (:gain 1.0)
+            (:access-from-file nil))))))))
+     (:add-slots
+      ((:channels 1)
+       (:max-dur 10000)
+       (:grains nil)
+       (:pipo-module "descr")
+       (:chop nil)))))
+   (:id 3))
+  (:box
+   (:reference (:symbol "DESCRIPTORS" "IAE"))
+   (:type :function)
+   (:group-id nil)
+   (:name "descriptors")
+   (:x 125)
+   (:y 272)
+   (:w 93)
+   (:h 30)
+   (:color nil)
+   (:border nil)
+   (:roundness nil)
+   (:text-font nil)
+   (:align nil)
+   (:lock nil)
+   (:lambda nil)
+   (:inputs
+    (:input
+     (:type :standard)
+     (:name "IAE")
+     (:value nil)
+     (:reactive nil)))
+   (:outputs (:output (:name "out") (:reactive nil)))
+   (:id 4))
+  (:box
+   (:library "om-iae")
+   (:reference (:symbol "GET-SOUND-DESCRIPTORS" "IAE"))
+   (:type :function)
+   (:group-id nil)
+   (:name "get-sound-descriptors")
+   (:x 464)
+   (:y 277)
+   (:w 149)
+   (:h 30)
+   (:color nil)
+   (:border nil)
+   (:roundness nil)
+   (:text-font nil)
+   (:align nil)
+   (:lock nil)
+   (:lambda :lambda)
+   (:inputs
+    (:input
+     (:type :standard)
+     (:name "SELF")
+     (:value nil)
+     (:reactive nil))
+    (:input
+     (:type :standard)
+     (:name "SRC-INDEX")
+     (:value nil)
+     (:reactive nil))
+    (:input
+     (:type :optional)
+     (:name "t1")
+     (:value nil)
+     (:reactive nil))
+    (:input
+     (:type :optional)
+     (:name "t2")
+     (:value nil)
+     (:reactive nil)))
+   (:outputs (:output (:name "out") (:reactive nil)))
+   (:id 5))
+  (:box
+   (:reference fixnum)
+   (:type :value)
+   (:group-id nil)
+   (:name "value box")
+   (:x 501)
+   (:y 244)
+   (:w 32)
+   (:h 30)
+   (:color
+    (:color-or-nil (:color (:color 1.0 1.0 1.0 1.0)) (:t-or-nil t)))
+   (:border nil)
+   (:roundness nil)
+   (:text-font nil)
+   (:align nil)
+   (:lock nil)
+   (:inputs)
+   (:outputs (:output (:name "value") (:reactive nil)))
+   (:value 0)
+   (:id 6))
+  (:comment
+   (:x 452)
+   (:y 206)
+   (:w 191)
+   (:h 38)
+   (:fgcolor nil)
+   (:bgcolor nil)
+   (:border nil)
+   (:roundness nil)
+   (:text-font nil)
+   (:align nil)
+   (:text
+    "Get the sound descriptors for a given source in IAE + time interval (t1 t2)")
+   (:id 7))
+  (:box
+   (:reference cdr)
+   (:type :function)
+   (:group-id nil)
+   (:name "cdr")
+   (:x 713)
+   (:y 170)
+   (:w 54)
+   (:h 30)
+   (:color nil)
+   (:border nil)
+   (:roundness nil)
+   (:text-font nil)
+   (:align nil)
+   (:lock nil)
+   (:lambda nil)
+   (:inputs
+    (:input
+     (:type :standard)
+     (:name "X")
+     (:value nil)
+     (:reactive nil)))
+   (:outputs (:output (:name "out") (:reactive nil)))
+   (:id 8))
+  (:box
+   (:reference butlast)
+   (:type :function)
+   (:group-id nil)
+   (:name "butlast")
+   (:x 619)
+   (:y 170)
+   (:w 72)
+   (:h 30)
+   (:color nil)
+   (:border nil)
+   (:roundness nil)
+   (:text-font nil)
+   (:align nil)
+   (:lock nil)
+   (:lambda nil)
+   (:inputs
+    (:input
+     (:type :standard)
+     (:name "LIST")
+     (:value nil)
+     (:reactive nil)))
+   (:outputs (:output (:name "out") (:reactive nil)))
+   (:id 9))
+  (:comment
+   (:x 659)
+   (:y 201)
+   (:w 61)
+   (:h 20)
+   (:fgcolor nil)
+   (:bgcolor nil)
+   (:border nil)
+   (:roundness nil)
+   (:text-font nil)
+   (:align nil)
+   (:text "list of T1s")
+   (:id 10))
+  (:comment
+   (:x 746)
+   (:y 201)
+   (:w 61)
+   (:h 20)
+   (:fgcolor nil)
+   (:bgcolor nil)
+   (:border nil)
+   (:roundness nil)
+   (:text-font nil)
+   (:align nil)
+   (:text "list of T2s")
+   (:id 11))
+  (:box
+   (:reference mapcar)
+   (:type :function)
+   (:group-id nil)
+   (:name "mapcar")
+   (:x 623)
+   (:y 320)
+   (:w 75)
+   (:h 30)
+   (:color nil)
+   (:border nil)
+   (:roundness nil)
+   (:text-font nil)
+   (:align nil)
+   (:lock nil)
+   (:lambda nil)
+   (:inputs
+    (:input
+     (:type :standard)
+     (:name "FUNCTION")
+     (:value nil)
+     (:reactive nil))
+    (:input
+     (:type :standard)
+     (:name "LIST")
+     (:value nil)
+     (:reactive nil))
+    (:input
+     (:type :optional)
+     (:name "more-lists")
+     (:value nil)
+     (:reactive nil)))
+   (:outputs (:output (:name "out") (:reactive nil)))
+   (:id 12))
+  (:box
+   (:reference collection)
+   (:type :object)
+   (:group-id nil)
+   (:name "...")
+   (:x 463)
+   (:y 358)
+   (:w 260)
+   (:h 40)
+   (:color nil)
+   (:border nil)
+   (:roundness nil)
+   (:text-font (:font (:face "Verdana") (:size 10) (:style :italic)))
+   (:align :center)
+   (:name "...")
+   (:display :hidden)
+   (:showname nil)
+   (:group-id nil)
+   (:lock :locked)
+   (:lambda nil)
+   (:inputs
+    (:input
+     (:type :standard)
+     (:name "SELF")
+     (:value nil)
+     (:reactive nil))
+    (:input
+     (:type :standard)
+     (:name "OBJ-LIST")
+     (:value nil)
+     (:reactive nil)))
+   (:outputs
+    (:output (:name "SELF") (:reactive nil))
+    (:output (:name "OBJ-LIST") (:reactive nil)))
+   (:window (:size (500 500)) (:position (42 68)))
+   (:edition-params)
+   (:value
+    (:object
+     (:class collection)
+     (:slots
+      ((:obj-list
+        (:list
+         (:list
+          (:list
+           4.387755102040817D0
+           4347.1133
+           0.004752453
+           0.0
+           0.9958772
+           -53.19314
+           4634.6563
+           6538436.0
+           0.6698934
+           2.9133334)
+          (:list
+           15.997732426303856D0
+           1395.6742
+           0.008474918
+           0.0
+           1.0134254
+           -53.34208
+           4034.9134
+           6688570.5
+           0.8102277
+           3.2364054)
+          (:list
+           27.607709750566898D0
+           1679.801
+           0.010284297
+           0.0
+           1.0009372
+           -49.72688
+           3197.6228
+           5280148.0
+           1.3120319
+           4.4100018)
+          (:list
+           39.217687074829925D0
+           912.1905
+           0.00541685
+           0.16687805
+           0.96253807
+           -48.599537
+           3176.9866
+           4430600.0
+           1.2580884
+           4.7858825)
+          (:list
+           50.82766439909297D0
+           915.01624
+           0.003745569
+           0.11005759
+           0.9644215
+           -49.107274
+           3269.0498
+           4071330.3
+           1.2408174
+           4.8864994)
+          (:list
+           62.43764172335601D0
+           1035.5603
+           0.009456249
+           0.089448095
+           0.9986062
+           -49.138993
+           3427.6785
+           4573509.0
+           1.084184
+           4.370506)
+          (:list
+           74.04761904761904D0
+           898.13135
+           0.01034984
+           0.05735022
+           0.9986964
+           -50.184246
+           3695.782
+           4857538.0
+           0.9954638
+           4.2148566)
+          (:list
+           85.65759637188208D0
+           1560.9777
+           0.009083182
+           0.05854374
+           0.9987909
+           -51.33292
+           4038.1106
+           5029715.5
+           0.9383035
+           4.051805)
+          (:list
+           97.26757369614512D0
+           1515.8882
+           0.006462097
+           0.0
+           0.99557287
+           -52.84854
+           4622.119
+           5940725.5
+           0.73498565
+           3.3705798)
+          (:list
+           108.87755102040816D0
+           1627.6421
+           0.002345914
+           0.0
+           0.9846777
+           -52.891545
+           5290.5127
+           5971362.0
+           0.6770581
+           3.7266195))
+         (:list
+          (:list
+           10.487528344671205D0
+           2290.4912
+           0.0028995418
+           0.0
+           0.97592307
+           -48.305046
+           4727.7207
+           5802397.5
+           0.955092
+           4.4578414)
+          (:list
+           22.097505668934247D0
+           2331.1848
+           0.0073073167
+           0.0
+           0.9741786
+           -40.038144
+           3319.0064
+           3873807.5
+           1.1484766
+           5.5182176)
+          (:list
+           33.70748299319726D0
+           1037.2332
+           0.013189961
+           0.34087276
+           0.9244343
+           -33.364697
+           2485.7044
+           2829308.3
+           1.1552204
+           4.4598436)
+          (:list
+           45.3174603174603D0
+           1049.0173
+           0.020054203
+           0.2779793
+           0.9249579
+           -35.885357
+           2218.0725
+           2487927.8
+           1.4449953
+           5.6415553)
+          (:list
+           56.927437641723344D0
+           1034.1902
+           0.019374373
+           0.0
+           0.9882921
+           -38.22608
+           2832.0962
+           2997520.8
+           0.9295131
+           4.5499854)
+          (:list
+           68.53741496598639D0
+           190.82178
+           0.017846806
+           0.11771548
+           0.9933405
+           -38.140873
+           3202.5586
+           2770953.5
+           0.8137859
+           4.8478975)
+          (:list
+           80.14739229024943D0
+           177.78655
+           0.0134485075
+           0.2765528
+           0.9517579
+           -38.222866
+           3153.5122
+           2814932.3
+           0.9534075
+           5.019508)
+          (:list
+           91.75736961451247D0
+           163.16217
+           0.012531628
+           0.48869306
+           0.92733557
+           -37.66648
+           3213.3255
+           2904288.3
+           0.89010334
+           4.3901563)
+          (:list
+           103.36734693877551D0
+           165.90985
+           0.012808988
+           0.50965506
+           0.9461244
+           -37.263977
+           3280.7942
+           2864904.3
+           0.8366192
+           4.7083178)
+          (:list
+           114.97732426303856D0
+           161.837
+           0.014664397
+           0.5063237
+           0.95169324
+           -36.43927
+           3415.3775
+           3302121.0
+           0.9544033
+           4.5409885)
+          (:list
+           126.5873015873016D0
+           162.62093
+           0.015382962
+           0.51903105
+           0.9537367
+           -35.8969
+           3563.5227
+           3542009.0
+           0.7617335
+           3.8144672)
+          (:list
+           138.19727891156464D0
+           164.78105
+           0.01849383
+           0.557976
+           0.95083726
+           -35.44301
+           3525.7818
+           2962738.0
+           0.68146396
+           4.896197)
+          (:list
+           149.80725623582765D0
+           163.89154
+           0.02250814
+           0.57343376
+           0.9643739
+           -34.943936
+           3535.0213
+           3291212.0
+           0.5278675
+           4.5257087)
+          (:list
+           161.41723356009072D0
+           163.87279
+           0.025909003
+           0.56861234
+           0.9845917
+           -34.51116
+           3521.4368
+           3767679.3
+           0.3442804
+           3.5167678)
+          (:list
+           173.02721088435374D0
+           164.42859
+           0.029558147
+           0.5729244
+           0.9844189
+           -34.238385
+           3349.4
+           3878227.0
+           0.27063522
+           3.2179013))
+         (:list
+          (:list
+           3.6371882086168057D0
+           165.07596
+           0.034978833
+           0.58049465
+           0.9863805
+           -33.94537
+           2769.8726
+           3525959.0
+           0.6191603
+           3.692861)
+          (:list
+           15.24716553287982D0
+           164.47206
+           0.043102708
+           0.58817387
+           0.9807173
+           -33.23292
+           2719.9138
+           3526832.8
+           0.4054171
+           3.5483)
+          (:list
+           26.85714285714289D0
+           164.68219
+           0.055463218
+           0.6008103
+           0.99344284
+           -33.28887
+           2256.5252
+           4083585.5
+           0.79999626
+           3.5867975)
+          (:list
+           38.4671201814059D0
+           164.10884
+           0.0689431
+           0.60417957
+           1.0029696
+           -33.3864
+           1682.206
+           4287141.0
+           1.2693697
+           4.0112286)
+          (:list
+           50.077097505668974D0
+           163.95996
+           0.08094848
+           0.60084254
+           1.006377
+           -32.37063
+           1326.3673
+           3708348.8
+           1.6684611
+           5.3067184)
+          (:list
+           61.68707482993199D0
+           164.26523
+           0.09846675
+           0.60390175
+           0.9970849
+           -30.701359
+           1290.411
+           3544839.3
+           1.5707268
+           4.75176)
+          (:list
+           73.29705215419506D0
+           164.39356
+           0.12742132
+           0.61577416
+           0.9950407
+           -29.477433
+           944.662
+           2665722.3
+           2.1891005
+           7.393994)
+          (:list
+           84.90702947845807D0
+           164.26898
+           0.15702515
+           0.62257123
+           1.0036081
+           -28.314929
+           678.6399
+           1836561.5
+           2.948572
+           12.220318)
+          (:list
+           96.51700680272109D0
+           164.09352
+           0.18005122
+           0.6158347
+           1.0118722
+           -27.05043
+           553.7064
+           1454051.8
+           3.5664277
+           16.678332)
+          (:list
+           108.12698412698416D0
+           164.16255
+           0.20084897
+           0.6106012
+           1.0060703
+           -25.85997
+           476.28265
+           1167824.8
+           4.098828
+           21.127593)
+          (:list
+           119.73696145124717D0
+           164.46977
+           0.23407583
+           0.61695815
+           0.99597395
+           -24.724566
+           455.04553
+           980628.2
+           4.231029
+           23.635308)
+          (:list
+           131.34693877551024D0
+           164.50257
+           0.27690217
+           0.62891126
+           0.9961733
+           -23.877579
+           390.6464
+           754201.07
+           4.84602
+           30.336653)
+          (:list
+           142.95691609977325D0
+           164.15248
+           0.30973044
+           0.63099647
+           1.005967
+           -23.220629
+           311.37833
+           493544.34
+           6.2870507
+           50.481705)
+          (:list
+           154.56689342403632D0
+           163.9426
+           0.3191324
+           0.6232189
+           1.0114354
+           -22.503064
+           299.42996
+           407717.6
+           6.9270563
+           61.71648)
+          (:list
+           166.17687074829934D0
+           163.97736
+           0.3275648
+           0.61888397
+           1.0029914
+           -21.80971
+           313.1189
+           397148.78
+           7.1817546
+           66.995636)
+          (:list
+           177.7868480725624D0
+           164.36202
+           0.35774052
+           0.62694633
+           0.99509484
+           -21.24632
+           320.34506
+           364120.5
+           7.292646
+           71.59197)
+          (:list
+           189.39682539682542D0
+           164.3457
+           0.39207786
+           0.63528955
+           0.99581635
+           -20.762135
+           341.00885
+           380300.03
+           7.0934095
+           69.382965)
+          (:list
+           201.00680272108843D0
+           163.89896
+           0.40431833
+           0.63227225
+           1.0075481
+           -20.557621
+           396.32806
+           522253.1
+           6.0385437
+           50.96174))
+         (:list
+          (:list
+           4.616780045351447D0
+           158.20783
+           0.35162044
+           0.51993454
+           1.001847
+           -20.603974
+           730.9781
+           743799.07
+           4.193639
+           29.931317)
+          (:list
+           16.22675736961446D0
+           143.80713
+           0.28591192
+           0.5720169
+           1.001029
+           -22.12474
+           733.34436
+           846911.5
+           4.0591354
+           26.291728)
+          (:list
+           27.836734693877588D0
+           145.8157
+           0.27705812
+           0.57829226
+           0.99576355
+           -23.132029
+           608.52326
+           1031561.44
+           3.905863
+           22.41458)
+          (:list
+           39.4467120181406D0
+           146.40447
+           0.2995932
+           0.5830122
+           1.0081229
+           -23.314618
+           531.12525
+           913979.44
+           4.229999
+           26.139113)
+          (:list
+           51.056689342403615D0
+           146.19007
+           0.30539948
+           0.60050047
+           0.99691356
+           -23.450655
+           575.1109
+           1008259.7
+           3.8454812
+           21.811169)
+          (:list
+           62.66666666666663D0
+           145.96045
+           0.27642414
+           0.5932529
+           1.0030873
+           -23.756554
+           510.0748
+           830082.75
+           4.432121
+           28.660845)
+          (:list
+           74.27664399092976D0
+           146.13037
+           0.29586405
+           0.5949252
+           1.010538
+           -23.890652
+           489.13367
+           910773.9
+           4.46667
+           27.12983)
+          (:list
+           85.88662131519277D0
+           146.7217
+           0.291986
+           0.60022414
+           0.9953683
+           -23.40176
+           551.30524
+           914156.8
+           4.079266
+           24.303517)
+          (:list
+           97.49659863945579D0
+           148.13108
+           0.2875735
+           0.5892771
+           1.0077491
+           -22.50523
+           662.4696
+           1125819.0
+           4.4786496
+           28.687508)
+          (:list
+           109.1065759637188D0
+           155.5771
+           0.27524155
+           0.58939577
+           0.9923626
+           -22.900038
+           718.9656
+           1361318.0
+           3.7518933
+           20.595393)
+          (:list
+           120.71655328798193D0
+           163.53028
+           0.27501395
+           0.62567407
+           1.0030886
+           -23.441493
+           524.90894
+           1087378.9
+           3.7452498
+           19.987305)
+          (:list
+           132.32653061224494D0
+           163.04906
+           0.31197926
+           0.60571224
+           1.0116046
+           -22.26185
+           387.3303
+           640524.9
+           5.116202
+           35.95894)
+          (:list
+           143.93650793650795D0
+           163.50209
+           0.34077945
+           0.6153983
+           1.0019707
+           -21.515954
+           333.817
+           405678.25
+           6.4799814
+           59.6741)
+          (:list
+           155.54648526077097D0
+           164.59876
+           0.3674592
+           0.62782884
+           0.9950041
+           -21.021832
+           347.19202
+           382778.8
+           6.1764245
+           56.331475)
+          (:list
+           167.15646258503398D0
+           164.5593
+           0.39907542
+           0.63610864
+           0.9968339
+           -20.62342
+           339.3928
+           341421.22
+           6.760477
+           66.66462)
+          (:list
+           178.7664399092971D0
+           163.85738
+           0.40626028
+           0.6339992
+           1.0083999
+           -19.985882
+           374.30164
+           299719.4
+           7.1946573
+           83.193924)
+          (:list
+           190.37641723356012D0
+           163.85764
+           0.393764
+           0.6244956
+           1.0073512
+           -19.51476
+           395.01727
+           275081.5
+           6.8702
+           80.18948)
+          (:list
+           201.98639455782313D0
+           164.30658
+           0.39637315
+           0.62076974
+           0.9982659
+           -18.792168
+           619.8726
+           606129.1
+           4.793246
+           39.54703)
+          (:list
+           213.59637188208615D0
+           144.72028
+           0.35016322
+           0.4713521
+           0.9897744
+           -17.333384
+           922.84717
+           509667.3
+           4.5414643
+           40.317395)
+          (:list
+           225.20634920634927D0
+           144.04222
+           0.28087106
+           0.5404568
+           0.98595804
+           -19.82419
+           773.6915
+           462469.53
+           4.181856
+           38.18107)
+          (:list
+           236.8163265306123D0
+           146.00917
+           0.31309837
+           0.57574267
+           1.00471
+           -22.096549
+           589.439
+           727303.07
+           4.272084
+           29.01868)
+          (:list
+           248.4263038548753D0
+           147.07035
+           0.33211073
+           0.595673
+           0.9953993
+           -22.526057
+           529.00306
+           760363.07
+           4.525235
+           30.192336)
+          (:list
+           260.0362811791383D0
+           145.98972
+           0.2963409
+           0.5908231
+           1.0079517
+           -22.264813
+           555.91224
+           697233.2
+           4.7862263
+           33.659077))
+         (:list
+          (:list
+           3.6462585034013273D0
+           146.51194
+           0.31294698
+           0.5955175
+           1.0034574
+           -21.36758
+           626.936
+           636409.94
+           5.000987
+           39.553425)
+          (:list
+           15.256235827664455D0
+           150.38393
+           0.2923213
+           0.5759808
+           0.99168
+           -21.127188
+           756.0676
+           1068326.4
+           4.9890747
+           35.5988)
+          (:list
+           26.866213151927468D0
+           160.58429
+           0.27646032
+           0.604879
+           0.9986791
+           -23.384623
+           589.39295
+           1270884.5
+           4.1731253
+           23.890149)
+          (:list
+           38.47619047619048D0
+           163.63324
+           0.31211823
+           0.61217666
+           1.01236
+           -22.256033
+           435.8959
+           826433.75
+           4.818482
+           31.10103)
+          (:list
+           50.086167800453495D0
+           162.66638
+           0.3520028
+           0.60146404
+           1.0100122
+           -20.467474
+           413.825
+           507988.34
+           5.5164638
+           44.50093)
+          (:list
+           61.69614512471662D0
+           164.00159
+           0.38847768
+           0.6149285
+           0.9952514
+           -18.883313
+           481.3015
+           393134.9
+           5.354642
+           49.886883)
+          (:list
+           73.30612244897964D0
+           163.9979
+           0.43997756
+           0.62471754
+           0.9930818
+           -17.852374
+           508.67285
+           316159.72
+           4.996425
+           51.14609)
+          (:list
+           84.91609977324265D0
+           163.70946
+           0.47913718
+           0.63352395
+           1.0019169
+           -17.031874
+           547.76557
+           308500.63
+           4.595477
+           46.658493)
+          (:list
+           96.52607709750567D0
+           163.42212
+           0.4708492
+           0.62705875
+           1.0033169
+           -15.948997
+           604.8343
+           258813.67
+           4.202132
+           48.283406)
+          (:list
+           108.13605442176868D0
+           163.416
+           0.46532324
+           0.62124384
+           0.99877996
+           -15.195983
+           646.5682
+           261975.77
+           4.3924193
+           52.871167)
+          (:list
+           119.7460317460318D0
+           163.35521
+           0.49408898
+           0.6251035
+           0.9875826
+           -14.78594
+           717.2648
+           332666.88
+           4.6071115
+           50.670533)
+          (:list
+           131.35600907029482D0
+           158.37146
+           0.44174722
+           0.51751054
+           0.98777664
+           -16.61994
+           912.68207
+           575907.9
+           4.0666824
+           34.616314)
+          (:list
+           142.96598639455783D0
+           143.96572
+           0.3238893
+           0.5484625
+           0.9914689
+           -19.341977
+           722.1829
+           466910.7
+           4.0570073
+           35.523854)
+          (:list
+           154.57596371882085D0
+           145.76639
+           0.35645852
+           0.5741402
+           1.0033197
+           -19.723965
+           587.0764
+           464192.06
+           5.2505994
+           46.65471)
+          (:list
+           166.18594104308397D0
+           145.39298
+           0.38665727
+           0.5894575
+           0.9929556
+           -19.5847
+           606.7794
+           515994.5
+           5.2345266
+           44.500866)
+          (:list
+           177.79591836734699D0
+           145.34259
+           0.3380018
+           0.5882882
+           1.0040597
+           -20.06206
+           612.64106
+           548277.94
+           5.020287
+           41.233826)
+          (:list
+           189.40589569161D0
+           146.71112
+           0.35205102
+           0.58853937
+           1.0047499
+           -19.853976
+           671.13227
+           627468.0
+           5.0947805
+           41.790303)
+          (:list
+           201.015873015873D0
+           153.55194
+           0.31134048
+           0.57138765
+           0.99215717
+           -21.263432
+           666.45264
+           1082747.9
+           4.1771503
+           25.48239)
+          (:list
+           212.62585034013603D0
+           163.77893
+           0.33408752
+           0.6141602
+           0.9966956
+           -21.56259
+           487.67023
+           1044171.25
+           4.14545
+           22.76837)
+          (:list
+           224.23582766439915D0
+           163.00514
+           0.41657498
+           0.61343694
+           1.0090677
+           -19.609194
+           408.6075
+           492451.6
+           5.9905205
+           51.42972)
+          (:list
+           235.84580498866217D0
+           162.54091
+           0.44739726
+           0.6127994
+           1.0044569
+           -17.562264
+           518.287
+           352672.63
+           5.331934
+           55.575337)
+          (:list
+           247.45578231292507D0
+           163.13257
+           0.45699444
+           0.61676354
+           0.9933638
+           -16.415829
+           585.27247
+           300931.66
+           4.6706276
+           52.46702)
+          (:list
+           259.0657596371882D0
+           163.41326
+           0.50205654
+           0.6287846
+           0.9915851
+           -15.688983
+           627.48896
+           311837.22
+           4.246307
+           44.66679)
+          (:list
+           270.6757369614511D0
+           163.21833
+           0.53798324
+           0.63394666
+           0.99818057
+           -14.983913
+           665.3434
+           282238.9
+           3.6561659
+           41.16182)
+          (:list
+           282.2857142857142D0
+           162.93869
+           0.5168725
+           0.6263763
+           1.0005871
+           -13.971511
+           735.0966
+           257618.7
+           3.3288272
+           41.09815)
+          (:list
+           293.8956916099771D0
+           161.37715
+           0.4905921
+           0.5778482
+           0.99424464
+           -14.695407
+           827.2468
+           414054.06
+           4.388545
+           42.042874))
+         (:list
+          (:list
+           3.505668934240248D0
+           142.93358
+           0.38470298
+           0.5357425
+           0.9865718
+           -16.75889
+           835.7087
+           453626.84
+           4.5398874
+           39.461296)
+          (:list
+           15.115646258503375D0
+           144.81952
+           0.36630854
+           0.56615806
+           0.9879598
+           -17.879582
+           691.62464
+           424542.72
+           5.172501
+           46.990185)
+          (:list
+           26.725623582766275D0
+           145.28022
+           0.38486388
+           0.5803002
+           1.0028958
+           -18.355875
+           653.8859
+           436760.9
+           5.353834
+           49.067227)
+          (:list
+           38.3356009070294D0
+           145.51622
+           0.38424793
+           0.6005733
+           0.9925761
+           -19.264578
+           639.4113
+           487163.63
+           4.857995
+           39.855713)
+          (:list
+           49.9455782312923D0
+           144.97292
+           0.33536124
+           0.59131015
+           0.99883974
+           -19.753262
+           669.58747
+           581548.4
+           4.281171
+           31.015212)
+          (:list
+           61.55555555555543D0
+           146.67696
+           0.35037416
+           0.5896701
+           1.0055876
+           -20.015828
+           672.9233
+           705208.5
+           4.7620516
+           35.371178)
+          (:list
+           73.16553287981856D0
+           151.18669
+           0.32345214
+           0.57467157
+           0.991088
+           -20.410986
+           767.48774
+           1067126.0
+           4.2175408
+           26.593558)
+          (:list
+           84.77551020408146D0
+           162.13748
+           0.31510314
+           0.6110521
+           1.0005567
+           -21.582022
+           590.0102
+           1078263.8
+           4.0900455
+           23.382544)
+          (:list
+           96.38548752834459D0
+           163.21845
+           0.36607015
+           0.6020442
+           1.0151403
+           -20.428027
+           417.23352
+           617356.0
+           5.3697114
+           39.459877)
+          (:list
+           107.99546485260771D0
+           162.1971
+           0.41465604
+           0.60338784
+           1.0048195
+           -18.14351
+           513.3508
+           418628.97
+           4.945489
+           43.260315)
+          (:list
+           119.60544217687061D0
+           163.15914
+           0.4576085
+           0.62124217
+           0.99248565
+           -16.840209
+           599.0133
+           374015.53
+           4.26448
+           39.065983)
+          (:list
+           131.21541950113374D0
+           163.15167
+           0.49414164
+           0.6321738
+           0.9933536
+           -16.133912
+           625.3355
+           341208.66
+           4.413952
+           44.159428)
+          (:list
+           142.82539682539664D0
+           162.7401
+           0.49665812
+           0.6287504
+           1.0062046
+           -15.481318
+           652.77247
+           332944.5
+           4.6514325
+           47.547688)
+          (:list
+           154.43537414965977D0
+           162.70175
+           0.4782034
+           0.6219296
+           1.0033054
+           -14.998951
+           681.3417
+           279653.22
+           4.3063617
+           49.88765)
+          (:list
+           166.0453514739229D0
+           161.23122
+           0.4625458
+           0.55651606
+           0.9886525
+           -14.702835
+           871.0884
+           343602.2
+           4.988006
+           58.51618)
+          (:list
+           177.6553287981858D0
+           157.55709
+           0.34785947
+           0.4522332
+           0.99344177
+           -15.889666
+           974.77814
+           309186.22
+           4.6217423
+           55.284733)
+          (:list
+           189.26530612244892D0
+           141.8952
+           0.34798202
+           0.5485496
+           0.98998857
+           -19.06124
+           838.0094
+           554086.9
+           3.4111808
+           26.864239)
+          (:list
+           200.87528344671182D0
+           145.41629
+           0.34892714
+           0.5703249
+           1.0025625
+           -20.547709
+           663.3981
+           697013.44
+           3.961591
+           27.866982)
+          (:list
+           212.48526077097495D0
+           145.04528
+           0.36625323
+           0.5903993
+           1.0082098
+           -20.476555
+           643.6377
+           657814.25
+           4.4392376
+           31.6893)
+          (:list
+           224.09523809523807D0
+           145.18793
+           0.32130927
+           0.5993681
+           0.9930564
+           -20.41758
+           654.66547
+           632040.3
+           4.608714
+           33.129425)
+          (:list
+           235.70521541950097D0
+           145.73938
+           0.3243513
+           0.5848354
+           1.0015059
+           -20.826136
+           626.79725
+           617973.5
+           4.609828
+           34.2805)
+          (:list
+           247.3151927437641D0
+           148.0972
+           0.33951828
+           0.59018195
+           0.99529684
+           -21.11566
+           674.72254
+           806580.8
+           4.8805018
+           36.109765)
+          (:list
+           258.925170068027D0
+           155.48859
+           0.2617772
+           0.5794464
+           1.0070677
+           -22.575728
+           720.46064
+           1241620.6
+           3.7295327
+           20.800127)
+          (:list
+           270.5351473922901D0
+           163.48027
+           0.2638009
+           0.6042613
+           0.99730874
+           -22.89619
+           531.73755
+           1161561.9
+           4.1400786
+           22.893942)
+          (:list
+           282.14512471655326D0
+           162.68692
+           0.33585498
+           0.61030734
+           0.9956515
+           -21.470858
+           454.15292
+           765840.94
+           4.929474
+           32.871117)
+          (:list
+           293.75510204081616D0
+           162.45433
+           0.38073456
+           0.62289036
+           1.0071516
+           -20.478568
+           477.0865
+           697899.44
+           4.973648
+           33.467335)
+          (:list
+           305.3650793650793D0
+           162.77147
+           0.37757477
+           0.6191337
+           1.007146
+           -19.928326
+           477.5152
+           598304.94
+           5.281013
+           39.283703)
+          (:list
+           316.9750566893424D0
+           163.00986
+           0.3876874
+           0.6186373
+           0.9957645
+           -19.713046
+           455.0597
+           522625.3
+           5.4117127
+           42.612008)
+          (:list
+           328.5850340136053D0
+           163.199
+           0.4201461
+           0.63145406
+           0.9942168
+           -19.523043
+           479.37335
+           589345.5
+           4.882638
+           34.744835)
+          (:list
+           340.19501133786844D0
+           162.9626
+           0.42997533
+           0.6353774
+           1.0029938
+           -19.37918
+           554.1448
+           681812.6
+           4.9465938
+           36.329724)
+          (:list
+           351.80498866213134D0
+           156.46082
+           0.3360861
+           0.46421647
+           1.0004578
+           -18.570713
+           867.7586
+           720862.94
+           4.5966478
+           34.34539)
+          (:list
+           363.41496598639447D0
+           142.68039
+           0.2946023
+           0.55210817
+           0.99819774
+           -20.245265
+           815.7875
+           666698.2
+           4.1127615
+           30.11286)
+          (:list
+           375.0249433106576D0
+           145.44663
+           0.2958468
+           0.57804835
+           0.99415547
+           -22.883902
+           653.4247
+           1137828.0
+           3.7949012
+           21.132489))
+         (:list
+          (:list
+           8.63492063492049D0
+           146.2216
+           0.2947985
+           0.5868697
+           1.0114514
+           -24.045393
+           593.44977
+           1563423.9
+           3.6004067
+           16.731114)
+          (:list
+           20.244897959183618D0
+           146.08974
+           0.29330513
+           0.6040927
+           0.99909914
+           -24.766304
+           532.29706
+           1334681.1
+           3.7788635
+           18.654002)
+          (:list
+           31.854875283446518D0
+           145.85605
+           0.25903508
+           0.5951277
+           1.000361
+           -24.75696
+           566.768
+           1298368.5
+           3.7397287
+           18.689023)
+          (:list
+           43.464852607709645D0
+           147.79302
+           0.2652025
+           0.59090305
+           1.011606
+           -24.096575
+           620.8478
+           1186631.9
+           4.127371
+           22.953782)
+          (:list
+           55.07482993197277D0
+           154.73792
+           0.23106233
+           0.5848087
+           0.9929538
+           -23.920317
+           707.2024
+           1270451.6
+           4.188953
+           24.11917)
+          (:list
+           66.68480725623567D0
+           162.59735
+           0.22918074
+           0.6178789
+           0.9977607
+           -24.162995
+           641.5384
+           1195173.0
+           3.729261
+           19.845492)
+          (:list
+           78.2947845804988D0
+           162.20093
+           0.26470402
+           0.613716
+           1.0081127
+           -23.630764
+           468.67386
+           798898.8
+           4.785266
+           30.739264)
+          (:list
+           89.9047619047617D0
+           162.51323
+           0.28040415
+           0.61673594
+           1.0065304
+           -23.447245
+           396.61084
+           645450.9
+           5.4448066
+           39.614785)
+          (:list
+           101.51473922902483D0
+           164.02371
+           0.28362036
+           0.6235151
+           0.99734247
+           -23.442072
+           375.87695
+           671179.2
+           5.4301596
+           38.742016)
+          (:list
+           113.12471655328796D0
+           164.16733
+           0.3075187
+           0.6317656
+           0.9957276
+           -23.225255
+           345.3178
+           599707.9
+           5.76403
+           42.941494)
+          (:list
+           124.73469387755086D0
+           163.87377
+           0.32605964
+           0.6377919
+           1.0021273
+           -22.93504
+           354.0336
+           600599.8
+           5.613855
+           41.049336)
+          (:list
+           136.34467120181398D0
+           163.66719
+           0.31591365
+           0.63050324
+           1.011895
+           -22.683186
+           352.72067
+           550376.8
+           5.870088
+           44.72612)
+          (:list
+           147.95464852607688D0
+           162.75913
+           0.30612883
+           0.5965202
+           1.0050331
+           -21.87673
+           1009.61396
+           2779106.0
+           2.775518
+           10.7249)
+          (:list
+           159.56462585034D0
+           145.06482
+           0.2605073
+           0.58053506
+           0.9922371
+           -22.002129
+           1015.9729
+           1785217.0
+           3.2456382
+           15.505883)
+          (:list
+           171.17460317460314D0
+           145.41033
+           0.22968982
+           0.5811306
+           0.9937976
+           -23.124039
+           621.6075
+           612073.4
+           4.8179474
+           37.37795)
+          (:list
+           182.78458049886604D0
+           146.09406
+           0.2539375
+           0.58632434
+           1.0035516
+           -24.144608
+           554.2284
+           700320.44
+           4.3808866
+           30.000542)
+          (:list
+           194.39455782312916D0
+           146.64028
+           0.24910492
+           0.600348
+           0.99552787
+           -25.581669
+           489.68762
+           846865.7
+           4.296878
+           26.633828)
+          (:list
+           206.0045351473923D0
+           146.11042
+           0.2173193
+           0.5983696
+           1.00524
+           -26.645358
+           500.26422
+           1108832.6
+           3.9185024
+           21.225588)
+          (:list
+           217.6145124716552D0
+           146.41641
+           0.22727432
+           0.60200936
+           1.005772
+           -27.218968
+           392.12125
+           832394.6
+           4.8807454
+           31.947037)
+          (:list
+           229.22448979591832D0
+           147.28385
+           0.20704758
+           0.60033566
+           0.99656487
+           -27.113242
+           380.04858
+           691931.2
+           5.578946
+           41.215966)
+          (:list
+           240.83446712018122D0
+           151.30875
+           0.2072162
+           0.59051776
+           1.0025016
+           -26.532044
+           593.6143
+           1014932.3
+           4.121987
+           24.791256)
+          (:list
+           252.44444444444434D0
+           161.3253
+           0.17510413
+           0.6110084
+           0.99813706
+           -26.995768
+           656.10236
+           1327530.3
+           3.2681296
+           16.102368)
+          (:list
+           264.05442176870747D0
+           164.31871
+           0.1922497
+           0.62160075
+           0.99550635
+           -26.72497
+           450.55844
+           853192.25
+           4.277614
+           25.412695)
+          (:list
+           275.66439909297037D0
+           162.91637
+           0.2199799
+           0.62584305
+           1.0014141
+           -26.364222
+           338.58914
+           551715.0
+           5.946917
+           46.55843)
+          (:list
+           287.2743764172335D0
+           163.6024
+           0.21428807
+           0.63202465
+           1.0075902
+           -26.426514
+           319.5581
+           480027.53
+           6.235742
+           51.56444)
+          (:list
+           298.8843537414964D0
+           164.26618
+           0.20559533
+           0.62384
+           1.0047996
+           -26.4805
+           304.02255
+           477558.7
+           6.5271964
+           54.518624)
+          (:list
+           310.4943310657595D0
+           164.36058
+           0.21288769
+           0.62688554
+           0.99622936
+           -26.489056
+           273.03308
+           369271.9
+           7.498711
+           74.0069))
+         (:list
+          (:list
+           9.104308390022652D0
+           164.43596
+           0.21966066
+           0.6275853
+           0.9972109
+           -26.146294
+           523.22217
+           742030.7
+           4.5666657
+           31.095709)
+          (:list
+           20.714285714285552D0
+           145.49916
+           0.15685915
+           0.5468866
+           1.0029787
+           -25.459525
+           805.9704
+           737953.75
+           4.253523
+           28.786948)
+          (:list
+           32.32426303854868D0
+           144.78328
+           0.15277629
+           0.58425397
+           0.9975694
+           -27.30851
+           630.89515
+           559940.9
+           4.762125
+           37.5294)
+          (:list
+           43.93424036281158D0
+           145.81678
+           0.1453044
+           0.58214534
+           0.99683494
+           -28.709414
+           545.98615
+           761846.1
+           4.4739685
+           29.842282)
+          (:list
+           55.544217687074706D0
+           146.00977
+           0.15249799
+           0.5898957
+           1.0091937
+           -29.73984
+           516.7897
+           906282.25
+           4.2876678
+           26.584595)
+          (:list
+           67.15419501133784D0
+           145.79001
+           0.14104234
+           0.60362643
+           0.99637807
+           -30.598126
+           457.23376
+           759448.25
+           4.8083234
+           33.79391)
+          (:list
+           78.76417233560074D0
+           147.99636
+           0.12808478
+           0.5928446
+           1.0049077
+           -31.27784
+           467.7573
+           885958.6
+           4.456443
+           28.370146)
+          (:list
+           90.37414965986386D0
+           158.4281
+           0.119462095
+           0.6133491
+           0.99701834
+           -31.87949
+           553.84247
+           1192200.3
+           3.653816
+           19.303448)
+          (:list
+           101.98412698412699D0
+           164.18517
+           0.114514776
+           0.631276
+           1.0056037
+           -31.3037
+           770.5353
+           1696951.0
+           2.6037143
+           11.0284395)
+          (:list
+           113.59410430838989D0
+           162.48955
+           0.11456324
+           0.6126832
+           1.0114517
+           -31.307879
+           562.0692
+           1227860.4
+           3.3766203
+           16.878012)
+          (:list
+           125.20408163265302D0
+           163.32032
+           0.112518914
+           0.62025857
+           1.00217
+           -31.652117
+           440.03665
+           945047.57
+           4.458974
+           26.877507)
+          (:list
+           136.81405895691592D0
+           164.6635
+           0.110184595
+           0.6366824
+           0.9952977
+           -32.09465
+           374.29218
+           760315.9
+           5.3498883
+           37.136746)
+          (:list
+           148.42403628117904D0
+           164.36894
+           0.11362006
+           0.638338
+           1.000045
+           -32.24432
+           370.35443
+           756578.8
+           5.2708264
+           36.49033)
+          (:list
+           160.03401360544217D0
+           163.99602
+           0.11048898
+           0.6351698
+           1.0088059
+           -32.399914
+           364.7673
+           680112.5
+           5.3424983
+           39.208683)
+          (:list
+           171.64399092970507D0
+           164.21006
+           0.103120625
+           0.6279746
+           1.0088314
+           -32.54673
+           369.6984
+           719213.8
+           5.2316303
+           36.872517)
+          (:list
+           183.2539682539682D0
+           164.10465
+           0.10019566
+           0.62446517
+           0.99987454
+           -32.840985
+           380.89612
+           714450.7
+           5.3779593
+           38.776356)
+          (:list
+           194.8639455782311D0
+           152.75017
+           0.090934396
+           0.54574597
+           0.9948616
+           -33.346528
+           654.8209
+           992769.2
+           4.070682
+           25.482649)
+          (:list
+           206.47392290249422D0
+           145.74874
+           0.07113929
+           0.5834661
+           1.0002822
+           -34.524277
+           545.749
+           673086.94
+           5.20523
+           41.394364)
+          (:list
+           218.08390022675735D0
+           146.26279
+           0.0751753
+           0.58943367
+           1.0032592
+           -35.2405
+           481.26532
+           761399.6
+           5.1622005
+           37.849163)
+          (:list
+           229.69387755102025D0
+           147.34404
+           0.07903638
+           0.588477
+           0.99594766
+           -35.990834
+           490.8965
+           877220.57
+           4.494856
+           29.961348)
+          (:list
+           241.30385487528338D0
+           146.19652
+           0.06568201
+           0.59703184
+           1.0095972
+           -37.249375
+           490.7805
+           997101.7
+           4.492748
+           29.463433)
+          (:list
+           252.91383219954628D0
+           146.42664
+           0.060679943
+           0.6027073
+           1.0010568
+           -38.315186
+           495.77063
+           1147746.1
+           4.507618
+           29.019837)
+          (:list
+           264.5238095238094D0
+           152.13672
+           0.054387033
+           0.591676
+           0.9981556
+           -39.448544
+           551.33436
+           1410164.0
+           4.0090113
+           22.926676)
+          (:list
+           276.13378684807276D0
+           160.34018
+           0.046158798
+           0.622085
+           0.99923796
+           -39.857613
+           739.9729
+           1813779.9
+           3.0475307
+           14.815352)
+          (:list
+           287.74376417233544D0
+           164.46372
+           0.04300077
+           0.62625987
+           1.0076834
+           -38.103913
+           1213.9264
+           2303479.5
+           1.720286
+           6.9607887)
+          (:list
+           299.35374149659856D0
+           168.71681
+           0.044628084
+           0.6270549
+           1.0048074
+           -39.356667
+           819.7382
+           2052059.4
+           3.02458
+           14.611268)
+          (:list
+           310.9637188208617D0
+           172.92342
+           0.038058225
+           0.6447622
+           1.0065725
+           -39.605923
+           1333.102
+           4555642.5
+           2.3851917
+           8.704429)
+          (:list
+           322.5736961451248D0
+           172.97948
+           0.033920288
+           0.6169119
+           1.0027073
+           -38.986115
+           1560.8108
+           3160567.5
+           2.1449585
+           9.455895)
+          (:list
+           334.18367346938794D0
+           164.21192
+           0.027951796
+           0.59007067
+           0.9932677
+           -38.63105
+           1686.9911
+           2740386.5
+           2.2840097
+           10.673302)
+          (:list
+           345.79365079365107D0
+           165.17867
+           0.028141158
+           0.5819957
+           0.9869734
+           -39.6444
+           1441.5404
+           1821363.6
+           2.1061712
+           13.062529)
+          (:list
+           357.40362811791374D0
+           165.1767
+           0.027698335
+           0.56552506
+           0.992262
+           -39.702206
+           1425.9357
+           1842568.5
+           2.252417
+           13.379474)
+          (:list
+           369.01360544217687D0
+           164.1523
+           0.030342835
+           0.5399445
+           0.9925479
+           -41.311917
+           1243.103
+           2327621.8
+           2.7747629
+           14.740351)
+          (:list
+           380.62358276644D0
+           164.38329
+           0.031072537
+           0.539126
+           0.99811507
+           -42.615982
+           1172.3925
+           2516464.8
+           2.8563576
+           14.037875)
+          (:list
+           392.2335600907031D0
+           152.7436
+           0.02538235
+           0.50438
+           0.993964
+           -42.117665
+           1272.99
+           2377070.3
+           2.8599317
+           13.0990305)
+          (:list
+           403.84353741496625D0
+           145.08858
+           0.019836059
+           0.49975693
+           0.99614096
+           -44.258713
+           1058.4321
+           2108737.3
+           3.217451
+           15.938524)
+          (:list
+           415.4535147392289D0
+           146.61966
+           0.022086533
+           0.5463277
+           1.0010133
+           -46.18903
+           1128.5164
+           2981728.0
+           2.7051466
+           11.853393)
+          (:list
+           427.06349206349205D0
+           146.2591
+           0.017856425
+           0.5056351
+           1.0131023
+           -47.64907
+           1196.5894
+           3785625.3
+           2.56315
+           10.267425)
+          (:list
+           438.6734693877552D0
+           147.61702
+           0.017778106
+           0.505252
+           0.99782205
+           -48.966313
+           1558.4058
+           4922759.0
+           1.973987
+           6.988482))
+         (:list
+          (:list
+           8.283446712018304D0
+           147.08602
+           0.012412564
+           0.5395941
+           0.99454457
+           -49.947693
+           1986.0913
+           6030831.5
+           1.569503
+           5.227079)
+          (:list
+           19.89342403628143D0
+           147.83676
+           0.010888284
+           0.44462854
+           0.99484456
+           -51.261387
+           2048.5735
+           5955919.5
+           1.5708165
+           5.363281)
+          (:list
+           31.503401360544104D0
+           149.19068
+           0.014290253
+           0.32452655
+           1.0096389
+           -52.48394
+           2462.2952
+           6684021.5
+           1.1986505
+           4.1480956)
+          (:list
+           43.11337868480723D0
+           148.12577
+           0.011099734
+           0.3012538
+           1.0055399
+           -53.57923
+           3071.8108
+           7411504.0
+           0.99805296
+           3.6130243)
+          (:list
+           54.72335600907036D0
+           155.81876
+           0.010005292
+           0.06398362
+           0.99782837
+           -53.877404
+           3628.3086
+           7117954.5
+           0.8745298
+           3.490756)
+          (:list
+           66.33333333333349D0
+           202.18593
+           0.0040914477
+           0.0
+           0.9792481
+           -54.0088
+           4231.1978
+           7247514.5
+           0.6109449
+           3.0361138)
+          (:list
+           77.94331065759661D0
+           49.774266
+           0.0040238793
+           0.0
+           1.0074843
+           -58.777996
+           5565.695
+           7783060.0
+           0.21412339
+           2.6479783)
+          (:list
+           89.55328798185974D0
+           1676.5036
+           0.0035993588
+           0.0
+           0.9964037
+           -58.053315
+           5668.9063
+           6728624.0
+           0.12619649
+           2.7229688)
+          (:list
+           101.16326530612241D0
+           49.774266
+           0.0014967825
+           0.0
+           0.98826814
+           -58.4584
+           5744.4815
+           7138471.0
+           0.09837108
+           2.7345286)
+          (:list
+           112.77324263038554D0
+           49.774266
+           0.0046732044
+           0.0
+           1.0086339
+           -58.714756
+           5877.459
+           6833918.0
+           0.15249111
+           2.9194987)
+          (:list
+           124.38321995464867D0
+           49.774266
+           0.006176526
+           0.0
+           1.0064465
+           -59.386868
+           5566.719
+           7493898.0
+           0.10960625
+           2.8251274)
+          (:list
+           135.9931972789118D0
+           52.077732
+           0.008970754
+           0.0
+           1.0031444
+           -59.06236
+           5359.528
+           7975459.0
+           0.14487207
+           2.6156953)
+          (:list
+           147.60317460317492D0
+           49.774266
+           0.0062186076
+           0.0
+           1.0053107
+           -58.44656
+           5411.7065
+           7877270.5
+           0.17768538
+           2.61886)
+          (:list
+           159.2131519274376D0
+           49.774266
+           0.0058326367
+           0.0
+           1.0074897
+           -56.98442
+           4781.962
+           8236350.0
+           0.4070623
+           2.4851923)
+          (:list
+           170.82312925170072D0
+           1491.2644
+           0.0034547204
+           0.0
+           0.9961092
+           -56.436688
+           4264.0357
+           8029685.5
+           0.6148402
+           2.6456075)
+          (:list
+           182.43310657596385D0
+           1171.8419
+           0.0038879435
+           0.047337294
+           0.9975033
+           -55.404297
+           3666.1536
+           7516499.5
+           0.8142428
+           2.8692038)
+          (:list
+           194.04308390022698D0
+           49.774266
+           0.010492765
+           0.0
+           1.0086467
+           -56.717728
+           4183.5664
+           7925597.0
+           0.58300305
+           2.7618)
+          (:list
+           205.6530612244901D0
+           1671.6635
+           0.011789011
+           0.0
+           1.0020502
+           -55.923764
+           3921.6377
+           7076622.0
+           0.96708084
+           3.3329346)
+          (:list
+           217.26303854875278D0
+           1586.4009
+           0.0060981685
+           0.007419288
+           1.0024254
+           -56.52331
+           3872.8982
+           6640187.0
+           1.1454893
+           3.7791643)
+          (:list
+           228.8730158730159D0
+           1834.8234
+           0.0043513165
+           0.09215468
+           0.9968443
+           -56.706013
+           3987.2632
+           7227867.5
+           1.0117753
+           3.3142026)
+          (:list
+           240.48299319727903D0
+           1538.0509
+           0.0017729685
+           0.022977949
+           0.97173566
+           -56.754975
+           4493.3594
+           7509377.5
+           0.4756425
+           2.3159159)
+          (:list
+           252.09297052154216D0
+           1806.3114
+           0.002671094
+           0.08193451
+           0.99147094
+           -56.59532
+           3938.3494
+           7085145.0
+           0.90661216
+           2.9895695)
+          (:list
+           263.7029478458053D0
+           1682.6386
+           0.0020631387
+           0.12958956
+           0.9734139
+           -56.22123
+           3328.0469
+           6579846.5
+           1.365157
+           3.973231)
+          (:list
+           275.31292517006796D0
+           1708.3347
+           0.0026160584
+           0.2510357
+           0.98277134
+           -56.097447
+           3237.1316
+           5946788.0
+           1.5491624
+           4.786825)
+          (:list
+           286.9229024943311D0
+           1744.6327
+           0.007782979
+           0.04955995
+           1.0061432
+           -55.802735
+           3032.5164
+           5749866.5
+           1.5882555
+           5.043007)
+          (:list
+           298.5328798185942D0
+           1610.8067
+           0.007856273
+           0.03003323
+           1.0031158
+           -56.34119
+           3390.2825
+           6628360.0
+           1.2452433
+           3.7806864)
+          (:list
+           310.14285714285734D0
+           1608.4152
+           0.005935976
+           0.06735945
+           0.99911696
+           -56.666146
+           3639.349
+           5945130.0
+           1.0692428
+           3.7000802)
+          (:list
+           321.75283446712047D0
+           1446.1251
+           0.0036866395
+           0.012633979
+           0.99340755
+           -57.44821
+           3535.239
+           6344778.0
+           1.2438949
+           3.9890714)
+          (:list
+           333.36281179138314D0
+           1655.2113
+           0.0017305554
+           0.15391028
+           0.97213567
+           -56.781048
+           3550.6443
+           5901507.0
+           1.1821805
+           3.8780532)
+          (:list
+           344.97278911564627D0
+           1765.2918
+           0.0013655543
+           0.07223505
+           0.9456634
+           -58.38396
+           3919.479
+           6660624.5
+           0.9924686
+           3.2789355))))))))
+   (:id 13))
+  (:box
+   (:reference nth)
+   (:type :function)
+   (:group-id nil)
+   (:name "nth")
+   (:x 616)
+   (:y 478)
+   (:w 55)
+   (:h 30)
+   (:color nil)
+   (:border nil)
+   (:roundness nil)
+   (:text-font nil)
+   (:align nil)
+   (:lock nil)
+   (:lambda nil)
+   (:inputs
+    (:input
+     (:type :standard)
+     (:name "ORIG-N")
+     (:value nil)
+     (:reactive t))
+    (:input
+     (:type :standard)
+     (:name "ORIG-LIST")
+     (:value nil)
+     (:reactive nil)))
+   (:outputs (:output (:name "out") (:reactive t)))
+   (:id 14))
+  (:box
+   (:reference fixnum)
+   (:type :value)
+   (:group-id nil)
+   (:name "value box")
+   (:x 561)
+   (:y 441)
+   (:w 32)
+   (:h 30)
+   (:color
+    (:color-or-nil (:color (:color 1.0 1.0 1.0 1.0)) (:t-or-nil t)))
+   (:border nil)
+   (:roundness nil)
+   (:text-font nil)
+   (:align nil)
+   (:lock nil)
+   (:inputs
+    (:input (:type :optional) (:name "in") (:value nil) (:reactive t)))
+   (:outputs (:output (:name "value") (:reactive t)))
+   (:value 3)
+   (:id 15))
+  (:box
+   (:reference cons)
+   (:type :function)
+   (:group-id nil)
+   (:name "cons")
+   (:x 128)
+   (:y 344)
+   (:w 61)
+   (:h 30)
+   (:color nil)
+   (:border nil)
+   (:roundness nil)
+   (:text-font nil)
+   (:align nil)
+   (:lock nil)
+   (:lambda nil)
+   (:inputs
+    (:input
+     (:type :standard)
+     (:name "CAR")
+     (:value "time")
+     (:reactive nil))
+    (:input
+     (:type :standard)
+     (:name "CDR")
+     (:value nil)
+     (:reactive nil)))
+   (:outputs (:output (:name "out") (:reactive nil)))
+   (:id 16))
+  (:box
+   (:reference simple-base-string)
+   (:type :value)
+   (:group-id nil)
+   (:name "value box")
+   (:x 130)
+   (:y 309)
+   (:w 32)
+   (:h 30)
+   (:color
+    (:color-or-nil (:color (:color 1.0 1.0 1.0 1.0)) (:t-or-nil t)))
+   (:border nil)
+   (:roundness nil)
+   (:text-font nil)
+   (:align nil)
+   (:lock nil)
+   (:inputs)
+   (:outputs (:output (:name "value") (:reactive nil)))
+   (:value "t")
+   (:id 17))
+  (:box
+   (:reference simple-base-string)
+   (:type :value)
+   (:group-id nil)
+   (:name "value box")
+   (:x 337)
+   (:y 156)
+   (:w 54)
+   (:h 30)
+   (:color
+    (:color-or-nil (:color (:color 1.0 1.0 1.0 1.0)) (:t-or-nil t)))
+   (:border nil)
+   (:roundness nil)
+   (:text-font nil)
+   (:align nil)
+   (:lock nil)
+   (:inputs)
+   (:outputs (:output (:name "value") (:reactive nil)))
+   (:value "descr")
+   (:id 18))
+  (:box
+   (:reference slider)
+   (:type :interface)
+   (:group-id nil)
+   (:name "slider")
+   (:x 508)
+   (:y 399)
+   (:w 128)
+   (:h 36)
+   (:color nil)
+   (:border nil)
+   (:roundness nil)
+   (:min-value 0)
+   (:max-value 8)
+   (:increment 1)
+   (:orientation :horizontal)
+   (:inputs)
+   (:outputs (:output (:name "value") (:reactive t)))
+   (:value 3)
+   (:id 19))
+  (:box
+   (:reference cons)
+   (:type :value)
+   (:group-id nil)
+   (:name "value box")
+   (:x 58)
+   (:y 386)
+   (:w 201)
+   (:h 61)
+   (:color
+    (:color-or-nil (:color (:color 1.0 1.0 1.0 1.0)) (:t-or-nil t)))
+   (:border nil)
+   (:roundness nil)
+   (:text-font nil)
+   (:align nil)
+   (:lock :locked)
+   (:inputs
+    (:input
+     (:type :optional)
+     (:name "in")
+     (:value nil)
+     (:reactive nil)))
+   (:outputs (:output (:name "value") (:reactive nil)))
+   (:value
+    (:list
+     "t"
+     "Frequency"
+     "Energy"
+     "Periodicity"
+     "AC1"
+     "Loudness"
+     "Centroid"
+     "Spread"
+     "Skewness"
+     "Kurtosis"))
+   (:id 20)))
+ (:connections
+  (:connection
+   (:from (:box 0 :out 0))
+   (:to (:box 3 :in 1))
+   (:attributes (:color nil :style nil :modif nil)))
+  (:connection
+   (:from (:box 0 :out 1))
+   (:to (:box 9 :in 0))
+   (:attributes (:color nil :style nil :modif nil)))
+  (:connection
+   (:from (:box 0 :out 1))
+   (:to (:box 8 :in 0))
+   (:attributes (:color nil :style nil :modif nil)))
+  (:connection
+   (:from (:box 2 :out 0))
+   (:to (:box 1 :in 1))
+   (:attributes (:color nil :style nil :modif nil)))
+  (:connection
+   (:from (:box 3 :out 0))
+   (:to (:box 4 :in 0))
+   (:attributes (:color nil :style nil :modif nil)))
+  (:connection
+   (:from (:box 3 :out 0))
+   (:to (:box 5 :in 0))
+   (:attributes (:color nil :style nil :modif nil)))
+  (:connection
+   (:from (:box 4 :out 0))
+   (:to (:box 16 :in 1))
+   (:attributes (:color nil :style nil :modif nil)))
+  (:connection
+   (:from (:box 5 :out 0))
+   (:to (:box 12 :in 0))
+   (:attributes (:color nil :style nil :modif nil)))
+  (:connection
+   (:from (:box 6 :out 0))
+   (:to (:box 5 :in 1))
+   (:attributes (:color nil :style nil :modif nil)))
+  (:connection
+   (:from (:box 8 :out 0))
+   (:to (:box 12 :in 2))
+   (:attributes (:color nil :style nil :modif nil)))
+  (:connection
+   (:from (:box 9 :out 0))
+   (:to (:box 12 :in 1))
+   (:attributes (:color nil :style nil :modif nil)))
+  (:connection
+   (:from (:box 12 :out 0))
+   (:to (:box 13 :in 1))
+   (:attributes (:color nil :style nil :modif nil)))
+  (:connection
+   (:from (:box 13 :out 1))
+   (:to (:box 14 :in 1))
+   (:attributes (:color nil :style nil :modif nil)))
+  (:connection
+   (:from (:box 14 :out 0))
+   (:to (:box 2 :in 0))
+   (:attributes (:color nil :style nil :modif nil)))
+  (:connection
+   (:from (:box 15 :out 0))
+   (:to (:box 14 :in 0))
+   (:attributes (:color nil :style nil :modif nil)))
+  (:connection
+   (:from (:box 16 :out 0))
+   (:to (:box 20 :in 0))
+   (:attributes (:color nil :style nil :modif nil)))
+  (:connection
+   (:from (:box 17 :out 0))
+   (:to (:box 16 :in 0))
+   (:attributes (:color nil :style nil :modif nil)))
+  (:connection
+   (:from (:box 18 :out 0))
+   (:to (:box 3 :in 2))
+   (:attributes (:color nil :style nil :modif nil)))
+  (:connection
+   (:from (:box 19 :out 0))
+   (:to (:box 15 :in 0))
+   (:attributes (:color nil :style nil :modif nil)))
+  (:connection
+   (:from (:box 20 :out 0))
+   (:to (:box 1 :in 2))
+   (:attributes (:color nil :style nil :modif nil)))))

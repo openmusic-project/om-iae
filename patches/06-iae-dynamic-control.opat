@@ -1,0 +1,1630 @@
+
+(:patch
+ (:om-version 7.0)
+ (:name "06-iae-dynamic-control")
+ (:doc "")
+ (:info
+  (:created "2016/01/20 12:32:57")
+  (:modified "2019/08/02 1:39:53"))
+ (:window (:size (1217 615)) (:position (583 405)))
+ (:grid nil)
+ (:lock nil)
+ (:boxes
+  (:box
+   (:reference sound)
+   (:type :object)
+   (:group-id 0)
+   (:name "SOUND")
+   (:x 18)
+   (:y 386)
+   (:w 187)
+   (:h 62)
+   (:color (:color 0.9 0.9 0.9 1.0))
+   (:border 1.5)
+   (:roundness nil)
+   (:text-font (:font (:face "Verdana") (:size 10) (:style :italic)))
+   (:align :center)
+   (:name "SOUND")
+   (:display :mini-view)
+   (:showname nil)
+   (:show-markers t)
+   (:group-id 0)
+   (:lock nil)
+   (:lambda nil)
+   (:inputs
+    (:input
+     (:type :standard)
+     (:name "SELF")
+     (:value :choose-file)
+     (:reactive t)))
+   (:outputs (:output (:name "SELF") (:reactive t)))
+   (:window (:size (nil nil)) (:position (nil nil)))
+   (:edition-params)
+   (:value
+    (:object
+     (:class sound)
+     (:slots
+      ((:onset 0)
+       (:duration 0)
+       (:interpol (:number-or-nil (:number 50) (:t-or-nil nil)))
+       (:default-frame-type marker-frame)
+       (:frames nil)
+       (:buffer nil)
+       (:n-samples 17640)
+       (:n-channels 1)
+       (:sample-rate 44100)
+       (:smpl-type :float)
+       (:sample-size 16)))
+     (:add-slots
+      ((:markers nil)
+       (:file-pathname nil)
+       (:sample-rate 44100)
+       (:n-channels 1)
+       (:n-samples 17640)
+       (:gain 1.0)
+       (:access-from-file nil)))))
+   (:id 0))
+  (:box
+   (:reference fixnum)
+   (:type :value)
+   (:group-id 0)
+   (:name "vb")
+   (:x 136.3916015625D0)
+   (:y 291)
+   (:w 36)
+   (:h 30)
+   (:color (:color 0.9 0.9 0.9 1.0))
+   (:border 1.5)
+   (:roundness nil)
+   (:text-font nil)
+   (:align :left)
+   (:lock nil)
+   (:inputs)
+   (:outputs (:output (:name "value") (:reactive nil)))
+   (:value 400)
+   (:id 1))
+  (:box
+   (:reference bpf)
+   (:type :object)
+   (:group-id 0)
+   (:name "BPF")
+   (:x 722)
+   (:y 297)
+   (:w 390)
+   (:h 91)
+   (:color (:color 0.9 0.9 0.9 1.0))
+   (:border 1.5)
+   (:roundness nil)
+   (:text-font (:font (:face "Verdana") (:size 10) (:style :italic)))
+   (:align :center)
+   (:name "BPF")
+   (:display :mini-view)
+   (:showname nil)
+   (:show-markers t)
+   (:group-id 0)
+   (:lock nil)
+   (:lambda nil)
+   (:inputs
+    (:input
+     (:type :standard)
+     (:name "SELF")
+     (:value nil)
+     (:reactive nil))
+    (:input
+     (:type :standard)
+     (:name "X-POINTS")
+     (:value (:list 0 100))
+     (:reactive nil))
+    (:input
+     (:type :standard)
+     (:name "Y-POINTS")
+     (:value (:list 0 100))
+     (:reactive nil))
+    (:input
+     (:type :key)
+     (:name "action")
+     (:value nil)
+     (:reactive nil)))
+   (:outputs
+    (:output (:name "SELF") (:reactive nil))
+    (:output (:name "X-POINTS") (:reactive nil))
+    (:output (:name "Y-POINTS") (:reactive nil))
+    (:output (:name "action") (:reactive nil)))
+   (:window (:size (1014 242)) (:position (45 418)))
+   (:edition-params)
+   (:value
+    (:object
+     (:class bpf)
+     (:slots
+      ((:onset 0)
+       (:duration 5759)
+       (:interpol (:number-or-nil (:number 50) (:t-or-nil nil)))
+       (:action :internal-lambda)
+       (:color nil)
+       (:decimals 0)
+       (:x-points
+        (:list
+         50
+         105
+         150
+         195
+         258
+         312
+         375
+         421
+         484
+         565
+         610
+         682
+         737
+         782
+         845
+         899
+         962
+         1025
+         1107
+         1188
+         1224
+         1269
+         1332
+         1377
+         1432
+         1495
+         1558
+         1630
+         1730
+         1793
+         1874
+         1937
+         2009
+         2073
+         2145
+         2208
+         2271
+         2325
+         2398
+         2470
+         2533
+         2587
+         2632
+         2677
+         2741
+         2795
+         2849
+         2894
+         3011
+         3084
+         3165
+         3219
+         3291
+         3327
+         3363
+         3409
+         3476
+         3506
+         3551
+         3610
+         3654
+         3743
+         3802
+         3847
+         3921
+         3951
+         3995
+         4025
+         4069
+         4128
+         4173
+         4217
+         4277
+         4321
+         4395
+         4440
+         4484
+         4529
+         4558
+         4588
+         4617
+         4632
+         4706
+         4736
+         4795
+         4825
+         4869
+         4929
+         4973
+         5018
+         5062
+         5121
+         5181
+         5210
+         5255
+         5299
+         5373
+         5418
+         5477
+         5521
+         5551
+         5596
+         5640
+         5684
+         5744
+         5759))
+       (:y-points
+        (:list
+         0
+         12
+         32
+         58
+         78
+         97
+         110
+         129
+         155
+         182
+         201
+         233
+         266
+         292
+         331
+         364
+         396
+         435
+         481
+         526
+         552
+         584
+         617
+         649
+         681
+         720
+         759
+         812
+         870
+         922
+         974
+         1026
+         1071
+         1117
+         1149
+         1202
+         1234
+         1279
+         1318
+         1363
+         1402
+         1435
+         1461
+         1500
+         1526
+         1552
+         1584
+         1611
+         1682
+         1728
+         1799
+         1851
+         1915
+         1949
+         1974
+         2000
+         1981
+         1938
+         1896
+         1868
+         1833
+         1784
+         1749
+         1713
+         1664
+         1622
+         1580
+         1545
+         1503
+         1467
+         1425
+         1390
+         1355
+         1320
+         1257
+         1221
+         1179
+         1137
+         1095
+         1053
+         1018
+         982
+         933
+         898
+         856
+         821
+         786
+         750
+         715
+         680
+         638
+         596
+         568
+         533
+         497
+         455
+         406
+         371
+         329
+         294
+         258
+         223
+         188
+         153
+         118
+         83))))
+     (:add-slots
+      ((:decimals 0)
+       (:color nil)
+       (:name "BPF")
+       (:action :internal-lambda)
+       (:interpol (:number-or-nil (:number 50) (:t-or-nil nil)))))))
+   (:id 2))
+  (:box
+   (:reference receive)
+   (:type :function)
+   (:group-id 0)
+   (:name "receive")
+   (:x 57)
+   (:y 141)
+   (:w 77.61181640625D0)
+   (:h 30)
+   (:color (:color 0.9 0.9 0.9 1.0))
+   (:border 1.5)
+   (:roundness nil)
+   (:text-font nil)
+   (:align :left)
+   (:lock nil)
+   (:lambda nil)
+   (:inputs
+    (:input
+     (:type :standard)
+     (:name "TARGETNAME")
+     (:value :om)
+     (:reactive t)))
+   (:outputs (:output (:name "out") (:reactive t)))
+   (:id 3))
+  (:box
+   (:reference split)
+   (:type :function)
+   (:group-id 0)
+   (:name "SPLIT")
+   (:x 41)
+   (:y 229)
+   (:w 109.5D0)
+   (:h 30)
+   (:color (:color 0.9 0.9 0.9 1.0))
+   (:border 1.5)
+   (:roundness nil)
+   (:text-font nil)
+   (:align :left)
+   (:lock :eval-once)
+   (:lambda nil)
+   (:inputs
+    (:input
+     (:type :standard)
+     (:name "LIST")
+     (:value nil)
+     (:reactive t)))
+   (:outputs
+    (:output (:name "out") (:reactive nil))
+    (:output (:name "out1") (:reactive t)))
+   (:id 4))
+  (:box
+   (:reference send)
+   (:type :function)
+   (:group-id nil)
+   (:name "send")
+   (:x 1019)
+   (:y 263)
+   (:w 64)
+   (:h 30)
+   (:color (:color 0.9 0.9 0.9 1.0))
+   (:border 1.5)
+   (:roundness nil)
+   (:text-font nil)
+   (:align :left)
+   (:lock nil)
+   (:lambda :lambda)
+   (:inputs
+    (:input
+     (:type :standard)
+     (:name "SELF")
+     (:value nil)
+     (:reactive nil)))
+   (:outputs (:output (:name "out") (:reactive nil)))
+   (:id 5))
+  (:box
+   (:reference cons)
+   (:type :value)
+   (:group-id nil)
+   (:name "vb")
+   (:x 40)
+   (:y 183)
+   (:w 113)
+   (:h 30)
+   (:color (:color 0.9 0.9 0.9 1.0))
+   (:border 1.5)
+   (:roundness nil)
+   (:text-font nil)
+   (:align :left)
+   (:lock nil)
+   (:inputs
+    (:input (:type :optional) (:name "in") (:value nil) (:reactive t)))
+   (:outputs (:output (:name "value") (:reactive t)))
+   (:value (:list 5759 83.0))
+   (:id 6))
+  (:box
+   (:library "om-iae")
+   (:reference (:symbol "IAE" "IAE"))
+   (:type :object)
+   (:group-id nil)
+   (:name nil)
+   (:x 184)
+   (:y 127)
+   (:w 263)
+   (:h 56)
+   (:color nil)
+   (:border nil)
+   (:roundness nil)
+   (:text-font nil)
+   (:align :center)
+   (:name nil)
+   (:display :mini-view)
+   (:showname nil)
+   (:show-markers t)
+   (:group-id nil)
+   (:lock nil)
+   (:lambda nil)
+   (:inputs
+    (:input
+     (:type :standard)
+     (:name "SELF")
+     (:value nil)
+     (:reactive nil))
+    (:input
+     (:type :standard)
+     (:name "SOUNDS")
+     (:value nil)
+     (:reactive nil)))
+   (:outputs
+    (:output (:name "SELF") (:reactive nil))
+    (:output (:name "SOUNDS") (:reactive nil)))
+   (:window (:size nil) (:position nil))
+   (:edition-params)
+   (:value
+    (:object
+     (:class (:symbol "IAE" "IAE"))
+     (:slots
+      ((:onset 0)
+       (:duration 0)
+       (:interpol (:number-or-nil (:number 50) (:t-or-nil nil)))
+       (:default-frame-type (:symbol "IAE-GRAIN" "IAE"))
+       (:frames nil)
+       (:sounds
+        (:list
+         (:object
+          (:class sound)
+          (:slots
+           ((:onset 0)
+            (:duration 0)
+            (:interpol (:number-or-nil (:number 50) (:t-or-nil nil)))
+            (:default-frame-type act-bundle)
+            (:frames nil)
+            (:buffer nil)
+            (:n-samples 262124)
+            (:n-channels 1)
+            (:sample-rate 44100)
+            (:smpl-type :float)
+            (:sample-size 16)))
+          (:add-slots
+           ((:markers nil)
+            (:file-pathname
+             (:pathname
+              (:directory
+               (:absolute
+                "Users"
+                "bresson"
+                "_SHARED-FILES"
+                "IN-FILES"
+                "SOUNDFILES"))
+              (:device :unspecific)
+              (:host nil)
+              (:name "guitar-lick")
+              (:type "aif")))
+            (:sample-rate 44100)
+            (:n-channels 1)
+            (:n-samples 262124)
+            (:gain 1.0)
+            (:access-from-file nil))))))))
+     (:add-slots
+      ((:channels 1)
+       (:max-dur 10000)
+       (:grains nil)
+       (:pipo-module "descr")
+       (:chop nil)))))
+   (:id 7))
+  (:box
+   (:reference sound)
+   (:type :object)
+   (:group-id 0)
+   (:name "SOUND")
+   (:x 203)
+   (:y 43)
+   (:w 156)
+   (:h 61)
+   (:color (:color 0.9 0.9 0.9 1.0))
+   (:border 1.5)
+   (:roundness nil)
+   (:text-font (:font (:face "Verdana") (:size 10) (:style :italic)))
+   (:align :center)
+   (:name "SOUND")
+   (:display :mini-view)
+   (:showname nil)
+   (:show-markers t)
+   (:group-id 0)
+   (:lock :locked)
+   (:lambda nil)
+   (:inputs
+    (:input
+     (:type :standard)
+     (:name "SELF")
+     (:value :choose-file)
+     (:reactive nil)))
+   (:outputs (:output (:name "SELF") (:reactive nil)))
+   (:window (:size nil) (:position nil))
+   (:edition-params)
+   (:value
+    (:object
+     (:class sound)
+     (:slots
+      ((:onset 0)
+       (:duration 0)
+       (:interpol (:number-or-nil (:number 50) (:t-or-nil nil)))
+       (:default-frame-type act-bundle)
+       (:frames nil)
+       (:buffer nil)
+       (:n-samples 262124)
+       (:n-channels 1)
+       (:sample-rate 44100)
+       (:smpl-type :float)
+       (:sample-size 16)))
+     (:add-slots
+      ((:markers nil)
+       (:file-pathname
+        (:pathname
+         (:directory
+          (:absolute
+           "Users"
+           "bresson"
+           "_SHARED-FILES"
+           "IN-FILES"
+           "SOUNDFILES"))
+         (:device :unspecific)
+         (:host nil)
+         (:name "guitar-lick")
+         (:type "aif")))
+       (:sample-rate 44100)
+       (:n-channels 1)
+       (:n-samples 262124)
+       (:gain 1.0)
+       (:access-from-file nil)))))
+   (:id 8))
+  (:box
+   (:reference (:symbol "IAE-SYNTH" "IAE"))
+   (:type :function)
+   (:group-id nil)
+   (:name "iae-synth")
+   (:x 70)
+   (:y 336)
+   (:w 83)
+   (:h 30)
+   (:color nil)
+   (:border nil)
+   (:roundness nil)
+   (:text-font nil)
+   (:align nil)
+   (:lock nil)
+   (:lambda nil)
+   (:inputs
+    (:input
+     (:type :standard)
+     (:name "SELF")
+     (:value nil)
+     (:reactive nil))
+    (:input
+     (:type :standard)
+     (:name "SOURCE")
+     (:value nil)
+     (:reactive nil))
+    (:input (:type :standard) (:name "POS") (:value nil) (:reactive t))
+    (:input
+     (:type :standard)
+     (:name "DUR")
+     (:value nil)
+     (:reactive nil)))
+   (:outputs (:output (:name "out") (:reactive t)))
+   (:id 9))
+  (:box
+   (:reference fixnum)
+   (:type :value)
+   (:group-id nil)
+   (:name "value box")
+   (:x 86)
+   (:y 301)
+   (:w 32)
+   (:h 30)
+   (:color
+    (:color-or-nil (:color (:color 1.0 1.0 1.0 1.0)) (:t-or-nil t)))
+   (:border nil)
+   (:roundness nil)
+   (:text-font nil)
+   (:align nil)
+   (:lock nil)
+   (:inputs)
+   (:outputs (:output (:name "value") (:reactive nil)))
+   (:value 0)
+   (:id 10))
+  (:comment
+   (:x 780)
+   (:y 398)
+   (:w 250)
+   (:h 25)
+   (:fgcolor nil)
+   (:bgcolor nil)
+   (:border (:number-or-nil (:number 0.0) (:t-or-nil t)))
+   (:roundness nil)
+   (:text-font
+    (:font-or-nil
+     (:font (:font (:face "Calibri") (:size 14.0D0) (:style :bold)))
+     (:t-or-nil t)))
+   (:align nil)
+   (:text "Controler: eval/play to \"send\" the values")
+   (:id 11))
+  (:box
+   (:library "om-iae")
+   (:reference (:symbol "IAE" "IAE"))
+   (:type :object)
+   (:group-id nil)
+   (:name nil)
+   (:x 253)
+   (:y 497)
+   (:w 247)
+   (:h 67)
+   (:color nil)
+   (:border nil)
+   (:roundness nil)
+   (:text-font nil)
+   (:align :center)
+   (:name nil)
+   (:display :mini-view)
+   (:showname nil)
+   (:show-markers t)
+   (:group-id nil)
+   (:lock nil)
+   (:lambda nil)
+   (:inputs
+    (:input
+     (:type :standard)
+     (:name "SELF")
+     (:value nil)
+     (:reactive nil))
+    (:input
+     (:type :standard)
+     (:name "SOUNDS")
+     (:value nil)
+     (:reactive nil))
+    (:input (:type :key) (:name "grains") (:value nil) (:reactive t)))
+   (:outputs
+    (:output (:name "SELF") (:reactive nil))
+    (:output (:name "SOUNDS") (:reactive nil))
+    (:output (:name "grains") (:reactive nil)))
+   (:window (:size (650 200)) (:position (296 299)))
+   (:edition-params)
+   (:value
+    (:object
+     (:class (:symbol "IAE" "IAE"))
+     (:slots
+      ((:onset 0)
+       (:duration 0)
+       (:interpol (:number-or-nil (:number 50) (:t-or-nil nil)))
+       (:default-frame-type (:symbol "IAE-GRAIN" "IAE"))
+       (:frames nil)
+       (:sounds
+        (:list
+         (:object
+          (:class sound)
+          (:slots
+           ((:onset 0)
+            (:duration 0)
+            (:interpol (:number-or-nil (:number 50) (:t-or-nil nil)))
+            (:default-frame-type act-bundle)
+            (:frames nil)
+            (:buffer nil)
+            (:n-samples 262124)
+            (:n-channels 1)
+            (:sample-rate 44100)
+            (:smpl-type :float)
+            (:sample-size 16)))
+          (:add-slots
+           ((:markers nil)
+            (:file-pathname
+             (:pathname
+              (:directory
+               (:absolute
+                "Users"
+                "bresson"
+                "_SHARED-FILES"
+                "IN-FILES"
+                "SOUNDFILES"))
+              (:device :unspecific)
+              (:host nil)
+              (:name "guitar-lick")
+              (:type "aif")))
+            (:sample-rate 44100)
+            (:n-channels 1)
+            (:n-samples 262124)
+            (:gain 1.0)
+            (:access-from-file nil))))))))
+     (:add-slots
+      ((:channels 1)
+       (:max-dur 10000)
+       (:grains nil)
+       (:pipo-module "descr")
+       (:chop nil)))))
+   (:id 12))
+  (:box
+   (:reference bpf)
+   (:type :object)
+   (:group-id nil)
+   (:name nil)
+   (:x 706)
+   (:y 172)
+   (:w 137)
+   (:h 69)
+   (:color nil)
+   (:border nil)
+   (:roundness nil)
+   (:text-font nil)
+   (:align :center)
+   (:name nil)
+   (:display :mini-view)
+   (:showname nil)
+   (:show-markers t)
+   (:group-id nil)
+   (:lock :locked)
+   (:lambda nil)
+   (:inputs
+    (:input
+     (:type :standard)
+     (:name "SELF")
+     (:value nil)
+     (:reactive nil))
+    (:input
+     (:type :standard)
+     (:name "X-POINTS")
+     (:value (:list 0 2000))
+     (:reactive nil))
+    (:input
+     (:type :standard)
+     (:name "Y-POINTS")
+     (:value (:list 0 100))
+     (:reactive nil)))
+   (:outputs
+    (:output (:name "SELF") (:reactive nil))
+    (:output (:name "X-POINTS") (:reactive nil))
+    (:output (:name "Y-POINTS") (:reactive nil)))
+   (:window (:size (585 400)) (:position (254 253)))
+   (:edition-params)
+   (:value
+    (:object
+     (:class bpf)
+     (:slots
+      ((:onset 0)
+       (:duration 3408.6333)
+       (:interpol (:number-or-nil (:number 50) (:t-or-nil nil)))
+       (:action nil)
+       (:color nil)
+       (:decimals 0)
+       (:x-points
+        (:list
+         50.4824
+         104.6461
+         149.7826
+         194.919
+         258.11
+         312.2738
+         375.4648
+         420.6012
+         483.7922
+         565.0377
+         610.1742
+         682.3925
+         736.5562
+         781.6927
+         844.8837
+         899.0474
+         962.2384
+         1025.4295
+         1106.675
+         1187.9207
+         1224.0297
+         1269.1661
+         1332.3572
+         1377.4937
+         1431.6574
+         1494.8483
+         1558.0393
+         1630.2577
+         1729.5578
+         1792.7488
+         1873.9944
+         1937.1854
+         2009.4038
+         2072.5948
+         2144.813
+         2208.004
+         2271.195
+         2325.359
+         2397.5772
+         2469.7954
+         2532.9864
+         2587.1502
+         2632.2866
+         2677.423
+         2740.614
+         2794.7779
+         2848.9414
+         2894.078
+         3011.4326
+         3083.651
+         3164.8965
+         3219.0603
+         3291.2786
+         3327.3877
+         3363.4969
+         3408.6333
+         3476
+         3506
+         3551
+         3610
+         3654
+         3743
+         3802
+         3847
+         3921
+         3951
+         3995
+         4025
+         4069
+         4128
+         4173
+         4217
+         4277
+         4321
+         4395
+         4440
+         4484
+         4529
+         4558
+         4588
+         4617
+         4632
+         4706
+         4736
+         4795
+         4825
+         4869
+         4929
+         4973
+         5018
+         5062
+         5121
+         5181
+         5210
+         5255
+         5299
+         5373
+         5418
+         5477
+         5521
+         5551
+         5596
+         5640
+         5684
+         5744
+         5759))
+       (:y-points
+        (:list
+         0.0231
+         12.4711
+         32.3879
+         58.1137
+         78.0305
+         97.1174
+         110.3953
+         129.4822
+         155.208
+         181.7638
+         200.8507
+         233.2154
+         266.4101
+         292.1359
+         331.1396
+         363.5044
+         395.8692
+         434.8728
+         480.5156
+         526.1582
+         551.8839
+         584.2487
+         616.6136
+         648.9782
+         681.3432
+         720.3468
+         759.3504
+         811.632
+         869.7227
+         922.0043
+         974.2857
+         1025.7374
+         1071.3801
+         1117.0227
+         1149.3875
+         1201.6691
+         1234.0338
+         1278.8466
+         1317.8502
+         1363.4928
+         1402.4966
+         1434.8613
+         1461.4172
+         1500.4208
+         1526.1466
+         1551.8724
+         1584.2373
+         1610.7929
+         1682.1614
+         1727.804
+         1799.1724
+         1850.6242
+         1915.3538
+         1948.5484
+         1974.2744
+         2000.0
+         1981
+         1938
+         1896
+         1868
+         1833
+         1784
+         1749
+         1713
+         1664
+         1622
+         1580
+         1545
+         1503
+         1467
+         1425
+         1390
+         1355
+         1320
+         1257
+         1221
+         1179
+         1137
+         1095
+         1053
+         1018
+         982
+         933
+         898
+         856
+         821
+         786
+         750
+         715
+         680
+         638
+         596
+         568
+         533
+         497
+         455
+         406
+         371
+         329
+         294
+         258
+         223
+         188
+         153
+         118
+         83))))
+     (:add-slots
+      ((:decimals 0)
+       (:color nil)
+       (:name "BPF")
+       (:action nil)
+       (:interpol (:number-or-nil (:number 50) (:t-or-nil nil)))))))
+   (:id 13))
+  (:box
+   (:reference bpf)
+   (:type :object)
+   (:group-id nil)
+   (:name nil)
+   (:x 705)
+   (:y 77)
+   (:w 269)
+   (:h 80)
+   (:color nil)
+   (:border nil)
+   (:roundness nil)
+   (:text-font nil)
+   (:align :center)
+   (:name nil)
+   (:display :mini-view)
+   (:showname nil)
+   (:show-markers t)
+   (:group-id nil)
+   (:lock :locked)
+   (:lambda nil)
+   (:inputs
+    (:input
+     (:type :standard)
+     (:name "SELF")
+     (:value nil)
+     (:reactive nil))
+    (:input
+     (:type :standard)
+     (:name "X-POINTS")
+     (:value (:list 0 2000))
+     (:reactive nil))
+    (:input
+     (:type :standard)
+     (:name "Y-POINTS")
+     (:value (:list 0 100))
+     (:reactive nil)))
+   (:outputs
+    (:output (:name "SELF") (:reactive nil))
+    (:output (:name "X-POINTS") (:reactive nil))
+    (:output (:name "Y-POINTS") (:reactive nil)))
+   (:window (:size (585 400)) (:position (275 276)))
+   (:edition-params)
+   (:value
+    (:object
+     (:class bpf)
+     (:slots
+      ((:onset 0)
+       (:duration 3186.644)
+       (:interpol (:number-or-nil (:number 50) (:t-or-nil nil)))
+       (:action nil)
+       (:color nil)
+       (:decimals 0)
+       (:x-points
+        (:list
+         10.6803
+         31.9955
+         53.3107
+         74.6259
+         95.941
+         117.2562
+         138.5714
+         159.8866
+         181.2018
+         202.517
+         223.8322
+         245.1474
+         266.4626
+         287.7778
+         309.093
+         330.4082
+         351.7234
+         373.0385
+         394.3537
+         415.6689
+         436.9841
+         458.2993
+         479.6145
+         500.9297
+         522.2448
+         543.5601
+         564.8753
+         586.1905
+         607.5057
+         628.8209
+         650.1361
+         671.4512
+         692.7664
+         714.0816
+         735.3968
+         756.712
+         778.0272
+         799.3424
+         820.6576
+         841.9728
+         863.288
+         884.6032
+         905.9184
+         927.2336
+         948.5488
+         969.8639
+         991.1791
+         1012.4943
+         1033.8095
+         1055.1248
+         1076.44
+         1097.7551
+         1119.0703
+         1140.3855
+         1161.7007
+         1183.0159
+         1204.331
+         1225.6463
+         1246.9616
+         1268.2766
+         1289.5918
+         1310.907
+         1332.2222
+         1353.5374
+         1374.8526
+         1396.1679
+         1417.483
+         1438.7982
+         1460.1134
+         1481.4286
+         1502.7438
+         1524.059
+         1545.3742
+         1566.6893
+         1588.0045
+         1609.3197
+         1630.6349
+         1651.9501
+         1673.2653
+         1694.5805
+         1715.8956
+         1737.2108
+         1758.526
+         1779.8412
+         1801.1564
+         1822.4716
+         1843.7868
+         1865.102
+         1886.4172
+         1907.7324
+         1929.0476
+         1950.3628
+         1971.678
+         1992.9932
+         2014.3084
+         2035.6237
+         2056.9387
+         2078.254
+         2099.569
+         2120.8845
+         2142.1997
+         2163.515
+         2184.83
+         2206.1453
+         2227.4605
+         2248.7757
+         2270.0908
+         2291.406
+         2312.7212
+         2334.0364
+         2355.3516
+         2376.6668
+         2397.982
+         2419.297
+         2440.6123
+         2461.9275
+         2483.2427
+         2504.5579
+         2525.873
+         2547.1883
+         2568.5034
+         2589.8186
+         2611.1338
+         2632.449
+         2653.7642
+         2675.0794
+         2696.3946
+         2717.7097
+         2739.025
+         2760.34
+         2781.6553
+         2802.9705
+         2824.2857
+         2845.6009
+         2866.916
+         2888.2312
+         2909.5464
+         2930.8616
+         2952.1768
+         2973.492
+         2994.8072
+         3016.1223
+         3037.4375
+         3058.7527
+         3080.068
+         3101.3833
+         3122.6985
+         3144.0137
+         3165.3289
+         3186.644))
+       (:y-points
+        (:list
+         326.043
+         321.5528
+         184.1518
+         233.5444
+         268.5681
+         247.015
+         238.9326
+         652.9316
+         396.0906
+         376.3336
+         364.659
+         205.7049
+         74.5903
+         223.6658
+         379.9258
+         544.2682
+         396.0906
+         141.9437
+         89.8571
+         106.9199
+         342.2078
+         338.6156
+         120.3906
+         405.071
+         141.0456
+         203.0108
+         162.5987
+         360.1688
+         363.7609
+         118.5945
+         156.3124
+         1008.5577
+         784.9444
+         820.8662
+         524.5112
+         863.9724
+         700.5281
+         713.9988
+         1005.8635
+         774.1678
+         900.7922
+         388.0082
+         763.3912
+         614.3156
+         951.0828
+         685.2612
+         958.2672
+         518.2248
+         493.9776
+         523.6131
+         502.06
+         673.5866
+         299.9997
+         585.5782
+         587.3744
+         408.6633
+         416.7457
+         255.9955
+         419.4398
+         128.473
+         164.3948
+         133.8613
+         467.9342
+         448.1772
+         159.9046
+         344.004
+         399.6828
+         239.8307
+         420.3378
+         237.1365
+         552.3504
+         594.5587
+         458.9538
+         455.3616
+         344.902
+         549.6564
+         206.603
+         570.3114
+         508.3463
+         610.7236
+         562.229
+         552.3504
+         484.9972
+         486.7932
+         1016.6401
+         1494.4003
+         1263.6026
+         1779.0808
+         2000.0
+         1829.3712
+         1635.3934
+         1438.7216
+         1183.6765
+         934.02
+         674.4848
+         787.6385
+         845.1133
+         1092.0758
+         1289.6459
+         1129.7938
+         819.9682
+         1541.0986
+         741.8382
+         614.3156
+         652.9316
+         581.088
+         596.3548
+         624.1942
+         559.5349
+         487.6912
+         1245.6416
+         1647.068
+         1019.3342
+         1011.2519
+         891.8118
+         686.1594
+         380.8238
+         400.5808
+         740.0421
+         882.8314
+         677.1789
+         292.8154
+         310.7762
+         584.6802
+         667.3004
+         511.9385
+         315.2664
+         249.7092
+         348.4942
+         390.7023
+         329.6352
+         303.5919
+         266.772
+         215.5834
+         166.1909
+         174.2734
+         225.462
+         229.0542
+         172.4772
+         75.4883
+         60.2216
+         117.6965
+         137.4535
+         98.8375
+         36.8724
+         9.931
+         13.5232
+         28.79
+         24.2997
+         0.0525))))
+     (:add-slots
+      ((:decimals 0)
+       (:color nil)
+       (:name "BPF")
+       (:action nil)
+       (:interpol (:number-or-nil (:number 50) (:t-or-nil nil)))))))
+   (:id 14))
+  (:box
+   (:library "om-iae")
+   (:reference (:symbol "IAE-GRAIN" "IAE"))
+   (:type :object)
+   (:group-id nil)
+   (:name nil)
+   (:x 422)
+   (:y 303)
+   (:w 135)
+   (:h 68)
+   (:color nil)
+   (:border nil)
+   (:roundness nil)
+   (:text-font nil)
+   (:align :center)
+   (:name nil)
+   (:display :text)
+   (:showname nil)
+   (:group-id nil)
+   (:lock nil)
+   (:lambda nil)
+   (:inputs
+    (:input
+     (:type :standard)
+     (:name "SELF")
+     (:value nil)
+     (:reactive nil))
+    (:input
+     (:type :standard)
+     (:name "DATE")
+     (:value 0)
+     (:reactive nil))
+    (:input
+     (:type :standard)
+     (:name "SOURCE")
+     (:value 0)
+     (:reactive nil))
+    (:input (:type :standard) (:name "POS") (:value 0) (:reactive t))
+    (:input
+     (:type :standard)
+     (:name "DURATION")
+     (:value 200)
+     (:reactive nil)))
+   (:outputs
+    (:output (:name "SELF") (:reactive t))
+    (:output (:name "DATE") (:reactive nil))
+    (:output (:name "SOURCE") (:reactive nil))
+    (:output (:name "POS") (:reactive nil))
+    (:output (:name "DURATION") (:reactive nil)))
+   (:window (:size nil) (:position nil))
+   (:edition-params)
+   (:value
+    (:object
+     (:class (:symbol "IAE-GRAIN" "IAE"))
+     (:slots
+      ((:item-time nil)
+       (:item-internal-time 5759)
+       (:item-type :master)
+       (:date 5759)
+       (:attributes (:list :posy 206))
+       (:source 0)
+       (:pos 83.0)
+       (:duration 200)))))
+   (:id 15))
+  (:box
+   (:reference
+    (:object
+     (:class omcollect)
+     (:slots ((:name "collect") (:protected-p nil) (:icon nil)))))
+   (:type :special)
+   (:group-id nil)
+   (:name "collect")
+   (:x 419)
+   (:y 430)
+   (:w 104)
+   (:h 42)
+   (:color
+    (:color-or-nil (:color (:color 0.82 0.7 0.7 1.0)) (:t-or-nil t)))
+   (:border nil)
+   (:roundness nil)
+   (:text-font nil)
+   (:align :center)
+   (:icon :top)
+   (:inputs
+    (:input
+     (:type :standard)
+     (:name "data-in")
+     (:value nil)
+     (:reactive t))
+    (:input
+     (:type :standard)
+     (:name "push")
+     (:value nil)
+     (:reactive t))
+    (:input
+     (:type :standard)
+     (:name "init")
+     (:value nil)
+     (:reactive t)))
+   (:outputs
+    (:output (:name "collect") (:reactive nil))
+    (:output (:name "data-out") (:reactive t))
+    (:output (:name "init") (:reactive nil)))
+   (:id 16))
+  (:box
+   (:reference button)
+   (:type :interface)
+   (:group-id nil)
+   (:name "button")
+   (:x 466)
+   (:y 381)
+   (:w 50)
+   (:h 37)
+   (:color nil)
+   (:border nil)
+   (:roundness nil)
+   (:send-value t)
+   (:text "reset")
+   (:inputs)
+   (:outputs (:output (:name "value") (:reactive t)))
+   (:value nil)
+   (:id 17))
+  (:comment
+   (:x 515)
+   (:y 520)
+   (:w 250)
+   (:h 26)
+   (:fgcolor nil)
+   (:bgcolor nil)
+   (:border (:number-or-nil (:number 0.0) (:t-or-nil t)))
+   (:roundness nil)
+   (:text-font
+    (:font-or-nil
+     (:font (:font (:face "Calibri") (:size 14.0D0) (:style :bold)))
+     (:t-or-nil t)))
+   (:align nil)
+   (:text "Eval this to load the memory in 'collect'")
+   (:id 18)))
+ (:connections
+  (:connection
+   (:from (:box 1 :out 0))
+   (:to (:box 9 :in 3))
+   (:attributes (:color nil :style nil :modif nil)))
+  (:connection
+   (:from (:box 3 :out 0))
+   (:to (:box 6 :in 0))
+   (:attributes
+    (:color (:color 0.3 0.3 0.3 1.0) :style nil :modif nil)))
+  (:connection
+   (:from (:box 4 :out 0))
+   (:to (:box 15 :in 1))
+   (:attributes (:color nil :style nil :modif nil)))
+  (:connection
+   (:from (:box 4 :out 1))
+   (:to (:box 9 :in 2))
+   (:attributes (:color nil :style nil :modif nil)))
+  (:connection
+   (:from (:box 4 :out 1))
+   (:to (:box 15 :in 3))
+   (:attributes (:color nil :style nil :modif nil)))
+  (:connection
+   (:from (:box 5 :out 0))
+   (:to (:box 2 :in 3))
+   (:attributes
+    (:color (:color 0.3 0.3 0.3 1.0) :style nil :modif nil)))
+  (:connection
+   (:from (:box 6 :out 0))
+   (:to (:box 4 :in 0))
+   (:attributes
+    (:color (:color 0.3 0.3 0.3 1.0) :style nil :modif nil)))
+  (:connection
+   (:from (:box 7 :out 0))
+   (:to (:box 9 :in 0))
+   (:attributes (:color nil :style nil :modif nil)))
+  (:connection
+   (:from (:box 7 :out 1))
+   (:to (:box 12 :in 1))
+   (:attributes (:color nil :style nil :modif nil)))
+  (:connection
+   (:from (:box 8 :out 0))
+   (:to (:box 7 :in 1))
+   (:attributes (:color nil :style nil :modif nil)))
+  (:connection
+   (:from (:box 9 :out 0))
+   (:to (:box 0 :in 0))
+   (:attributes (:color nil :style nil :modif nil)))
+  (:connection
+   (:from (:box 10 :out 0))
+   (:to (:box 9 :in 1))
+   (:attributes (:color nil :style nil :modif nil)))
+  (:connection
+   (:from (:box 13 :out 0))
+   (:to (:box 2 :in 0))
+   (:attributes (:color nil :style nil :modif nil)))
+  (:connection
+   (:from (:box 15 :out 0))
+   (:to (:box 16 :in 0))
+   (:attributes (:color nil :style nil :modif nil)))
+  (:connection
+   (:from (:box 16 :out 1))
+   (:to (:box 12 :in 2))
+   (:attributes (:color nil :style nil :modif nil)))
+  (:connection
+   (:from (:box 17 :out 0))
+   (:to (:box 16 :in 2))
+   (:attributes (:color nil :style nil :modif nil)))
+  (:connection
+   (:from (:box 17 :out 0))
+   (:to (:box 16 :in 1))
+   (:attributes (:color nil :style nil :modif nil)))))
