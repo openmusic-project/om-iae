@@ -389,10 +389,10 @@ Note: some desciptor names used at initialization (e.g. MFCC, SpectralCrest, ...
 
 
 ;;; Returns a sound buffer with a grain from given pos in IAE
-(defmethod! iae-synth ((self iae::IAE) source pos dur)
-  :indoc '("An IAE instance" "source number" "position in source [ms]" "duration [ms]")
+(defmethod! iae-synth ((self iae::IAE) source pos dur &optional (gain 1.0))
+  :indoc '("An IAE instance" "source number" "position in source [ms]" "duration [ms]" "gain")
   :doc "Synthesizes a grain (SOUND buffer) from IAE"
-  :initvals '(nil 0 0 200)
+  :initvals '(nil 0 0 200 1.0)
   :outdoc '("sound")
   (when (iaeengine-ptr self)
     (let* ((*iae (iaeengine-ptr self))
@@ -414,6 +414,7 @@ Note: some desciptor names used at initialization (e.g. MFCC, SpectralCrest, ...
       (iae-lib::iae_set_Attack *iae 0.0d0 0.5d0)
       (iae-lib::iae_set_Attack *iae 0.0d0 0.5d0)
       (iae-lib::iae_set_position *iae (coerce pos 'double-float) 0.0d0)
+      (iae-lib::iae_set_gain *iae (coerce gain 'double-float))
       ;(iae-lib::iae_set_positionvar *iae 1000.0d0)
       (iae-lib::iae_set_period *iae -0.0d0 0.0d0)
       (iae-lib::iae_set_duration *iae (coerce dur 'double-float) 0.0d0)
@@ -427,10 +428,10 @@ Note: some desciptor names used at initialization (e.g. MFCC, SpectralCrest, ...
 ;;; other option:
 ;;<request> can contain one or more triplets (desc,value,weight), where 'desc' is a descriptor number (as built-in teh IAE), and 'value' the targetted value for this descriptor. 'weight' is optional and will be set to 1.0 (maximum) by default.
 
-(defmethod! iae-synth-desc ((self iae::IAE) descriptor value weight dur)
+(defmethod! iae-synth-desc ((self iae::IAE) descriptor value weight dur &optional (gain 1.0))
   
-  :indoc '("An IAE instance" "descriptor number(s)" "requested value(s)" "weight(s)" "duration [ms]")
-  :initvals '(nil 0 0.0 1.0 200)
+  :indoc '("An IAE instance" "descriptor number(s)" "requested value(s)" "weight(s)" "duration [ms]" "gain")
+  :initvals '(nil 0 0.0 1.0 200 1.0)
   :outdoc '("sound")
   :doc "Synthesizes a grain (SOUND buffer) from IAE, resquesting some value(s) for some given descriptor(s)."
 
@@ -454,7 +455,7 @@ Note: some desciptor names used at initialization (e.g. MFCC, SpectralCrest, ...
       (iae-lib::iae_set_period *iae -0.0d0 0.0d0)
       ;(iae-lib::iae_set_positionvar *iae 0.0d0)
       (iae-lib::iae_set_duration *iae (coerce dur 'double-float) 1.0d0)
-      
+      (iae-lib::iae_set_gain *iae (coerce gain 'double-float))
       (when (descriptors self)
         
         (let* ((n (length (descriptors self)))
