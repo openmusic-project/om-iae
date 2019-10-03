@@ -118,8 +118,6 @@ At the same time it is a container for granular synthesis events that are comput
 Tracks can be computed and segmented using 'pipo' modules: \"desc\" \"ircamdescriptor\" \"slice:fft\" \"mfcc\" \"<desc,mfcc>\" ... ") 
 )
 
-(defmethod om::data-stream-frames-slot ((self iae)) 'grains)
-
 
 (defmethod om::om-cleanup ((self iae::IAE))
   (when (iae::iaeengine-ptr self)
@@ -389,10 +387,10 @@ Note: some desciptor names used at initialization (e.g. MFCC, SpectralCrest, ...
 
 
 ;;; Returns a sound buffer with a grain from given pos in IAE
-(defmethod! iae-synth ((self iae::IAE) source pos dur &optional (gain 1.0))
-  :indoc '("An IAE instance" "source number" "position in source [ms]" "duration [ms]" "gain")
+(defmethod! iae-synth ((self iae::IAE) source pos dur &key (gain 1.0) (attack 10) (release 10))
+  :indoc '("An IAE instance" "source number" "position in source [ms]" "duration [ms]" "gain" "attack time [ms]" "release time [ms]")
   :doc "Synthesizes a grain (SOUND buffer) from IAE"
-  :initvals '(nil 0 0 200 1.0)
+  :initvals '(nil 0 0 200 1.0 10 10)
   :outdoc '("sound")
   (when (iaeengine-ptr self)
     (let* ((*iae (iaeengine-ptr self))
@@ -411,8 +409,8 @@ Note: some desciptor names used at initialization (e.g. MFCC, SpectralCrest, ...
 
       (iae-lib::iae_set_Cyclic *iae nil)
       (iae-lib::iae_set_CenteredGrains *iae nil)
-      (iae-lib::iae_set_Attack *iae 0.0d0 0.5d0)
-      (iae-lib::iae_set_Attack *iae 0.0d0 0.5d0)
+      (iae-lib::iae_set_Attack *iae (coerce attack 'double-float) 0.0d0)
+      (iae-lib::iae_set_Release *iae (coerce release 'double-float) 0.0d0)
       (iae-lib::iae_set_position *iae (coerce pos 'double-float) 0.0d0)
       (iae-lib::iae_set_gain *iae (coerce gain 'double-float))
       ;(iae-lib::iae_set_positionvar *iae 1000.0d0)
@@ -428,16 +426,16 @@ Note: some desciptor names used at initialization (e.g. MFCC, SpectralCrest, ...
 ;;; other option:
 ;;<request> can contain one or more triplets (desc,value,weight), where 'desc' is a descriptor number (as built-in teh IAE), and 'value' the targetted value for this descriptor. 'weight' is optional and will be set to 1.0 (maximum) by default.
 
-(defmethod! iae-synth-desc ((self iae::IAE) descriptor value weight dur &optional (gain 1.0))
+(defmethod! iae-synth-desc ((self iae::IAE) descriptor value weight dur &key (gain 1.0) (attack 10) (release 10))
   
-  :indoc '("An IAE instance" "descriptor number(s)" "requested value(s)" "weight(s)" "duration [ms]" "gain")
-  :initvals '(nil 0 0.0 1.0 200 1.0)
+  :indoc '("An IAE instance" "descriptor number(s)" "requested value(s)" "weight(s)" "duration [ms]" "gain" "attack time [ms]" "release time [ms]")
+  :initvals '(nil 0 0.0 1.0 200 1.0 10 10)
   :outdoc '("sound")
   :doc "Synthesizes a grain (SOUND buffer) from IAE, resquesting some value(s) for some given descriptor(s)."
 
   (when (iaeengine-ptr self)
     (let* ((*iae (iaeengine-ptr self))
-           (nsamples (ceiling (* (max dur 500) (iae::samplerate self) 0.001)))
+           (nsamples (ceiling (* dur (iae::samplerate self) 0.001)))
            (omsnd (make-instance 'om::om-internal-sound :n-channels (channels self) :smpl-type :float
                                  :n-samples nsamples :sample-rate 44100))
            (**samples (om::make-audio-buffer (channels self) nsamples))
@@ -451,10 +449,11 @@ Note: some desciptor names used at initialization (e.g. MFCC, SpectralCrest, ...
 
       (iae-lib::iae_set_Cyclic *iae nil)
       (iae-lib::iae_set_CenteredGrains *iae nil)
-      (iae-lib::iae_set_Attack *iae 10.0d0 0.0d0)
+      (iae-lib::iae_set_Attack *iae (coerce attack 'double-float) 0.0d0)
+      (iae-lib::iae_set_Release *iae (coerce release 'double-float) 0.0d0)
       (iae-lib::iae_set_period *iae -0.0d0 0.0d0)
       ;(iae-lib::iae_set_positionvar *iae 0.0d0)
-      (iae-lib::iae_set_duration *iae (coerce dur 'double-float) 1.0d0)
+      (iae-lib::iae_set_duration *iae (coerce dur 'double-float) 0.0d0)
       (iae-lib::iae_set_gain *iae (coerce gain 'double-float))
       (when (descriptors self)
         
