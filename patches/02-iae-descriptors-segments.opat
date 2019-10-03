@@ -1,18 +1,18 @@
 
 (:patch
  (:om-version 1.14E-4)
- (:name "iae-descriptors-segments")
+ (:name "02-iae-descriptors-segments")
  (:doc "")
  (:info
   (:created "2017/12/22 16:32:44")
-  (:modified "2019/08/02 0:38:46"))
+  (:modified "2019/10/04 0:06:14"))
  (:window (:size (849 863)) (:position (794 100)))
  (:grid nil)
  (:lock nil)
  (:boxes
   (:box
-   (:reference sound)
    (:type :object)
+   (:reference sound)
    (:group-id nil)
    (:name nil)
    (:x 178)
@@ -60,91 +60,91 @@
          (:object
           (:class marker-frame)
           (:slots
-           ((:item-time nil)
+           ((:onset 15)
+            (:item-time nil)
             (:item-internal-time 15)
             (:item-type :master)
-            (:date 15)
             (:attributes nil)
             (:label nil))))
          (:object
           (:class marker-frame)
           (:slots
-           ((:item-time nil)
+           ((:onset 125)
+            (:item-time nil)
             (:item-internal-time 125)
             (:item-type 125)
-            (:date 125)
             (:attributes nil)
             (:label nil))))
          (:object
           (:class marker-frame)
           (:slots
-           ((:item-time nil)
+           ((:onset 306)
+            (:item-time nil)
             (:item-internal-time 306)
             (:item-type 306)
-            (:date 306)
             (:attributes nil)
             (:label nil))))
          (:object
           (:class marker-frame)
           (:slots
-           ((:item-time nil)
+           ((:onset 514)
+            (:item-time nil)
             (:item-internal-time 514)
             (:item-type 514)
-            (:date 514)
             (:attributes nil)
             (:label nil))))
          (:object
           (:class marker-frame)
           (:slots
-           ((:item-time nil)
+           ((:onset 782)
+            (:item-time nil)
             (:item-internal-time 782)
             (:item-type 782)
-            (:date 782)
             (:attributes nil)
             (:label nil))))
          (:object
           (:class marker-frame)
           (:slots
-           ((:item-time nil)
+           ((:onset 1084)
+            (:item-time nil)
             (:item-internal-time 1084)
             (:item-type 1084)
-            (:date 1084)
             (:attributes nil)
             (:label nil))))
          (:object
           (:class marker-frame)
           (:slots
-           ((:item-time nil)
+           ((:onset 1462)
+            (:item-time nil)
             (:item-internal-time 1462)
             (:item-type 1462)
-            (:date 1462)
             (:attributes nil)
             (:label nil))))
          (:object
           (:class marker-frame)
           (:slots
-           ((:item-time nil)
+           ((:onset 1775)
+            (:item-time nil)
             (:item-internal-time 1775)
             (:item-type 1775)
-            (:date 1775)
             (:attributes nil)
             (:label nil))))
          (:object
           (:class marker-frame)
           (:slots
-           ((:item-time nil)
+           ((:onset 2217)
+            (:item-time nil)
             (:item-internal-time 2217)
             (:item-type 2217)
-            (:date 2217)
             (:attributes nil)
             (:label nil))))
          (:object
           (:class marker-frame)
           (:slots
-           ((:item-time nil)
+           ((:onset 2565)
+            (:item-time nil)
             (:item-internal-time 2565)
             (:item-type :master)
-            (:date 2565)
             (:attributes nil)
             (:label nil))))))
        (:buffer nil)
@@ -175,8 +175,8 @@
        (:access-from-file nil)))))
    (:id 0))
   (:box
-   (:reference 2d-array)
    (:type :object)
+   (:reference 2d-array)
    (:group-id nil)
    (:name nil)
    (:x 141)
@@ -489,8 +489,8 @@
          "Kurtosis"))))))
    (:id 1))
   (:box
-   (:reference mat-trans)
    (:type :function)
+   (:reference mat-trans)
    (:group-id nil)
    (:name "mat-trans")
    (:x 233)
@@ -514,8 +514,8 @@
    (:id 2))
   (:box
    (:library "om-iae")
-   (:reference (:symbol "IAE" "IAE"))
    (:type :object)
+   (:reference (:symbol "IAE" "IAE"))
    (:group-id nil)
    (:name nil)
    (:x 118)
@@ -579,91 +579,91 @@
               (:object
                (:class marker-frame)
                (:slots
-                ((:item-time nil)
+                ((:onset 15)
+                 (:item-time nil)
                  (:item-internal-time 15)
                  (:item-type :master)
-                 (:date 15)
                  (:attributes nil)
                  (:label nil))))
               (:object
                (:class marker-frame)
                (:slots
-                ((:item-time nil)
+                ((:onset 125)
+                 (:item-time nil)
                  (:item-internal-time 125)
                  (:item-type 125)
-                 (:date 125)
                  (:attributes nil)
                  (:label nil))))
               (:object
                (:class marker-frame)
                (:slots
-                ((:item-time nil)
+                ((:onset 306)
+                 (:item-time nil)
                  (:item-internal-time 306)
                  (:item-type 306)
-                 (:date 306)
                  (:attributes nil)
                  (:label nil))))
               (:object
                (:class marker-frame)
                (:slots
-                ((:item-time nil)
+                ((:onset 514)
+                 (:item-time nil)
                  (:item-internal-time 514)
                  (:item-type 514)
-                 (:date 514)
                  (:attributes nil)
                  (:label nil))))
               (:object
                (:class marker-frame)
                (:slots
-                ((:item-time nil)
+                ((:onset 782)
+                 (:item-time nil)
                  (:item-internal-time 782)
                  (:item-type 782)
-                 (:date 782)
                  (:attributes nil)
                  (:label nil))))
               (:object
                (:class marker-frame)
                (:slots
-                ((:item-time nil)
+                ((:onset 1084)
+                 (:item-time nil)
                  (:item-internal-time 1084)
                  (:item-type 1084)
-                 (:date 1084)
                  (:attributes nil)
                  (:label nil))))
               (:object
                (:class marker-frame)
                (:slots
-                ((:item-time nil)
+                ((:onset 1462)
+                 (:item-time nil)
                  (:item-internal-time 1462)
                  (:item-type 1462)
-                 (:date 1462)
                  (:attributes nil)
                  (:label nil))))
               (:object
                (:class marker-frame)
                (:slots
-                ((:item-time nil)
+                ((:onset 1775)
+                 (:item-time nil)
                  (:item-internal-time 1775)
                  (:item-type 1775)
-                 (:date 1775)
                  (:attributes nil)
                  (:label nil))))
               (:object
                (:class marker-frame)
                (:slots
-                ((:item-time nil)
+                ((:onset 2217)
+                 (:item-time nil)
                  (:item-internal-time 2217)
                  (:item-type 2217)
-                 (:date 2217)
                  (:attributes nil)
                  (:label nil))))
               (:object
                (:class marker-frame)
                (:slots
-                ((:item-time nil)
+                ((:onset 2565)
+                 (:item-time nil)
                  (:item-internal-time 2565)
                  (:item-type :master)
-                 (:date 2565)
                  (:attributes nil)
                  (:label nil))))))
             (:buffer nil)
@@ -701,8 +701,8 @@
        (:chop nil)))))
    (:id 3))
   (:box
-   (:reference (:symbol "DESCRIPTORS" "IAE"))
    (:type :function)
+   (:reference (:symbol "DESCRIPTORS" "IAE"))
    (:group-id nil)
    (:name "descriptors")
    (:x 125)
@@ -726,8 +726,8 @@
    (:id 4))
   (:box
    (:library "om-iae")
-   (:reference (:symbol "GET-SOUND-DESCRIPTORS" "IAE"))
    (:type :function)
+   (:reference (:symbol "GET-SOUND-DESCRIPTORS" "IAE"))
    (:group-id nil)
    (:name "get-sound-descriptors")
    (:x 464)
@@ -765,8 +765,8 @@
    (:outputs (:output (:name "out") (:reactive nil)))
    (:id 5))
   (:box
-   (:reference fixnum)
    (:type :value)
+   (:reference fixnum)
    (:group-id nil)
    (:name "value box")
    (:x 501)
@@ -799,8 +799,8 @@
     "Get the sound descriptors for a given source in IAE + time interval (t1 t2)")
    (:id 7))
   (:box
-   (:reference cdr)
    (:type :function)
+   (:reference cdr)
    (:group-id nil)
    (:name "cdr")
    (:x 713)
@@ -823,8 +823,8 @@
    (:outputs (:output (:name "out") (:reactive nil)))
    (:id 8))
   (:box
-   (:reference butlast)
    (:type :function)
+   (:reference butlast)
    (:group-id nil)
    (:name "butlast")
    (:x 619)
@@ -873,8 +873,8 @@
    (:text "list of T2s")
    (:id 11))
   (:box
-   (:reference mapcar)
    (:type :function)
+   (:reference mapcar)
    (:group-id nil)
    (:name "mapcar")
    (:x 623)
@@ -907,8 +907,8 @@
    (:outputs (:output (:name "out") (:reactive nil)))
    (:id 12))
   (:box
-   (:reference collection)
    (:type :object)
+   (:reference collection)
    (:group-id nil)
    (:name "...")
    (:x 463)
@@ -940,7 +940,7 @@
    (:outputs
     (:output (:name "SELF") (:reactive nil))
     (:output (:name "OBJ-LIST") (:reactive nil)))
-   (:window (:size (500 500)) (:position (42 68)))
+   (:window (:size (698 500)) (:position (42 68)))
    (:edition-params)
    (:value
     (:object
@@ -3379,8 +3379,8 @@
            3.2789355))))))))
    (:id 13))
   (:box
-   (:reference nth)
    (:type :function)
+   (:reference nth)
    (:group-id nil)
    (:name "nth")
    (:x 616)
@@ -3408,8 +3408,8 @@
    (:outputs (:output (:name "out") (:reactive t)))
    (:id 14))
   (:box
-   (:reference fixnum)
    (:type :value)
+   (:reference fixnum)
    (:group-id nil)
    (:name "value box")
    (:x 561)
@@ -3429,8 +3429,8 @@
    (:value 3)
    (:id 15))
   (:box
-   (:reference cons)
    (:type :function)
+   (:reference cons)
    (:group-id nil)
    (:name "cons")
    (:x 128)
@@ -3458,8 +3458,8 @@
    (:outputs (:output (:name "out") (:reactive nil)))
    (:id 16))
   (:box
-   (:reference simple-base-string)
    (:type :value)
+   (:reference simple-base-string)
    (:group-id nil)
    (:name "value box")
    (:x 130)
@@ -3478,8 +3478,8 @@
    (:value "t")
    (:id 17))
   (:box
-   (:reference simple-base-string)
    (:type :value)
+   (:reference simple-base-string)
    (:group-id nil)
    (:name "value box")
    (:x 337)
@@ -3498,8 +3498,8 @@
    (:value "descr")
    (:id 18))
   (:box
-   (:reference slider)
    (:type :interface)
+   (:reference slider)
    (:group-id nil)
    (:name "slider")
    (:x 508)
@@ -3518,8 +3518,8 @@
    (:value 3)
    (:id 19))
   (:box
-   (:reference cons)
    (:type :value)
+   (:reference cons)
    (:group-id nil)
    (:name "value box")
    (:x 58)
