@@ -423,12 +423,16 @@ Note: some desciptor names used at initialization (e.g. MFCC, SpectralCrest, ...
       omsnd)))
 
 ;;; Returns a sound buffer with a grain from given set of descriptor values in IAE
-(defmethod! iae-synth-desc ((self iae::IAE) descriptor value dur)
+
+;;; other option:
+;;<request> can contain one or more triplets (desc,value,weight), where 'desc' is a descriptor number (as built-in teh IAE), and 'value' the targetted value for this descriptor. 'weight' is optional and will be set to 1.0 (maximum) by default.
+
+(defmethod! iae-synth-desc ((self iae::IAE) descriptor value weight dur)
   
-  :indoc '("An IAE instance" "descriptor number" "requested value" "duration [ms]")
-  :initvals '(nil 0 0 200)
+  :indoc '("An IAE instance" "descriptor number(s)" "requested value(s)" "weight(s)" "duration [ms]")
+  :initvals '(nil 0 0.0 1.0 200)
   :outdoc '("sound")
-  :doc "Synthesizes a grain (SOUND buffer) from IAE, resquesting a given value for a given descriptor."
+  :doc "Synthesizes a grain (SOUND buffer) from IAE, resquesting some value(s) for some given descriptor(s)."
 
   (when (iaeengine-ptr self)
     (let* ((*iae (iaeengine-ptr self))
@@ -452,11 +456,20 @@ Note: some desciptor names used at initialization (e.g. MFCC, SpectralCrest, ...
       (iae-lib::iae_set_duration *iae (coerce dur 'double-float) 1.0d0)
       
       (when (descriptors self)
+        
         (let* ((n (length (descriptors self)))
                (vals (make-list n :initial-element 0.0))
                (weights (make-list n :initial-element 0.0)))
-          (setf (nth descriptor vals) (float value))
-          (setf (nth descriptor weights) 1.0)
+          
+          (loop for desc in (om::list! descriptor)
+                for i from 0 
+                do 
+                (if (>= desc n) (om-lisp:om-print-format "Error: no descriptor number ~D in IAE" (list desc) "OM-IAE")
+                  (let ((value (float (or (if (listp value) (nth i value) value) 0.0)))
+                        (weight (float (or (if (listp weight) (nth i weight) value) 1.0))))
+                    (setf (nth descriptor vals) value)
+                    (setf (nth descriptor weights) weight))
+                  ))
           
           (iae-lib::iae_set_target *iae n (cffi::foreign-alloc :float :initial-contents vals))
           (iae-lib::iae_set_weight *iae n (cffi::foreign-alloc :float :initial-contents weights))
