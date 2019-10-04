@@ -294,16 +294,21 @@ Note: some desciptor names used at initialization (e.g. MFCC, SpectralCrest, ...
 
       (when (< source (length (sounds self)))
         (iae-lib::iae_set_sourceindex *iae source))
-
+           
+      ;;; general params
       (iae-lib::iae_set_Cyclic *iae nil)
       (iae-lib::iae_set_CenteredGrains *iae nil)
       (iae-lib::iae_set_Attack *iae (coerce attack 'double-float) 0.0d0)
       (iae-lib::iae_set_Release *iae (coerce release 'double-float) 0.0d0)
-      (iae-lib::iae_set_position *iae (coerce pos 'double-float) 0.0d0)
-      (iae-lib::iae_set_gain *iae (coerce gain 'double-float))
-      ;(iae-lib::iae_set_positionvar *iae 1000.0d0)
       (iae-lib::iae_set_period *iae -0.0d0 0.0d0)
       (iae-lib::iae_set_duration *iae (coerce dur 'double-float) 0.0d0)
+      (iae-lib::iae_set_gain *iae (coerce gain 'double-float))
+      
+      ;;; mode-specific
+      (iae-lib::iae_set_position *iae (coerce pos 'double-float) 0.0d0)
+      ;(iae-lib::iae_set_positionvar *iae 1000.0d0)
+      
+      ;;; generates the grain
       (iae-lib::iae_trigger *iae)
       (iae-lib::iae_synth *iae nsamples **samples (channels self))
       (setf (om::buffer omsnd) (om::make-om-sound-buffer-gc :ptr **samples :count 1 :nch (channels self)))
@@ -335,14 +340,16 @@ Note: some desciptor names used at initialization (e.g. MFCC, SpectralCrest, ...
 ;   Synchronous = 2  synchronous granular synthesis (needs at least 2 markers)
       (iae-lib::iae_set_SynthMode *iae 1)
 
+      ;;; general params
       (iae-lib::iae_set_Cyclic *iae nil)
       (iae-lib::iae_set_CenteredGrains *iae nil)
       (iae-lib::iae_set_Attack *iae (coerce attack 'double-float) 0.0d0)
       (iae-lib::iae_set_Release *iae (coerce release 'double-float) 0.0d0)
       (iae-lib::iae_set_period *iae -0.0d0 0.0d0)
-      ;(iae-lib::iae_set_positionvar *iae 0.0d0)
       (iae-lib::iae_set_duration *iae (coerce dur 'double-float) 0.0d0)
       (iae-lib::iae_set_gain *iae (coerce gain 'double-float))
+      
+      ;;; mode-specific
       (when (descriptors self)
         
         (let* ((n (length (descriptors self)))
@@ -365,13 +372,16 @@ Note: some desciptor names used at initialization (e.g. MFCC, SpectralCrest, ...
       
       (iae-lib::iae_set_k *iae 3)
       
+      ;;; generates the grain
       (iae-lib::iae_select_new *iae T)
+      
+      ; info about the grain that has been selected
       ;(let* ((selind (iae-lib::iae_get_selectedsegmentindex *iae 0))
       ;       (selbuf (iae-lib::iae_get_SelectedSourceIndex *iae 0))
       ;       (seltime (iae-lib::iae_get_descriptor_data *iae selbuf selind framedescbuffer)))
       ;  (print (format nil "VALUE: ~D found in buffer ~D - index ~D - time=~D" value selbuf selind seltime))
       ;  )
-      ;(iae-lib::iae_trigger *iae)
+      
       (iae-lib::iae_synth *iae nsamples **samples (channels self))
 
       (setf (om::buffer omsnd) (om::make-om-sound-buffer-gc :ptr **samples :count 1 :nch (channels self)))
