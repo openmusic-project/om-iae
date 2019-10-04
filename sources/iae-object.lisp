@@ -108,7 +108,7 @@ Use items of this list to instancitate the :pipo-module attribute of IAE."
 
  - Tracks can be computed and segmented using 'pipo' modules: \"desc\" \"ircamdescriptor\" \"slice:fft\" \"mfcc\" \"<desc,mfcc>\" ... 
 
- - Segmentation is computed from the <chop> parameter which can be a chop-size or a list (module params) where module is one of \"chop\", \"onseg\", or \"gate\".
+ - Segmentation is computed from the <chop> parameter which can be a chop-size or a list (module (param1 val1 (param2 val2) ...) where 'module' is one of \"chop\", \"onseg\", or \"gate\".
 "
 
   ) 
