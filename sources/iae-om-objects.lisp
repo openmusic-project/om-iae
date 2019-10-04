@@ -95,25 +95,16 @@ Use items of this list to instancitate the :pipo-module attribute of IAE."
 ;;; IAE
 ;;;==================================
 
-(defclass! IAE (om::om-cleanup-mixin om::data-stream)
+(defclass! IAE (om::om-cleanup-mixin)   ; om::data-stream
  ((iaeengine-ptr :accessor iaeengine-ptr :initform nil)
   (sounds :initarg :sounds :accessor sounds :initform nil :documentation "a sound or list of sounds to build the IAE container on")
   (channels :accessor channels :initform 1 :documentation "number of channels for audio output")
-  (max-dur :accessor max-dur :initform 10000 :documentation "max duration fo the audio output buffer [ms]")
   (samplerate :accessor samplerate :initform 44100 :documentation "sample rate for audio output")
-  (grains :accessor grains :initform nil :documentation "a list of timed-requests for granular synthesis")
-  ; (markers :accessor markers :initform nil :documentation "markers in audio buffers")
   (pipo-module :accessor pipo-module :initform "descr" :documentation "name of a pipo module for sound analysis") 
   (descriptors :accessor descriptors :initform nil)
   (desc-tracks :accessor desc-tracks :initform nil)
-  (chop :accessor chop :initform nil :documentation "chop size for pipo segmentation [number of samples]")
-  ;;; needed for play
-  (buffer-player :accessor buffer-player :initform nil)
-  )
- (:default-initargs :default-frame-type 'IAE-grain)
+  (chop :accessor chop :initform nil :documentation "chop size for pipo segmentation [number of samples]"))
  (:documentation "IAE is a multi-track container for sounds and sound descriptions are stored data. 
-
-At the same time it is a container for granular synthesis events that are computed dynamically from the audio buffers.
 
 Tracks can be computed and segmented using 'pipo' modules: \"desc\" \"ircamdescriptor\" \"slice:fft\" \"mfcc\" \"<desc,mfcc>\" ... ") 
 )
@@ -123,34 +114,17 @@ Tracks can be computed and segmented using 'pipo' modules: \"desc\" \"ircamdescr
   (when (iae::iaeengine-ptr self)
     (om::om-print-dbg "deleting engine of ~A [~A]" (list self (iae::iaeengine-ptr self)) "GC")
     (iae-lib::iae_delete (iae::iaeengine-ptr self))
-    (when (iae::buffer-player self) (om::free-buffer-player (iae::buffer-player self)))
-  ))
+    (setf (iae::iaeengine-ptr self) nil)
+    ))
 
 ;;; called each time an instance is created
 ;;; => mostly memory allocations
 (defmethod initialize-instance :after ((self iae::IAE) &rest initargs)
-  
   (om::om-print-dbg "Initializing IAE for ~A" (list self) "IAE")
-  
-  (let* ((sr (iae::samplerate self))
-         (size (round (* (iae::max-dur self) sr) 1000))
-         (nch (iae::channels self)))
+  (setf (iae::iaeengine-ptr self) 
+        (iae-lib::iae_new  (iae::samplerate self) 512 (iae::channels self) 1))
+  )
     
-    (setf (iae::iaeengine-ptr self) (iae-lib::iae_new  (iae::samplerate self) 512 nch 1))
-    
-    (om::set-object-time-window self 100)
-
-    (let ((audio-buffer (fli::allocate-foreign-object  
-                         :type :pointer :nelems nch
-                         :initial-contents (loop for c from 1 to nch
-                                                 collect
-                                                 (fli::allocate-foreign-object :type :float :nelems size :initial-element 0.0)))))
-  
-      (setf (iae::buffer-player self) 
-            (om::make-player-from-buffer audio-buffer size nch sr))
-      )))
-
-
 ;;======================================================
 ;; INITIALIZATION OF THE PIPO MODULE
 ;; module-name can be: "desc" "ircamdescriptor" "slice:fft" "mfcc" "<desc,mfcc>" "...:chop"
@@ -259,14 +233,7 @@ Tracks can be computed and segmented using 'pipo' modules: \"desc\" \"ircamdescr
 ;;;==============================================================================
 
 (defmethod om::additional-class-attributes ((self iae::IAE)) 
-  '(iae::channels iae::max-dur iae::grains iae::pipo-module iae::chop))
-
-(defmethod om::data-stream-frames-slot ((self iae::IAE)) 'iae::grains)
-
-(defmethod om::play-obj? ((self iae::IAE)) t)
-
-(defmethod om::get-obj-dur ((self iae::IAE)) (iae::max-dur self))
-
+  '(iae::channels iae::pipo-module iae::chop))
 
 ;;;======================================================
 ;;; READ FROM IAE
@@ -304,87 +271,8 @@ Note: some desciptor names used at initialization (e.g. MFCC, SpectralCrest, ...
 
 
 ;;;=========================
-;;; DISPLAY
+;;; SYNTH
 ;;;=========================
-
-;;; do that better with IDs etc.
-(defmethod om::get-cache-display-for-draw ((self iae::IAE) box)
-  (declare (ignore box))
-  (append (call-next-method)
-          (list (iae::iae-info self))))
-
-
-(defmethod om::draw-mini-view ((self iae::IAE) (box t) x y w h &optional time)
-  (call-next-method)
-  (let ((display-cache (om::get-display-draw box)))
-    (oa::om-with-font 
-     (oa::om-def-font :font1 :size 8) 
-     (loop for str in (om::string-lines-to-list (car display-cache))
-           for y = 16 then (+ y 10) do 
-           (om::om-draw-string 10 y str))
-     )))
-
-
-;;;============================================
-;;; DATA-STREAM ACTIONS FOR IAE
-;;;============================================
-
-
-(defclass! IAE-grain (om::data-frame)
-   ((om::date :accessor om::date :initarg :date :initform 0 :documentation "date/time of the grain")
-    (source :accessor source :initarg :source :initform 0 :documentation "source num inside IAE")
-    (pos :accessor pos :initarg :pos :initform 0 :documentation "position in source")
-    (duration :accessor duration :initarg :duration :initform 100 :documentation "duration of the grain"))
-   (:documentation "A granular-synthesis request for IAE, based on source/position data."))
-
-(defclass! IAE-request (om::data-frame)
-   ((om::date :accessor om::date :initarg :date :initform 0 :documentation "date/time of the grain")
-    (descriptor :accessor descriptor :initarg :descriptor :initform 0 :documentation "the descriptor inside IAE/pipo")
-    (value :accessor value :initarg :value :initform 0 :documentation "the value of the descriptor")
-    (duration :accessor duration :initarg :duration :initform 100 :documentation "duration of the grain"))
-   (:documentation "A granular-synthesis request for IAE, based on sound descritor value."))
-
-
-;;; utils to generate random grains / requests
-(defun make-IAE-grains (n &key (nsources 1) (maxpos 2500) (durtot 10000) (mindur 100) (maxdur 600))
-  (sort 
-   (loop for i from 1 to n collect
-         (make-instance 'IAE-grain :date (random durtot)
-                        :source (random (1- nsources))
-                        :pos (random maxpos)
-                        :duration (+ mindur (random (- maxdur mindur)))))
-   '< :key 'om::date))
-
-(defun gen-random-requests (n &key (descriptor 0) (minval 100) (maxval 1000) (durtot 10000) (mindur 50) (maxdur 300))
-  (sort 
-   (loop for i from 1 to n collect
-         (make-instance 'IAE-request :date (random durtot)
-                        :descriptor descriptor
-                        :value (+ minval (random (- maxval minval)))
-                        :duration (+ mindur (random (- maxdur mindur)))))
-   '< :key 'om::date))
-
-
-;;; OM wrappers:
-(defmethod om::item-duration ((self iae::IAE-grain)) (iae::duration self))
-
-(defmethod om::data-frame-text-description ((self iae::IAE-grain)) `("IAE GRAIN:" ,(format nil "~D in source ~A" (iae::pos self) (iae::source self))))
-(defmethod om::data-frame-text-description ((self iae::IAE-request)) `("IAE REQUEST:" ,(format nil "desc. ~A = ~D" (iae::descriptor self) (iae::value self))))
-
-(defmethod om::y-range-for-object ((self iae::IAE)) '(-1000 3000))
-
-(defmethod om::get-frame-color ((self iae::IAE-grain)) (oa::om-make-color-alpha (om::get-midi-channel-color (1+ (iae::source self))) 0.5))
-(defmethod om::get-frame-posy ((self iae::IAE-grain)) (+ 50 (iae::pos self)))
-(defmethod om::get-frame-sizey ((self iae::IAE-grain)) 
-  (or (getf (om::attributes self) :posy)
-      (setf (getf (om::attributes self) :posy) (+ 200 (om::om-random -50 50)))))
-
-(defmethod om::get-frame-color ((self iae::IAE-request)) (om::om-make-color-alpha (om::get-midi-channel-color (1+ (iae::descriptor self))) 0.5))
-(defmethod om::get-frame-posy ((self iae::IAE-request)) (iae::value self))
-(defmethod om::get-frame-sizey ((self iae::IAE-request)) 
-  (or (getf (om::attributes self) :posy)
-      (setf (getf (om::attributes self) :posy) (+ 200 (om::om-random -50 50)))))
-
 
 ;;; Returns a sound buffer with a grain from given pos in IAE
 (defmethod! iae-synth ((self iae::IAE) source pos dur &key (gain 1.0) (attack 10) (release 10))
@@ -490,105 +378,24 @@ Note: some desciptor names used at initialization (e.g. MFCC, SpectralCrest, ...
       omsnd)))
 
 
+;;;=========================
+;;; DISPLAY
+;;;=========================
+
+;;; do that better with IDs etc.
+(defmethod om::get-cache-display-for-draw ((self iae::IAE) box)
+  (declare (ignore box))
+  (append (call-next-method)
+          (list (iae::iae-info self))))
 
 
-;;;===============================
-;;; AUDIO RENDERING
-;;;===============================
-
-(defun iae-add-grain (iae audiobuffer dur at)
-  (when (iae::buffer-player iae)
-    (let ((pos (round (* at (iae::samplerate iae)) 1000))
-          (size (round (* dur (iae::samplerate iae)) 1000)))
-      (dotimes (c (iae::channels iae))
-        (dotimes (i size)
-          (unless (>= i (om::bp-size (iae::buffer-player iae)))
-            (setf (fli:dereference 
-                   (fli:dereference (om::bp-buffer (iae::buffer-player iae)) :index c :type :pointer)
-                   :index (+ pos i) :type :float)
-                  (+ (fli:dereference 
-                      (fli:dereference (om::bp-buffer (iae::buffer-player iae)) :index c :type :pointer) 
-                      :index (+ pos i) :type :float)
-                     (fli:dereference 
-                      (fli:dereference (om::om-sound-buffer-ptr (om::buffer audiobuffer)) :index c :type :pointer)
-                      :index i :type :float)))
-            ))))))
-
-(defmethod make-grain-from-frame ((self iae::IAE) (frame iae::IAE-grain))
-  (iae::iae-synth self (source frame) (iae::pos frame) (iae::duration frame)))
-
-(defmethod make-grain-from-frame ((self iae::IAE) (frame iae::IAE-request))
-  (iae::iae-synth-desc self (iae::descriptor frame) (iae::value frame) (iae::duration frame)))
-
-
-;;; This is the action performed when we "play" an IAE object
-(defmethod om::get-computation-list-for-play ((object iae::IAE) &optional interval)
-  (loop for frame in (remove-if #'(lambda (date) (or (< date (car interval)) (>= date (cadr interval))))
-                                (om::data-stream-get-frames object) 
-                                :key 'om::date)
-        do (iae-add-grain object
-                          (make-grain-from-frame object frame)
-                          (duration frame) (om::date frame))
-        )
-  nil)
-
-#|
-(defmethod get-computation-list-for-play ((object iae) &optional interval)
-  (mapcar 
-   #'(lambda (frame) 
-       (list (- (date frame) (time-window object))
-             (date frame)
-             #'(lambda ()
-                 (iae-add-grain object
-                                (make-grain-from-frame object frame)
-                                (duration frame) (date frame)))))
-   (remove-if #'(lambda (date) (or (< date (car interval)) (>= date (cadr interval))))
-              (data-stream-get-frames object) 
-              :key 'date)))
-|#
-
-
-(defmethod iae-reset ((self iae::IAE))
-  (when (iae::buffer-player self)
-    (dotimes (c (om::bp-channels (iae::buffer-player self)))
-      (dotimes (i (om::bp-size (iae::buffer-player self)))
-        (setf (fli:dereference 
-               (fli:dereference (om::bp-buffer (iae::buffer-player self)) :index c :type :pointer) 
-               :index i :type :float)
-              0.0)))))
-
-(defmethod om::get-action-list-for-play ((object iae::IAE) interval &optional parent)
-  (om::external-player-actions object interval parent))
-
-
-(defmethod om::player-play-object ((self om::scheduler) (object iae::IAE) caller &key parent interval)
-  (declare (ignore parent))
-  (om::start-buffer-player (iae::buffer-player object) 
-                       :start-frame (if (car interval)
-                                        (round (* (car interval) (/ (iae::samplerate object) 1000.0)))
-                                      (or (car interval) 0)))
-  (call-next-method))
-
-(defmethod om::player-stop-object ((self om::scheduler) (object iae::IAE))
-  (let ((current-state (om::state self)))
-    (om::stop-buffer-player (iae::buffer-player object))
-    (unless (eq current-state :stop) 
-      (iae-reset object))
-    (call-next-method)))
-
-(defmethod om::player-pause-object ((self om::scheduler) (object iae::IAE))
-  (om::pause-buffer-player (iae::buffer-player object))
-  (call-next-method))
-
-(defmethod player-continue-object ((self om::scheduler) (object iae::IAE))
-  (om::continue-buffer-player (iae::buffer-player object))
-  (call-next-method))
-
-(defmethod om::set-object-time ((self iae::IAE) time) 
-  (iae-reset self)
-  (om::jump-to-time (iae::buffer-player self) time)
-  (call-next-method))
-
-
+(defmethod om::draw-mini-view ((self iae::IAE) (box t) x y w h &optional time)
+  (let ((display-cache (om::get-display-draw box)))
+    (oa::om-with-font 
+     (oa::om-def-font :font1 :size 8) 
+     (loop for str in (om::string-lines-to-list (car display-cache))
+           for y = 16 then (+ y 10) do 
+           (om::om-draw-string 10 y str))
+     )))
 
 
