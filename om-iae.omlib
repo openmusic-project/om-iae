@@ -11,7 +11,7 @@
  (:source-files 
   (:pathname (:directory (:relative "sources")) (:name "iae-init"))
   (:pathname (:directory (:relative "sources")) (:name "iae-bindings"))
-  (:pathname (:directory (:relative "sources")) (:name "iae-om-objects"))
+  (:pathname (:directory (:relative "sources")) (:name "iae-object"))
   (:pathname (:directory (:relative "sources")) (:name "iae-container"))
   )
  (:symbols 
