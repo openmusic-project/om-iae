@@ -106,7 +106,12 @@ Use items of this list to instancitate the :pipo-module attribute of IAE."
   (chop :accessor chop :initform nil :documentation "chop size for pipo segmentation [number of samples]"))
  (:documentation "IAE is a multi-track container for sounds and sound descriptions are stored data. 
 
-Tracks can be computed and segmented using 'pipo' modules: \"desc\" \"ircamdescriptor\" \"slice:fft\" \"mfcc\" \"<desc,mfcc>\" ... ") 
+ - Tracks can be computed and segmented using 'pipo' modules: \"desc\" \"ircamdescriptor\" \"slice:fft\" \"mfcc\" \"<desc,mfcc>\" ... 
+
+ - Segmentation is computed from the <chop> parameter which can be a chop-size or a list (module params) where module is one of \"chop\", \"onseg\", or \"gate\".
+"
+
+  ) 
 )
 
 
@@ -134,7 +139,10 @@ Tracks can be computed and segmented using 'pipo' modules: \"desc\" \"ircamdescr
 
   (let* ((*iae (iaeengine-ptr self))
          (main-pipo (if (listp (iae::pipo-module self)) "ircamdescriptor" (iae::pipo-module self)))
-         (pipo-string (if (chop self) (concatenate 'string main-pipo ":chop") main-pipo)))
+         (seg-list (if (numberp (chop self)) 
+                       `("chop" ("size" ,(chop self)))
+                     (chop self)))
+         (pipo-string (if seg-list (concatenate 'string main-pipo ":" (car seg-list)) main-pipo)))
 
     (if (= 1 (iae-lib::iae_pipo_create *iae pipo-string))  ;;;  ; "basic" "ircamdescriptor" "mfcc" "slice:fft"  "...:chop"
         
@@ -173,8 +181,10 @@ Tracks can be computed and segmented using 'pipo' modules: \"desc\" \"ircamdescr
          ; (iae-lib::iae_pipo_param_set_int *iae "ircamdescriptor.hopsize" 0 512)
           (iae-lib::iae_pipo_param_set_int *iae "mfcc.hopsize" 0 512)
           
-          (when (chop self)
-            (iae-lib::iae_pipo_param_set_int *iae "chop.size" 0 (chop self)))
+          (loop for param in (cdr seg-list) do
+                ;;; set, e.g. "chop.size" etc.
+                (let ((param-name (concatenate 'string (car seg-list) "." (car param))))
+                  (iae-lib::iae_pipo_param_set_int *iae param-name 0 (cadr param))))
           
           (setf (desc-tracks self) ;;; compute descriptors and collect track indices
                 (loop for i from 0 to (1- (length (sounds self))) 
