@@ -5,7 +5,7 @@
  (:doc "")
  (:info
   (:created "2017/12/22 16:32:44")
-  (:modified "2019/10/04 0:06:38"))
+  (:modified "2019/10/04 11:09:33"))
  (:window (:size (975 853)) (:position (116 63)))
  (:grid nil)
  (:lock nil)
@@ -1077,7 +1077,6 @@
    (:name nil)
    (:display :mini-view)
    (:showname nil)
-   (:show-markers t)
    (:group-id nil)
    (:lock nil)
    (:lambda nil)
@@ -1107,12 +1106,7 @@
     (:object
      (:class (:symbol "IAE" "IAE"))
      (:slots
-      ((:onset 0)
-       (:duration 0)
-       (:interpol (:number-or-nil (:number 50) (:t-or-nil nil)))
-       (:default-frame-type (:symbol "IAE-GRAIN" "IAE"))
-       (:frames nil)
-       (:sounds
+      ((:sounds
         (:list
          (:object
           (:class sound)
@@ -1150,8 +1144,6 @@
             (:access-from-file nil))))))))
      (:add-slots
       ((:channels 1)
-       (:max-dur 10000)
-       (:grains nil)
        (:pipo-module
         (:list
          "SpectralVariation"

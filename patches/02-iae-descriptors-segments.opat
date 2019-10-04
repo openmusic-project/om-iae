@@ -5,7 +5,7 @@
  (:doc "")
  (:info
   (:created "2017/12/22 16:32:44")
-  (:modified "2019/10/04 0:06:14"))
+  (:modified "2019/10/04 11:09:43"))
  (:window (:size (849 863)) (:position (794 100)))
  (:grid nil)
  (:lock nil)
@@ -530,7 +530,6 @@
    (:name nil)
    (:display :mini-view)
    (:showname nil)
-   (:show-markers t)
    (:group-id nil)
    (:lock :eval-once)
    (:lambda nil)
@@ -560,12 +559,7 @@
     (:object
      (:class (:symbol "IAE" "IAE"))
      (:slots
-      ((:onset 0)
-       (:duration 0)
-       (:interpol (:number-or-nil (:number 50) (:t-or-nil nil)))
-       (:default-frame-type (:symbol "IAE-GRAIN" "IAE"))
-       (:frames nil)
-       (:sounds
+      ((:sounds
         (:list
          (:object
           (:class sound)
@@ -693,12 +687,7 @@
             (:n-samples 124602)
             (:gain 1.0)
             (:access-from-file nil))))))))
-     (:add-slots
-      ((:channels 1)
-       (:max-dur 10000)
-       (:grains nil)
-       (:pipo-module "descr")
-       (:chop nil)))))
+     (:add-slots ((:channels 1) (:pipo-module "descr") (:chop nil)))))
    (:id 3))
   (:box
    (:type :function)

@@ -5,7 +5,7 @@
  (:doc "")
  (:info
   (:created "2017/12/22 16:32:44")
-  (:modified "2019/10/04 0:07:50"))
+  (:modified "2019/10/04 11:09:55"))
  (:window (:size (975 867)) (:position (477 124)))
  (:grid nil)
  (:lock nil)
@@ -122,7 +122,7 @@
         (:pathname
          (:directory (:absolute "Users" "bresson" "OM" "out-files"))
          (:device :unspecific)
-         (:host :unspecific)
+         (:host nil)
          (:name "descriptors")
          (:type "sdif")))
        (:file-map
@@ -2554,7 +2554,6 @@
    (:name nil)
    (:display :mini-view)
    (:showname nil)
-   (:show-markers t)
    (:group-id nil)
    (:lock nil)
    (:lambda nil)
@@ -2584,12 +2583,7 @@
     (:object
      (:class (:symbol "IAE" "IAE"))
      (:slots
-      ((:onset 0)
-       (:duration 0)
-       (:interpol (:number-or-nil (:number 50) (:t-or-nil nil)))
-       (:default-frame-type (:symbol "IAE-GRAIN" "IAE"))
-       (:frames nil)
-       (:sounds
+      ((:sounds
         (:list
          (:pathname
           (:directory
@@ -2605,11 +2599,7 @@
           (:name "Bassclarinet1")
           (:type "aif"))))))
      (:add-slots
-      ((:channels 1)
-       (:max-dur 10000)
-       (:grains nil)
-       (:pipo-module "ircamdescriptor")
-       (:chop nil)))))
+      ((:channels 1) (:pipo-module "ircamdescriptor") (:chop nil)))))
    (:id 11))
   (:comment
    (:x 678)
