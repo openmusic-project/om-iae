@@ -34,10 +34,14 @@
 
 (defclass! IAE-request (om::data-frame)
    ((om::date :accessor om::date :initarg :date :initform 0 :documentation "date/time of the grain")
-    (descriptor :accessor descriptor :initarg :descriptor :initform 0 :documentation "the descriptor inside IAE/pipo")
-    (value :accessor value :initarg :value :initform 0 :documentation "the value of the descriptor")
+    (descriptor :accessor descriptor :initarg :descriptor :initform 0 :documentation "the descriptor number inside IAE/pipo")
+    (value :accessor value :initarg :value :initform 0.0 :documentation "the value of the descriptor")
+    (weight :accessor weight :initarg :weight :initform 1.0 :documentation "the weight of the descriptor")
     (duration :accessor duration :initarg :duration :initform 100 :documentation "duration of the grain"))
-   (:documentation "A granular-synthesis request for IAE, based on sound descritor value."))
+   (:documentation "A granular-synthesis request for IAE, based on sound descritor value and weight.
+
+<descriptor>, <value>, and <weight> can be single values or lists (of the same length!).
+"))
 
 
 ;;; utils to generate random grains / requests
@@ -181,7 +185,7 @@
 
 (defmethod make-grain-from-frame ((self iae::IAE-Container) (frame iae::IAE-request))
  (when (iae self)
-   (iae::iae-synth-desc (iae self) (iae::descriptor frame) (iae::value frame) (iae::duration frame))))
+   (iae::iae-synth-desc (iae self) (iae::descriptor frame) (iae::value frame) (iae::weight frame) (iae::duration frame))))
 
 
 
