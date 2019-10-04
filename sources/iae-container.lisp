@@ -70,7 +70,7 @@
 ;;;============================================
 
 (defclass! IAE-container (om::om-cleanup-mixin om::data-stream)
- ((iae :accessor iae :initarg iae :initform nil)
+ ((iae :accessor iae :initarg :iae :initform nil)
   (grains :accessor grains :initarg :grains :initform nil :documentation "a list of timed-requests for granular synthesis")
   (max-dur :accessor max-dur :initform 10000 :documentation "max duration fo the audio output buffer [ms]")
   (buffer-player :accessor buffer-player :initform nil) ;;;
