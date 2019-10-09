@@ -127,7 +127,13 @@
 (defmethod om::data-frame-text-description ((self iae::IAE-request)) 
   `("IAE REQUEST:" ,(format nil "desc. ~A = ~D" (iae::descriptor self) (iae::value self))))
 
-(defmethod om::y-range-for-object ((self iae::IAE-Container)) '(-1000 3000))
+(defmethod om::y-range-for-object ((self iae::IAE-Container)) 
+  (let* ((posy-list (loop for item in (grains self) collect (om::get-frame-posy item)))
+         (posy-min (list-min posy-list))
+         (posy-max (list-max posy-list))
+         (margin (* (- posy-max posy-min) 0.1)))
+         
+    (list (- posy-min margin) (+ posy-max margin))))
 
 (defmethod om::get-frame-color ((self iae::IAE-grain)) 
   (oa::om-make-color-alpha (om::get-midi-channel-color (1+ (iae::source self))) 0.5))
@@ -136,8 +142,9 @@
   (+ 50 (iae::pos self)))
 
 (defmethod om::get-frame-sizey ((self iae::IAE-grain)) 
-  (or (getf (om::attributes self) :posy)
-      (setf (getf (om::attributes self) :posy) (+ 200 (om::om-random -50 50)))))
+  (or (getf (om::attributes self) :sizey)
+      (setf (getf (om::attributes self) :sizey) (+ 100 (om::om-random -50 50)))))
+
 
 (defmethod om::get-frame-color ((self iae::IAE-request)) 
   (om::om-make-color-alpha (om::get-midi-channel-color (1+ (iae::descriptor self))) 0.5))
@@ -146,8 +153,9 @@
   (iae::value self))
 
 (defmethod om::get-frame-sizey ((self iae::IAE-request)) 
-  (or (getf (om::attributes self) :posy)
-      (setf (getf (om::attributes self) :posy) (+ 200 (om::om-random -50 50)))))
+  (or (getf (om::attributes self) :sizey)
+      (setf (getf (om::attributes self) :sizey) 
+            (+ 50 (om::om-random -50 50)))))
 
 
 
@@ -194,13 +202,19 @@
 
 ;;; This is the action performed when we "play" an IAE object
 (defmethod om::get-computation-list-for-play ((object iae::IAE-Container) &optional interval)
-  (loop for frame in (remove-if #'(lambda (date) (or (< date (car interval)) (>= date (cadr interval))))
-                                (om::data-stream-get-frames object) 
-                                :key 'om::date)
-        do (iae-add-grain object
-                          (make-grain-from-frame object frame)
-                          (duration frame) (om::date frame))
-        )
+  
+  (if (iae object)
+    
+      (loop for frame in (remove-if #'(lambda (date) (or (< date (car interval)) (>= date (cadr interval))))
+                                  (om::data-stream-get-frames object) 
+                                  :key 'om::date)
+          do (iae-add-grain object
+                            (make-grain-from-frame object frame)
+                            (duration frame) (om::date frame))
+          )
+    
+    (om::om-print "Error playing IAE-container: no IAE engine loaded!"))
+  
   nil)
 
 
