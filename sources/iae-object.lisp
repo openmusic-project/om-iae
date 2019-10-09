@@ -370,10 +370,10 @@ Note: some desciptor names used at initialization (e.g. MFCC, SpectralCrest, ...
                 for i from 0 
                 do 
                 (if (>= desc n) (om-lisp:om-print-format "Error: no descriptor number ~D in IAE" (list desc) "OM-IAE")
-                  (let ((value (float (or (if (listp value) (nth i value) value) 0.0)))
-                        (weight (float (or (if (listp weight) (nth i weight) value) 1.0))))
-                    (setf (nth descriptor vals) value)
-                    (setf (nth descriptor weights) weight))
+                  (let ((value (float (or (if (consp value) (nth i value) value) 0.0)))
+                        (weight (float (or (if (consp weight) (nth i weight) weight) 1.0))))
+                    (setf (nth desc vals) value)
+                    (setf (nth desc weights) weight))
                   ))
           
           (iae-lib::iae_set_target *iae n (cffi::foreign-alloc :float :initial-contents vals))
