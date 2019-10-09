@@ -253,14 +253,25 @@ Use items of this list to instancitate the :pipo-module attribute of IAE."
   (iae-lib::iae_info_get_string (iaeengine-ptr iae) (oa::om-make-null-pointer)))
 
 
-(om::defmethod! iae-descriptors ((self iae))
-  :doc "Returns the list of all descriptor tracks computed in an IAE instance.
+;;;=========================
+;;; DESCRIPTORS
+;;;=========================
 
-Note: some desciptor names used at initialization (e.g. MFCC, SpectralCrest, ...) produce more than one descriptor tracks (e.g. MFCC by default produces 12 tracks corresponding to 12 MFCC coefficients)."
+
+(om::defmethod! iae-descriptors ((self iae))
+  :doc "Returns the names of all descriptor tracks computed in an IAE instance.
+
+ Note: some desciptor names used at initialization (e.g. MFCC, SpectralCrest, ...) produce more than one descriptor tracks (e.g. MFCC by default produces 12 tracks corresponding to 12 MFCC coefficients)."
 
   (descriptors self))
 
+
 (om::defmethod! get-sound-descriptors ((self iae) src-index &optional (t1 0) (t2 nil))
+  
+  :indoc '("An IAE instance" "source index" "min time" "max time")
+  :initvals '(nil 0 0 nil)
+  :outdoc '("a list of time+descriptor value lists")
+  :doc "Returns the descriptor values for segment <seg-index> in <self>."
   
   (let* ((*iae (iaeengine-ptr self))
          (numdesc (length (descriptors self)))
@@ -279,6 +290,85 @@ Note: some desciptor names used at initialization (e.g. MFCC, SpectralCrest, ...
       (fli:free-foreign-object framedescbuffer))
     ))
 
+
+(defmethod! get-segment-descriptors ((self iae::IAE) (src-index integer) (seg-index integer))
+  
+  :indoc '("An IAE instance" "source index" "segment index in source")
+  :initvals '(nil 0 0)
+  :outdoc '("a list (time of the segment / list of descriptor values)")
+  :doc "Returns the time and descriptor values for segment <seg-index> in <src-index>."
+  
+    (when (and (iaeengine-ptr self)
+               (descriptors self))
+    
+      (let* ((*iae (iaeengine-ptr self))
+             (n (length (descriptors self)))
+             (framedescbuffer (cffi::foreign-alloc :float :count n)))
+
+        (unwind-protect 
+            (let* ((time (iae-lib::iae_get_descriptor_data *iae src-index seg-index framedescbuffer))
+                   (data (loop for i from 0 to (1- n) collect
+                               (cffi::mem-aref framedescbuffer :float i))))
+              (list time data))
+
+          (cffi::foreign-free framedescbuffer))
+      
+        )))
+
+
+;;;=========================
+;;; KNN
+;;;=========================
+
+(defmethod! iae-knn ((self iae::IAE) descriptor value weight k)
+  
+  :indoc '("An IAE instance" "descriptor number(s)" "requested value(s)" "weight(s)")
+  :initvals '(nil 0 0.0 1.0 3)
+  :outdoc '("a list of candidate (source-index segment-index)")
+  :doc "Searchs for k-best candidates (source-index and segment-position) in a IAE buffer, matching some value(s) for some given weighted descriptor(s)."
+
+  (when (and (iaeengine-ptr self)
+             (descriptors self))
+    
+    (let* ((*iae (iaeengine-ptr self))
+           (n (length (descriptors self)))
+           (vals (make-list n :initial-element 0.0))
+           (weights (make-list n :initial-element 0.0)))
+          
+      (loop for desc in (om::list! descriptor)
+            for i from 0 
+            do 
+            (if (>= desc n) (om-lisp:om-print-format "Error: no descriptor number ~D in IAE" (list desc) "OM-IAE")
+              (let ((value (float (or (if (consp value) (nth i value) value) 0.0)))
+                    (weight (float (or (if (consp weight) (nth i weight) weight) 1.0))))
+                (setf (nth desc vals) value)
+                (setf (nth desc weights) weight))
+              ))
+
+      (let ((value-array (cffi::foreign-alloc :float :initial-contents vals))
+            (weight-array (cffi::foreign-alloc :float :initial-contents weights)))
+        
+        (unwind-protect 
+                
+            (progn 
+              
+              (iae-lib::iae_set_target *iae n value-array)
+              (iae-lib::iae_set_weight *iae n weight-array)
+              (iae-lib::iae_set_k *iae k)
+              (iae-lib::iae_select_new *iae nil)  
+              
+              (loop for i from 0 to (1- k) collect
+                    (let* ((selsrc (iae-lib::iae_get_SelectedSourceIndex *iae i))
+                           (selind (iae-lib::iae_get_SelectedSegmentIndex *iae i)))
+                      (list selsrc selind)))
+              )
+          
+          (cffi::foreign-free value-array)
+          (cffi::foreign-free weight-array)
+          
+          ))
+      )))
+              
 
 ;;;=========================
 ;;; SYNTH
@@ -329,6 +419,8 @@ Note: some desciptor names used at initialization (e.g. MFCC, SpectralCrest, ...
 ;;; other option:
 ;;<request> can contain one or more triplets (desc,value,weight), where 'desc' is a descriptor number (as built-in teh IAE), and 'value' the targetted value for this descriptor. 'weight' is optional and will be set to 1.0 (maximum) by default.
 
+
+
 (defmethod! iae-synth-desc ((self iae::IAE) descriptor value weight dur &key (gain 1.0) (attack 10) (release 10))
   
   :indoc '("An IAE instance" "descriptor number(s)" "requested value(s)" "weight(s)" "duration [ms]" "gain" "attack time [ms]" "release time [ms]")
@@ -376,25 +468,24 @@ Note: some desciptor names used at initialization (e.g. MFCC, SpectralCrest, ...
                     (setf (nth desc weights) weight))
                   ))
           
-          (iae-lib::iae_set_target *iae n (cffi::foreign-alloc :float :initial-contents vals))
-          (iae-lib::iae_set_weight *iae n (cffi::foreign-alloc :float :initial-contents weights))
-          ))
+          (let ((value-array (cffi::foreign-alloc :float :initial-contents vals))
+                (weight-array (cffi::foreign-alloc :float :initial-contents weights)))
+        
+            (unwind-protect 
+                (progn 
+                  (iae-lib::iae_set_target *iae n value-array)
+                  (iae-lib::iae_set_weight *iae n weight-array)
+                  (iae-lib::iae_set_k *iae 1)
+                  ;;; generates the grain
+                  (iae-lib::iae_select_new *iae T)   ;; T = force-trigger
+                  (iae-lib::iae_synth *iae nsamples **samples (channels self)))
+              
+              (cffi::foreign-free value-array)
+              (cffi::foreign-free weight-array))
+            )))
       
-      (iae-lib::iae_set_k *iae 3)
-      
-      ;;; generates the grain
-      (iae-lib::iae_select_new *iae T)
-      
-      ; info about the grain that has been selected
-      ;(let* ((selind (iae-lib::iae_get_selectedsegmentindex *iae 0))
-      ;       (selbuf (iae-lib::iae_get_SelectedSourceIndex *iae 0))
-      ;       (seltime (iae-lib::iae_get_descriptor_data *iae selbuf selind framedescbuffer)))
-      ;  (print (format nil "VALUE: ~D found in buffer ~D - index ~D - time=~D" value selbuf selind seltime))
-      ;  )
-      
-      (iae-lib::iae_synth *iae nsamples **samples (channels self))
-
       (setf (om::buffer omsnd) (om::make-om-sound-buffer-gc :ptr **samples :count 1 :nch (channels self)))
+      
       omsnd)))
 
 

@@ -16,6 +16,11 @@
   )
  (:symbols 
   (:classes "iae::IAE" "iae::IAE-Container" "iae::IAE-Grain" "iae::IAE-Request")
-  (:functions "iae::iae-synth" "iae::iae-synth-desc" "iae::ircam-descriptors-names" "iae::iae-descriptors"))
+  (:functions 
+   "iae::ircam-descriptors-names" "iae::iae-descriptors"
+   "iae::get-segment-descriptors" "iae::get-sound-descriptors"
+   "iae::iae-knn"
+   "iae::iae-synth" "iae::iae-synth-desc" 
+   ))
  (:author "J. Bresson, D. Schwarz (2016-2019)")
  (:doc "Use Ircam's ISMM Audio Engine (IAE) in OM7."))
