@@ -147,7 +147,7 @@
 
 
 (defmethod om::get-frame-color ((self iae::IAE-request)) 
-  (om::om-make-color-alpha (om::get-midi-channel-color (1+ (iae::descriptor self))) 0.5))
+  (om::om-make-color-alpha (om::get-midi-channel-color (1+ (car (om::list! (iae::descriptor self))))) 0.5))
 
 (defmethod om::get-frame-posy ((self iae::IAE-request)) 
   (car (om::list! (iae::value self))))
