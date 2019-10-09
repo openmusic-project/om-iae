@@ -155,7 +155,9 @@
 (defmethod om::get-frame-sizey ((self iae::IAE-request)) 
   (or (getf (om::attributes self) :sizey)
       (setf (getf (om::attributes self) :sizey) 
-            (+ 50 (om::om-random -50 50)))))
+            ;(+ 50 (om::om-random -50 50))
+            100
+            )))
 
 
 
