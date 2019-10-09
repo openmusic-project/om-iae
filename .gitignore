@@ -3,3 +3,4 @@
 **/*.framework/**/*
 *.zip
 reference-pages/
+.DS_Store
