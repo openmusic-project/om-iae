@@ -150,7 +150,7 @@
   (om::om-make-color-alpha (om::get-midi-channel-color (1+ (iae::descriptor self))) 0.5))
 
 (defmethod om::get-frame-posy ((self iae::IAE-request)) 
-  (iae::value self))
+  (car (om::list! (iae::value self))))
 
 (defmethod om::get-frame-sizey ((self iae::IAE-request)) 
   (or (getf (om::attributes self) :sizey)
@@ -198,9 +198,12 @@
    (iae::iae-synth-desc (iae self) (iae::descriptor frame) (iae::value frame) (iae::weight frame) (iae::duration frame))))
 
 
-
+;;; reports actions to audio player
 (defmethod om::get-action-list-for-play ((object iae::IAE-Container) interval &optional parent)
   (om::external-player-actions object interval parent))
+
+
+
 
 ;;; This is the action performed when we "play" an IAE object
 (defmethod om::get-computation-list-for-play ((object iae::IAE-Container) &optional interval)
