@@ -127,13 +127,17 @@
 (defmethod om::data-frame-text-description ((self iae::IAE-request)) 
   `("IAE REQUEST:" ,(format nil "desc. ~A = ~D" (iae::descriptor self) (iae::value self))))
 
+
 (defmethod om::y-range-for-object ((self iae::IAE-Container)) 
   (let* ((posy-list (loop for item in (grains self) collect (om::get-frame-posy item)))
          (posy-min (list-min posy-list))
          (posy-max (list-max posy-list))
-         (margin (* (- posy-max posy-min) 0.1)))
+         (margin (if (= posy-max posy-min) 10
+                   (* (min 100 (- posy-max posy-min) 0.1)))))
          
     (list (- posy-min margin) (+ posy-max margin))))
+
+
 
 (defmethod om::get-frame-color ((self iae::IAE-grain)) 
   (oa::om-make-color-alpha (om::get-midi-channel-color (1+ (iae::source self))) 0.5))
