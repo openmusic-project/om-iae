@@ -32,7 +32,8 @@
     (duration :accessor duration :initarg :duration :initform 100 :documentation "duration of the grain"))
    (:documentation "A granular-synthesis request for IAE, based on source/position data."))
 
-(defclass! IAE-request (om::data-frame)
+;;; IAE request's pos and source are "hidden" dans get determined by IAE.knn  
+(defclass! IAE-request (IAE-grain)
    ((om::date :accessor om::date :initarg :date :initform 0 :documentation "date/time of the grain")
     (descriptor :accessor descriptor :initarg :descriptor :initform 0 :documentation "the descriptor number inside IAE/pipo")
     (value :accessor value :initarg :value :initform 0.0 :documentation "the value of the descriptor")
@@ -42,6 +43,8 @@
 
 <descriptor>, <value>, and <weight> can be single values or lists (of the same length!).
 "))
+
+(defmethod om::item-get-duration ((self iae::IAE-grain)) (iae::duration self))
 
 
 ;;; utils to generate random grains / requests
@@ -73,7 +76,9 @@
  ((iae :accessor iae :initarg :iae :initform nil)
   (grains :accessor grains :initarg :grains :initform nil :documentation "a list of timed-requests for granular synthesis")
   (max-dur :accessor max-dur :initform 10000 :documentation "max duration fo the audio output buffer [ms]")
-  (buffer-player :accessor buffer-player :initform nil) ;;;
+  (value-ranges :accessor value-ranges :initform nil :documentation "ranges for internal descriptor values")
+  (buffer-player :accessor buffer-player :initform nil)
+  
   )
  (:default-initargs :default-frame-type 'IAE-grain)
  (:documentation "IAE-container is a container for granular synthesis events that are computed dynamically from an IAE object") 
@@ -107,28 +112,70 @@
         (setf (iae::buffer-player self) 
               (om::make-player-from-buffer audio-buffer size nch sr))
         
-        ))))
+        )))
+  
+  (set-value-ranges self)
+  )
 
 
 (defmethod om::om-cleanup ((self iae::IAE-container))
   (when (iae::buffer-player self) 
-    (om::free-buffer-player (iae::buffer-player self)))
-  )
+    (om::free-buffer-player (iae::buffer-player self))))
 
+
+
+;;; by convention descriptor #-1 is just the position in source
+(defmethod set-value-ranges ((self IAE-container))
+  
+  (loop for grain in (grains self) do 
+        
+        (if (typep grain 'IAE-request)
+            
+            ;;; else: IAE-request
+            (loop for d in (om::list! (descriptor grain))
+                  for v in (om::list! (value grain)) do
+                
+                  (let ((pos (position d (value-ranges self) :key #'car)))
+                    (if pos 
+                  
+                        (setf (car (cadr (nth pos (value-ranges self))))
+                              (min v (car (cadr (nth pos (value-ranges self)))))
+                              (cadr (cadr (nth pos (value-ranges self))))
+                              (max v (cadr (cadr (nth pos (value-ranges self))))))
+                
+                      (push (list d (list v v))
+                            (value-ranges self))))
+                  )
+          
+          ;;; get pos-range
+          (let ((pos (position -1 (value-ranges self) :key #'car)))
+            (if pos 
+                  
+                (setf (car (cadr (nth pos (value-ranges self))))
+                      (min (pos grain) (car (cadr (nth pos (value-ranges self)))))
+                      (cadr (cadr (nth pos (value-ranges self))))
+                      (max (pos grain) (cadr (cadr (nth pos (value-ranges self))))))
+                
+              (push (list -1 (list (pos grain) (pos grain)))
+                    (value-ranges self))))
+          
+          )))
 
 ;;;=================
 ;;; OM API/Editors 
 ;;;=================
 
-(defmethod om::item-duration ((self iae::IAE-grain)) (iae::duration self))
-
 (defmethod om::data-frame-text-description ((self iae::IAE-grain)) 
   `("IAE GRAIN:" ,(format nil "~D in source ~A" (iae::pos self) (iae::source self))))
 (defmethod om::data-frame-text-description ((self iae::IAE-request)) 
-  `("IAE REQUEST:" ,(format nil "desc. ~A = ~D" (iae::descriptor self) (iae::value self))))
+  `("IAE REQUEST:" ,(format nil "desc. ~A : ~D" (iae::descriptor self) (iae::value self))))
 
 
-(defmethod om::y-range-for-object ((self iae::IAE-Container)) 
+;;; (0 100) is the reference range
+(defmethod om::y-range-for-object ((self iae::IAE-Container)) '(-10 110))
+  
+#|
+  (let ((reference-descriptor 
   (let* ((posy-list (loop for item in (grains self) collect (om::get-frame-posy item)))
          (posy-min (list-min posy-list))
          (posy-max (list-max posy-list))
@@ -136,19 +183,38 @@
                    (* (min 100 (- posy-max posy-min) 0.1)))))
          
     (list (- posy-min margin) (+ posy-max margin))))
+|#
 
-
+;;; GRAPHICAT ATTRIBUTES FOR GRANULAR GRAINS
 
 (defmethod om::get-frame-color ((self iae::IAE-grain)) 
-  (oa::om-make-color-alpha (om::get-midi-channel-color (1+ (iae::source self))) 0.5))
+  (oa::om-make-color-alpha (om::get-midi-channel-color (1+ (source self))) 0.5))
+
+(defmethod om::get-frame-sizey ((self iae::IAE-grain)) 5) 
 
 (defmethod om::get-frame-posy ((self iae::IAE-grain)) 
-  (+ 50 (iae::pos self)))
+  (pos self))
 
-(defmethod om::get-frame-sizey ((self iae::IAE-grain)) 
-  (or (getf (om::attributes self) :sizey)
-      (setf (getf (om::attributes self) :sizey) (+ 100 (om::om-random -50 50)))))
 
+(defmethod om::get-frame-area ((frame iae::IAE-grain) editor)
+  (let ((panel (om::active-panel editor))
+        (container (om::object-value editor)))
+    (values ;; x
+            (om::x-to-pix panel (om::date frame))
+            ;; y
+            (- (om::h panel)
+               (om::y-to-pix panel (* 100 (/ (om::get-frame-posy frame) 
+                                             (or (cadadr (find -1 (value-ranges container) :key #'car))
+                                                 (max-dur container))))))
+            ;; w
+            (max 3 (om::dx-to-dpix panel (om::get-frame-graphic-duration frame)))
+            ;; h
+            (min -3 (om::dy-to-dpix panel (- (om::get-frame-sizey frame))))  ;; !! upwards
+            )))
+
+
+
+;;; SPECIFIC GRAPHICAL ATTRIBUTES FOR DESCRIPTOR GRAINS
 
 (defmethod om::get-frame-color ((self iae::IAE-request)) 
   (om::om-make-color-alpha (om::get-midi-channel-color (1+ (car (om::list! (iae::descriptor self))))) 0.5))
@@ -156,13 +222,23 @@
 (defmethod om::get-frame-posy ((self iae::IAE-request)) 
   (car (om::list! (iae::value self))))
 
-(defmethod om::get-frame-sizey ((self iae::IAE-request)) 
-  (or (getf (om::attributes self) :sizey)
-      (setf (getf (om::attributes self) :sizey) 
-            ;(+ 50 (om::om-random -50 50))
-            100
-            )))
 
+(defmethod om::get-frame-area ((frame iae::IAE-request) editor)
+  (let ((panel (om::active-panel editor))
+        (container (om::object-value editor)))
+    (values ;; x
+            (om::x-to-pix panel (om::date frame))
+            ;; y
+            (- (om::h panel)
+               (om::y-to-pix panel (* 100 (/ (om::get-frame-posy frame) 
+                                             (or (cadadr (find (car (om::list! (iae::descriptor frame)))
+                                                               (value-ranges container) :key #'car)) 
+                                                 (max-dur container))))))
+            ;; w
+            (max 3 (om::dx-to-dpix panel (om::get-frame-graphic-duration frame)))
+            ;; h
+            (min -3 (om::dy-to-dpix panel (- (om::get-frame-sizey frame))))  ;; !! upwards
+            )))
 
 
 ;;;===============================
