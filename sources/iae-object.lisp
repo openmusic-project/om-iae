@@ -409,7 +409,7 @@ If <segmentation> is an integer value (chop-size), this value is considered the 
 ;   Granular = 0,    asynchronous granular synthesis
 ;   Segmented = 1,   concatenative synthesis (needs at least 1 marker)
 ;   Synchronous = 2  synchronous granular synthesis (needs at least 2 markers)
-      (iae-lib::iae_set_SynthMode *iae 0)
+      (iae-lib::iae_set_SynthMode *iae 1)
 
       (when (< source (length (sounds self)))
         (iae-lib::iae_set_sourceindex *iae source))
