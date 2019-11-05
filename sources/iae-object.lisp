@@ -103,12 +103,13 @@ Use items of this list to instancitate the :pipo-module attribute of IAE."
   (pipo-module :accessor pipo-module :initform "descr" :documentation "name of a pipo module for sound analysis") 
   (descriptors :accessor descriptors :initform nil)
   (desc-tracks :accessor desc-tracks :initform nil)
-  (chop :accessor chop :initform nil :documentation "chop size for pipo segmentation [number of samples]"))
+  (segmentation :accessor segmentation :initform nil :documentation "segmentation params"))
  (:documentation "IAE is a multi-track container for sounds and sound descriptions are stored data. 
 
  - Tracks can be computed and segmented using 'pipo' modules: \"desc\" \"ircamdescriptor\" \"slice:fft\" \"mfcc\" \"<desc,mfcc>\" ... 
 
- - Segmentation is computed from the <chop> parameter which can be a chop-size or a list (module (param1 val1 (param2 val2) ...) where 'module' is one of \"chop\", \"onseg\", or \"gate\".
+ - Segmentation is computed from the <segmentation> parameter which can be a chop-size or a list (module (param1 val1 (param2 val2) ...) where 'module' is one of \"chop\", \"onseg\", or \"gate\".
+If <segmentation> is an integer value (chop-size), this value is considered the size (in milliseconds) for the \"chop\" segmentation mode.
 "
 
   ) 
@@ -139,9 +140,9 @@ Use items of this list to instancitate the :pipo-module attribute of IAE."
 
   (let* ((*iae (iaeengine-ptr self))
          (main-pipo (if (listp (iae::pipo-module self)) "ircamdescriptor" (iae::pipo-module self)))
-         (seg-list (if (numberp (chop self)) 
-                       `("chop" ("size" ,(chop self)))
-                     (chop self)))
+         (seg-list (if (numberp (segmentation self)) 
+                       `("chop" ("size" ,(segmentation self)))
+                     (segmentation self)))
          (pipo-string (if seg-list (concatenate 'string main-pipo ":" (car seg-list)) main-pipo)))
 
     (if (= 1 (iae-lib::iae_pipo_create *iae pipo-string))  ;;;  ; "basic" "ircamdescriptor" "mfcc" "slice:fft"  "...:chop"
@@ -243,7 +244,7 @@ Use items of this list to instancitate the :pipo-module attribute of IAE."
 ;;;==============================================================================
 
 (defmethod om::additional-class-attributes ((self iae::IAE)) 
-  '(iae::channels iae::pipo-module iae::chop))
+  '(iae::channels iae::pipo-module iae::segmentation))
 
 ;;;======================================================
 ;;; READ FROM IAE
