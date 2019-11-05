@@ -321,10 +321,10 @@ If <segmentation> is an integer value (chop-size), this value is considered the 
 ;;; KNN
 ;;;=========================
 
-(defmethod! iae-knn ((self iae::IAE) descriptor value weight k)
+(defmethod! iae-knn ((self iae::IAE) descriptor value weight k &oprional radius)
   
-  :indoc '("An IAE instance" "descriptor number(s)" "requested value(s)" "weight(s)")
-  :initvals '(nil 0 0.0 1.0 3)
+  :indoc '("An IAE instance" "descriptor number(s)" "requested value(s)" "weight(s)" "number of soultions" "max radius of the search domain")
+  :initvals '(nil 0 0.0 1.0 3 nil)
   :outdoc '("a list of candidate (source-index segment-index)")
   :doc "Searchs for k-best candidates (source-index and segment-position) in a IAE buffer, matching some value(s) for some given weighted descriptor(s)."
 
@@ -356,6 +356,11 @@ If <segmentation> is an integer value (chop-size), this value is considered the 
               (iae-lib::iae_set_target *iae n value-array)
               (iae-lib::iae_set_weight *iae n weight-array)
               (iae-lib::iae_set_k *iae k)
+
+              (when radius ;; typically r = [0 - 4]
+                ;;; !! may lead to a list smaller than k
+                (iae-lib::iae_set_radius *iae radius))  
+              
               (iae-lib::iae_select_new *iae nil)  
               
               (loop for i from 0 to (1- k) collect
@@ -376,11 +381,24 @@ If <segmentation> is an integer value (chop-size), this value is considered the 
 ;;;=========================
 
 ;;; Returns a sound buffer with a grain from given pos in IAE
-(defmethod! iae-synth ((self iae::IAE) source pos dur &key (gain 1.0) (attack 10) (release 10))
-  :indoc '("An IAE instance" "source number" "position in source [ms]" "duration [ms]" "gain" "attack time [ms]" "release time [ms]")
-  :doc "Synthesizes a grain (SOUND buffer) from IAE"
-  :initvals '(nil 0 0 200 1.0 10 10)
+(defmethod! iae-synth ((self iae::IAE) source marker offset dur &key (gain 1.0) (attack 10) (release 10) (other-iae-params))
+  :indoc '("An IAE instance" "source number" 
+           "position in source [marker-id]" 
+           "time-position in source [ms]" 
+           "duration [ms]" 
+           "gain" "attack time [ms]" "release time [ms]")
+  :doc "Synthesizes a grain (SOUND buffer) from IAE.
+
+- <source> is the source number in IAE (must be inferior to the total number of sources)
+- <marker> is the marker/segment index in <source> (must be inferior to the total number of segments)
+- <offset> is an offset in milliseconds relative to <marker>, or to the beginning of <source> if <marker> = NIL.
+- <dur> is the duration of the output grain.
+
+- <other-params> is a lits of list of the form ((\"param\" value) ...) corresponding to the parameters of IAE/MuBu.
+"
+  :initvals '(nil 0 nil 0 200 1.0 10 10)
   :outdoc '("sound")
+
   (when (iaeengine-ptr self)
     (let* ((*iae (iaeengine-ptr self))
            (nsamples (ceiling (* dur (iae::samplerate self) 0.001)))
@@ -395,7 +413,7 @@ If <segmentation> is an integer value (chop-size), this value is considered the 
 
       (when (< source (length (sounds self)))
         (iae-lib::iae_set_sourceindex *iae source))
-           
+      
       ;;; general params
       (iae-lib::iae_set_Cyclic *iae nil)
       (iae-lib::iae_set_CenteredGrains *iae nil)
@@ -406,8 +424,15 @@ If <segmentation> is an integer value (chop-size), this value is considered the 
       (iae-lib::iae_set_gain *iae (coerce gain 'double-float))
       
       ;;; mode-specific
-      (iae-lib::iae_set_position *iae (coerce pos 'double-float) 0.0d0)
-      ;(iae-lib::iae_set_positionvar *iae 1000.0d0)
+      (if marker
+          
+          (progn (iae-lib::iae_set_markerindex *iae marker)
+            (iae-lib::iae_set_offset *iae (coerce offset 'double-float)))
+        
+        (iae-lib::iae_set_position *iae (coerce offset 'double-float) 0.0d0))
+
+      ; (iae-lib::iae_set_positionvar *iae 1000.0d0)
+      
       
       ;;; generates the grain
       (iae-lib::iae_trigger *iae)
