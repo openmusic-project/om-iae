@@ -172,7 +172,7 @@
 
 
 ;;; (0 100) is the reference range
-(defmethod om::y-range-for-object ((self iae::IAE-Container)) '(-10 110))
+(defmethod om::y-range-for-object ((self iae::IAE-Container)) '(-10 1000))
   
 #|
   (let ((reference-descriptor 
