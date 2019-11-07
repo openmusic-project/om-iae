@@ -73,7 +73,7 @@
 ;;;============================================
 
 (defclass! IAE-container (om::om-cleanup-mixin om::data-stream)
- ((iae :accessor iae :initarg :iae :initform nil)
+ ((iae-obj :accessor iae-obj :initarg :iae-obj :initform nil)
   (grains :accessor grains :initarg :grains :initform nil :documentation "a list of timed-requests for granular synthesis")
   (max-dur :accessor max-dur :initform 10000 :documentation "max duration fo the audio output buffer [ms]")
   (value-ranges :accessor value-ranges :initform nil :documentation "ranges for internal descriptor values")
@@ -93,13 +93,13 @@
 
 (defmethod om::om-init-instance :after ((self iae::IAE-container) &optional initargs)
   
-  (when (iae self)
+  (when (iae-obj self)
     
     (om::om-print-dbg "Initializing IAE-container for ~A" (list self) "OM-IAE")
     
-    (let* ((sr (iae::samplerate (iae self)))
+    (let* ((sr (iae::samplerate (iae-obj self)))
            (size (round (* (iae::max-dur self) sr) 1000))
-           (nch (iae::channels (iae self))))
+           (nch (iae::channels (iae-obj self))))
     
       (om::set-object-time-window self 100)
       
@@ -249,7 +249,7 @@
 (defmethod iae-add-grain ((iae-c iae-container) (snd om::om-internal-sound) (dur integer) (at integer))
   (when (iae::buffer-player iae-c)
     (let* ((bp (iae::buffer-player iae-c))
-           (iae (iae iae-c))
+           (iae (iae-obj iae-c))
            (nch (iae::channels iae))
            (pos (round (* at (om::bp-sample-rate bp)) 1000))
            (size (round (* dur (om::bp-sample-rate bp)) 1000))
@@ -270,12 +270,13 @@
 
 
 (defmethod make-grain-from-frame ((self iae::IAE-Container) (frame iae::IAE-grain))
-  (when (iae self)
-    (iae::iae-synth (iae self) (source frame) (iae::pos frame) (iae::duration frame))))
+  (when (iae-obj self)
+    (iae::iae-synth (iae-obj self) (source frame) (iae::pos frame) (iae::duration frame))))
 
 (defmethod make-grain-from-frame ((self iae::IAE-Container) (frame iae::IAE-request))
- (when (iae self)
-   (iae::iae-synth-desc (iae self) (iae::descriptor frame) (iae::value frame) (iae::weight frame) (iae::duration frame))))
+ (when (iae-obj self)
+   (iae::iae-synth-desc (iae-obj self) (iae::descriptor frame) (iae::value frame) (iae::weight frame) (iae::duration frame))))
+
 
 
 ;;; reports actions to audio player
@@ -283,12 +284,10 @@
   (om::external-player-actions object interval parent))
 
 
-
-
 ;;; This is the action performed when we "play" an IAE object
 (defmethod om::get-computation-list-for-play ((object iae::IAE-Container) &optional interval)
   
-  (if (iae object)
+  (if (iae-obj object)
     
       (loop for frame in (remove-if #'(lambda (date) (or (< date (car interval)) (>= date (cadr interval))))
                                   (om::data-stream-get-frames object) 
@@ -315,6 +314,7 @@
 (defmethod om::player-play-object ((self om::scheduler) (object iae::IAE-Container) caller &key parent interval)
   (declare (ignore parent))
   (let ((bp (iae::buffer-player object)))
+    (om::set-object-time-window object 2000)
     (if bp
       (om::start-buffer-player bp 
                                :start-frame (if (car interval)

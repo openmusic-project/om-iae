@@ -17,12 +17,16 @@
 (defpackage :iae-lib)
 (in-package :iae-lib)
 
-(cffi::defcfun ("iae_new" iae_new) :POINTER (SR :INT) (BSIZE :INT) (NCHAN :INT) (NVOICE :INT))
+(cffi::defcfun ("iae_new" iae_new) :POINTER (SR :INT) (maxbuffersize :INT) (NCHAN :INT) (NVOICE :INT)
+  (maxGrainDuration :double) (maxDelayDuration :double) (maxTransposition :double) 
+  (minperiod :double) (maxperiod :double))
+
 (cffi::defcfun ("iae_delete" iae_delete) :VOID (SELF :POINTER))
 (cffi::defcfun ("iae_synth" iae_synth) :INT (SELF :POINTER) (NSAMP :INT) (AUDIOOUT :POINTER) (NCHAN :INT))
 (cffi::defcfun ("iae_info_get_string" iae_info_get_string) :STRING (SELF :POINTER) (ARG :STRING))
 (cffi::defcfun ("iae_read" iae_read) :INT (SELF :POINTER) (AUDIOFILENAME :STRING) (DESCRIPTIONFILENAME :pointer))
-(cffi::defcfun ("iae_read_clip" iae_read_clip) :INT (SELF :POINTER) (NAME :STRING) (NSAMP :INT) (NCHAN :INT) (SAMPLES :POINTER) (SR :DOUBLE))
+(cffi::defcfun ("iae_read_buffer" iae_read_buffer) :INT (SELF :POINTER) (NAME :STRING) (NSAMP :INT) (NCHAN :INT) (SAMPLES :POINTER) (SR :DOUBLE))
+
 (cffi::defcfun ("iae_trigger" iae_trigger) :VOID (SELF :POINTER))
 (cffi::defcfun ("iae_select_new" iae_select_new) :INT (SELF :POINTER) (FORCETRIGGER :BOOLEAN))
 (cffi::defcfun ("iae_clear_selection" iae_clear_selection) :VOID (SELF :POINTER))
@@ -72,6 +76,8 @@
 (cffi::defcfun ("iae_get_track_size" iae_get_track_size) :int (SELF :POINTER) (buffer :int) (track :int))
 (cffi::defcfun ("iae_get_num_params" iae_get_num_params) :INT)
 (cffi::defcfun ("iae_get_param_name" iae_get_param_name) :STRING (I :INT))
+(cffi::defcfun ("iae_get_SegmentDuration" iae_get_SegmentDuration) :double (SELF :POINTER) (SRC :INT) (MARKER :INT))
+
 
 (cffi::defcfun ("iae_get_array_AudioDuration" iae_get_array_AudioDuration) :INT (SELF :POINTER) (ARR :POINTER))
 (cffi::defcfun ("iae_get_array_NumMarkers" iae_get_array_NumMarkers) :INT (SELF :POINTER) (ARR :POINTER))

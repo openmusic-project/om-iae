@@ -128,7 +128,11 @@ If <segmentation> is an integer value (chop-size), this value is considered the 
 (defmethod initialize-instance :after ((self iae::IAE) &rest initargs)
   (om::om-print-dbg "Initializing IAE for ~A" (list self) "IAE")
   (setf (iae::iaeengine-ptr self) 
-        (iae-lib::iae_new  (iae::samplerate self) 512 (iae::channels self) 1))
+        (iae-lib::iae_new (iae::samplerate self) 512 (iae::channels self) 1
+                          10000d0 100d0 ;; millisecond 
+                          4800d0 ;; midicents
+                          0.2d0 10000.0d0
+                          ))
   )
     
 ;;======================================================
@@ -218,9 +222,18 @@ If <segmentation> is an integer value (chop-size), this value is considered the 
   (when (iae::sounds self)
     
     ;;; can be called several times for the different sources
-    (loop for s in (iae::sounds self) when (om::get-sound-file s) do
-          (iae-lib::iae_read (iae::iaeengine-ptr self) (namestring (om::get-sound-file s)) (cffi-sys::null-pointer)))
-    
+    (loop for s in (iae::sounds self) 
+          for i from 0 do
+          (if (om::get-sound-file s)
+              (iae-lib::iae_read (iae::iaeengine-ptr self) (namestring (om::get-sound-file s)) (cffi-sys::null-pointer))
+            (iae-lib::iae_read_buffer (iae::iaeengine-ptr self) (format nil "BufferSource_~D" i)
+                                      (om::n-samples s) (om::n-channels s)
+                                      ;;; if more than 1 channel, this should be an interleaved audio buffer !!
+                                      (fli:dereference (om::om-sound-buffer-ptr (om::buffer s)) :index 0 :type :pointer)
+                                      (coerce (om::sample-rate s) 'double-float))
+            ))
+                                      
+    om::interleave-buffer
     ;(iae-lib::iae_set_MarkerTrackSdif (iaeengine-ptr self) -1 "XCUD" "XCUD")
     ;(iae-lib::iae_set_DescriptorTrackSdif (iaeengine-ptr self) -1 "XCUD" "XCUD")
    
@@ -381,27 +394,33 @@ If <segmentation> is an integer value (chop-size), this value is considered the 
 ;;;=========================
 
 ;;; Returns a sound buffer with a grain from given pos in IAE
-(defmethod! iae-synth ((self iae::IAE) source marker offset dur &key (gain 1.0) (attack 10) (release 10) (other-iae-params))
+(defmethod! iae-synth ((self iae::IAE) source position dur &key (gain 1.0) (attack 10) (release 10) (other-iae-params))
   :indoc '("An IAE instance" "source number" 
-           "position in source [marker-id]" 
-           "time-position in source [ms]" 
+           "position in source [marker-id or time in ms]" 
+           "" 
            "duration [ms]" 
            "gain" "attack time [ms]" "release time [ms]")
   :doc "Synthesizes a grain (SOUND buffer) from IAE.
 
 - <source> is the source number in IAE (must be inferior to the total number of sources)
-- <marker> is the marker/segment index in <source> (must be inferior to the total number of segments)
-- <offset> is an offset in milliseconds relative to <marker>, or to the beginning of <source> if <marker> = NIL.
+- <position> (int) is interpreted as the marker/segment index in <source> (must be inferior to the total number of segments)
+- <position> (float) is interpreted as a time-position in milliseconds in source <source>
 - <dur> is the duration of the output grain.
 
 - <other-params> is a lits of list of the form ((\"param\" value) ...) corresponding to the parameters of IAE/MuBu.
 "
-  :initvals '(nil 0 nil 0 200 1.0 10 10)
+  :initvals '(nil 0 0 200 1.0 10 10 nil)
   :outdoc '("sound")
 
   (when (iaeengine-ptr self)
     (let* ((*iae (iaeengine-ptr self))
-           (nsamples (ceiling (* dur (iae::samplerate self) 0.001)))
+           
+           (graindur (print (if (and (or (null dur) (zerop dur))
+                              (integerp position))  ;; mode "marker"
+                         (iae-lib::iae_get_SegmentDuration *iae source position)
+                       dur)))
+           
+           (nsamples (ceiling (* graindur (iae::samplerate self) 0.001)))
            (omsnd (make-instance 'om::om-internal-sound :n-channels (channels self) :smpl-type :float
                                  :n-samples nsamples :sample-rate 44100))
            (**samples (om::make-audio-buffer (channels self) nsamples)))
@@ -409,7 +428,7 @@ If <segmentation> is an integer value (chop-size), this value is considered the 
 ;   Granular = 0,    asynchronous granular synthesis
 ;   Segmented = 1,   concatenative synthesis (needs at least 1 marker)
 ;   Synchronous = 2  synchronous granular synthesis (needs at least 2 markers)
-      (iae-lib::iae_set_SynthMode *iae 1)
+      (iae-lib::iae_set_SynthMode *iae (if (integerp position) 1 0))
 
       (when (< source (length (sounds self)))
         (iae-lib::iae_set_sourceindex *iae source))
@@ -420,19 +439,18 @@ If <segmentation> is an integer value (chop-size), this value is considered the 
       (iae-lib::iae_set_Attack *iae (coerce attack 'double-float) 0.0d0)
       (iae-lib::iae_set_Release *iae (coerce release 'double-float) 0.0d0)
       (iae-lib::iae_set_period *iae -0.0d0 0.0d0)
-      (iae-lib::iae_set_duration *iae (coerce dur 'double-float) 0.0d0)
-      (iae-lib::iae_set_gain *iae (coerce gain 'double-float))
-      
-      ;;; mode-specific
-      (if marker
-          
-          (progn (iae-lib::iae_set_markerindex *iae marker)
-            (iae-lib::iae_set_offset *iae (coerce offset 'double-float)))
-        
-        (iae-lib::iae_set_position *iae (coerce offset 'double-float) 0.0d0))
 
-      ; (iae-lib::iae_set_positionvar *iae 1000.0d0)
+      (if (or (null dur) (zerop dur))
+          (iae-lib::iae_set_duration *iae 0.0d0 1.0d0) ;;; duration of the segment
+        (iae-lib::iae_set_duration *iae (coerce dur 'double-float) 0.0d0))
       
+      (iae-lib::iae_set_gain *iae (coerce gain 'double-float))
+      (iae-lib::iae_set_positionvar *iae 0.0d0)
+
+      ;;; mode-specific
+      (if (integerp position)
+          (iae-lib::iae_set_markerindex *iae position)
+        (iae-lib::iae_set_position *iae (coerce position 'double-float) 0.0d0))
       
       ;;; generates the grain
       (iae-lib::iae_trigger *iae)
@@ -446,7 +464,7 @@ If <segmentation> is an integer value (chop-size), this value is considered the 
 ;;<request> can contain one or more triplets (desc,value,weight), where 'desc' is a descriptor number (as built-in teh IAE), and 'value' the targetted value for this descriptor. 'weight' is optional and will be set to 1.0 (maximum) by default.
 
 
-
+;;; A mix of IAE-KNN and IAE-SYNTH
 (defmethod! iae-synth-desc ((self iae::IAE) descriptor value weight dur &key (gain 1.0) (attack 10) (release 10))
   
   :indoc '("An IAE instance" "descriptor number(s)" "requested value(s)" "weight(s)" "duration [ms]" "gain" "attack time [ms]" "release time [ms]")
@@ -518,6 +536,9 @@ If <segmentation> is an integer value (chop-size), this value is considered the 
 ;;;=========================
 ;;; DISPLAY
 ;;;=========================
+
+(defmethod om::display-modes-for-object ((self iae::iae))
+  '(:hidden :text :mini-view))
 
 ;;; do that better with IDs etc.
 (defmethod om::get-cache-display-for-draw ((self iae::IAE) box)
