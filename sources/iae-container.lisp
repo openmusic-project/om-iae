@@ -29,7 +29,9 @@
    ((om::date :accessor om::date :initarg :date :initform 0 :documentation "date/time of the grain")
     (source :accessor source :initarg :source :initform 0 :documentation "source num inside IAE")
     (pos :accessor pos :initarg :pos :initform 0 :documentation "position in source")
-    (duration :accessor duration :initarg :duration :initform 100 :documentation "duration of the grain"))
+    (duration :accessor duration :initarg :duration :initform 100 :documentation "duration of the grain")
+    (iae-params :accessor iae-params :initarg :iae-params :initform nil :documentation "a list of (name value(s)) for other IAE parameters")
+    )
    (:documentation "A granular-synthesis request for IAE, based on source/position data."))
 
 ;;; IAE request's pos and source are "hidden" dans get determined by IAE.knn  
@@ -38,7 +40,8 @@
     (descriptor :accessor descriptor :initarg :descriptor :initform 0 :documentation "the descriptor number inside IAE/pipo")
     (value :accessor value :initarg :value :initform 0.0 :documentation "the value of the descriptor")
     (weight :accessor weight :initarg :weight :initform 1.0 :documentation "the weight of the descriptor")
-    (duration :accessor duration :initarg :duration :initform 100 :documentation "duration of the grain"))
+    (duration :accessor duration :initarg :duration :initform 100 :documentation "duration of the grain")
+    (iae-params :accessor iae-params :initarg :iae-params :initform nil :documentation "a list of (name value(s)) for other IAE parameters"))
    (:documentation "A granular-synthesis request for IAE, based on sound descritor value and weight.
 
 <descriptor>, <value>, and <weight> can be single values or lists (of the same length!).
@@ -75,10 +78,11 @@
 (defclass! IAE-container (om::om-cleanup-mixin om::data-stream)
  ((iae-obj :accessor iae-obj :initarg :iae-obj :initform nil)
   (grains :accessor grains :initarg :grains :initform nil :documentation "a list of timed-requests for granular synthesis")
+  (iae-params :accessor iae-params :initarg :iae-params :initform nil :documentation "a list of (name value(s)) for global IAE parameters")
+
   (max-dur :accessor max-dur :initform 10000 :documentation "max duration fo the audio output buffer [ms]")
   (value-ranges :accessor value-ranges :initform nil :documentation "ranges for internal descriptor values")
   (buffer-player :accessor buffer-player :initform nil)
-  
   )
  (:default-initargs :default-frame-type 'IAE-grain)
  (:documentation "IAE-container is a container for granular synthesis events that are computed dynamically from an IAE object") 
@@ -271,11 +275,14 @@
 
 (defmethod make-grain-from-frame ((self iae::IAE-Container) (frame iae::IAE-grain))
   (when (iae-obj self)
-    (iae::iae-synth (iae-obj self) (source frame) (iae::pos frame) (iae::duration frame))))
+    (iae::iae-synth (iae-obj self) (source frame) (iae::pos frame) (iae::duration frame)
+                    (iae-params frame))))
 
 (defmethod make-grain-from-frame ((self iae::IAE-Container) (frame iae::IAE-request))
  (when (iae-obj self)
-   (iae::iae-synth-desc (iae-obj self) (iae::descriptor frame) (iae::value frame) (iae::weight frame) (iae::duration frame))))
+   (iae::iae-synth-desc (iae-obj self) 
+                        (iae::descriptor frame) (iae::value frame) (iae::weight frame) (iae::duration frame)
+                        (iae-params frame))))
 
 
 
@@ -292,10 +299,12 @@
       (loop for frame in (remove-if #'(lambda (date) (or (< date (car interval)) (>= date (cadr interval))))
                                   (om::data-stream-get-frames object) 
                                   :key 'om::date)
-          do (iae-add-grain object
-                            (make-grain-from-frame object frame)
-                            (duration frame) (om::date frame))
-          )
+            do 
+            (make-iae-param-calls (iae-obj object) (iae-params object)) ;; "global params"
+            (iae-add-grain object
+                           (make-grain-from-frame object frame)
+                           (duration frame) (om::date frame))
+            )
     
     (om::om-print "Error playing IAE-container: no IAE engine loaded!"))
   

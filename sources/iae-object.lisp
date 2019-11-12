@@ -237,8 +237,7 @@ If <segmentation> is an integer value (chop-size), this value is considered the 
                                       (fli:dereference (om::om-sound-buffer-ptr (om::buffer s)) :index 0 :type :pointer)
                                       (coerce (om::sample-rate s) 'double-float))
             ))
-                                      
-    om::interleave-buffer
+                                       
     ;(iae-lib::iae_set_MarkerTrackSdif (iaeengine-ptr self) -1 "XCUD" "XCUD")
     ;(iae-lib::iae_set_DescriptorTrackSdif (iaeengine-ptr self) -1 "XCUD" "XCUD")
    
@@ -429,7 +428,7 @@ If <segmentation> is an integer value (chop-size), this value is considered the 
 
 (fboundp (intern (string-upcase "iae_set_period") :iae-lib))
 
-(defun format-iae-param-calls (iae* param-list)
+(defun make-iae-param-calls (iae* param-list)
   (loop for param in param-list
         do
         (let ((func (intern (string-upcase (concatenate 'string "iae_set_" (car param))) :iae-lib)))
@@ -448,8 +447,8 @@ If <segmentation> is an integer value (chop-size), this value is considered the 
           )
         ))
 
-
 #|
+;;; missing:
 iae-lib::iae_set_outputdelays
 iae-lib::iae_set_outputgains
 iae-lib::iae_set_reverse
@@ -521,7 +520,7 @@ iae-lib::iae_set_reverse
 
   
 ;;; Returns a sound buffer with a grain from given pos in IAE
-(defmethod! iae-synth ((self iae::IAE) source position dur &key (gain 1.0) (attack 10) (release 10) (other-iae-params))
+(defmethod! iae-synth ((self iae::IAE) source position dur &key (gain 1.0) (attack 10) (release 10) other-iae-params)
   :indoc '("An IAE instance" "source number" 
            "position in source [marker-id or time in ms]" 
            "" 
@@ -568,7 +567,7 @@ iae-lib::iae_set_reverse
       (iae-lib::iae_set_period *iae -0.0d0 0.0d0)
 
       (when other-iae-params
-        (format-iae-param-calls *iae other-iae-params))
+        (make-iae-param-calls *iae other-iae-params))
       
       (if (or (null dur) (zerop dur))
           (iae-lib::iae_set_duration *iae 0.0d0 1.0d0) ;;; duration of the segment
@@ -595,7 +594,7 @@ iae-lib::iae_set_reverse
 
 
 ;;; A mix of IAE-KNN and IAE-SYNTH
-(defmethod! iae-synth-desc ((self iae::IAE) descriptor value weight dur &key (gain 1.0) (attack 10) (release 10))
+(defmethod! iae-synth-desc ((self iae::IAE) descriptor value weight dur &key (gain 1.0) (attack 10) (release 10) other-iae-params)
   
   :indoc '("An IAE instance" "descriptor number(s)" "requested value(s)" "weight(s)" "duration [ms]" "gain" "attack time [ms]" "release time [ms]")
   :initvals '(nil 0 0.0 1.0 200 1.0 10 10)
@@ -624,6 +623,9 @@ iae-lib::iae_set_reverse
       (iae-lib::iae_set_period *iae -0.0d0 0.0d0)
       (iae-lib::iae_set_duration *iae (coerce dur 'double-float) 0.0d0)
       (iae-lib::iae_set_gain *iae (coerce gain 'double-float))
+      
+      (when other-iae-params
+        (make-iae-param-calls *iae other-iae-params))
       
       ;;; mode-specific
       (when (descriptors self)
