@@ -30,7 +30,12 @@
     (source :accessor source :initarg :source :initform 0 :documentation "source num inside IAE")
     (pos :accessor pos :initarg :pos :initform 0 :documentation "position in source")
     (duration :accessor duration :initarg :duration :initform 100 :documentation "duration of the grain")
-    (iae-params :accessor iae-params :initarg :iae-params :initform nil :documentation "a list of (name value(s)) for other IAE parameters")
+    (gain :accessor gain :initform 1.0 :documentation "gain of the grain")
+    (attack :accessor attack :initform 10 :documentation "attack time (ms)")
+    (release :accessor release :initform 10 :documentation "release time (ms)")
+    (outputgains :accessor outputgains :initform nil :documentation "list of gains for the IAE output channels")
+    (outputdelays :accessor outputdelays :initform nil :documentation "list of delays for the IAE output channels")
+    (iae-params :accessor iae-params :initform nil :documentation "a list of (name value(s)) for other IAE parameters")
     )
    (:documentation "A granular-synthesis request for IAE, based on source/position data."))
 
@@ -41,11 +46,14 @@
     (value :accessor value :initarg :value :initform 0.0 :documentation "the value of the descriptor")
     (weight :accessor weight :initarg :weight :initform 1.0 :documentation "the weight of the descriptor")
     (duration :accessor duration :initarg :duration :initform 100 :documentation "duration of the grain")
-    (iae-params :accessor iae-params :initarg :iae-params :initform nil :documentation "a list of (name value(s)) for other IAE parameters"))
+    )
    (:documentation "A granular-synthesis request for IAE, based on sound descritor value and weight.
 
 <descriptor>, <value>, and <weight> can be single values or lists (of the same length!).
 "))
+
+(defmethod om::additional-class-attributes ((self iae::IAE-grain))
+  '(gain attack release outputgains outputdelays iae-params))
 
 (defmethod om::item-get-duration ((self iae::IAE-grain)) (iae::duration self))
 
@@ -281,13 +289,18 @@
 
 (defmethod make-grain-from-frame ((self iae::IAE-Container) (frame iae::IAE-grain))
   (when (iae-obj self)
-    (iae::iae-synth (iae-obj self) (source frame) (iae::pos frame) (iae::duration frame)
+    (iae::iae-synth (iae-obj self) 
+                    (source frame) (iae::pos frame) (iae::duration frame)
+                    :gain (gain frame) :attack (attack frame) :release (release frame)
+                    :outputgains (outputgains frame) :outputdelays (outputdelays frame)
                     :other-iae-params (iae-params frame))))
 
 (defmethod make-grain-from-frame ((self iae::IAE-Container) (frame iae::IAE-request))
  (when (iae-obj self)
    (iae::iae-synth-desc (iae-obj self) 
                         (iae::descriptor frame) (iae::value frame) (iae::weight frame) (iae::duration frame)
+                        :gain (gain frame) :attack (attack frame) :release (release frame)
+                        :outputgains (outputgains frame) :outputdelays (outputdelays frame)
                         :other-iae-params (iae-params frame))))
 
 

@@ -427,23 +427,34 @@ If <segmentation> is an integer value (chop-size), this value is considered the 
   )
 
 
-(defun make-iae-param-calls (iae* param-list)
+(defun make-iae-param-calls (*iae param-list)
   (loop for param in param-list
         do
         (let ((func (intern (string-upcase (concatenate 'string "iae_set_" (car param))) :iae-lib)))
           
-          (if (fboundp func)
-
-              (cond
-               ((consp (cadr param))
-                (apply func (cons iae* (loop for p in (cadr param) collect (coerce p 'double-float)))))
-               ((floatp (cadr param))
-                (apply func (list iae* (coerce (cadr param) 'double-float))))
-               (t ;;; int , boolean
-                (apply func (list iae* (cadr param)))))
-
-              (om::om-beep-msg "IAE-PARAMS: function ~A does not exist" func))
-          )
+          (cond 
+           ((fboundp func)
+            (cond
+             ((consp (cadr param))
+              (apply func (cons *iae (loop for p in (cadr param) collect (coerce p 'double-float)))))
+             ((floatp (cadr param))
+              (apply func (list *iae (coerce (cadr param) 'double-float))))
+             (t ;;; int , boolean
+                (apply func (list *iae (cadr param))))))
+           
+           ((string-equal (car param) "outputgains")
+            (let ((gains (cffi::foreign-alloc :float :initial-contents (loop for elt in (cadr param) collect (coerce elt 'double-float)))))
+              (iae-lib::iae_set_outputchannelgain *iae (length (cadr param)) gains)
+              (cffi-sys:foreign-free gains)))
+           
+           ((string-equal (car param) "outputdelays")
+            (let ((delays (cffi::foreign-alloc :float :initial-contents (loop for elt in (cadr param) collect (coerce elt 'double-float)))))
+              (iae-lib::iae_set_outputchannelgain *iae (length (cadr param)) delays)
+              (cffi-sys:foreign-free delays)))
+           
+           (t
+            (om::om-beep-msg "IAE-PARAMS: function ~A does not exist" func))
+           ))
         ))
 
 ;;;=========================
@@ -511,7 +522,7 @@ If <segmentation> is an integer value (chop-size), this value is considered the 
 
   
 ;;; Returns a sound buffer with a grain from given pos in IAE
-(defmethod! iae-synth ((self iae::IAE) source position dur &key (gain 1.0) (attack 10) (release 10) other-iae-params)
+(defmethod! iae-synth ((self iae::IAE) source position dur &key (gain 1.0) (attack 10) (release 10) outputgains outputdelays other-iae-params)
   :indoc '("An IAE instance" "source number" 
            "position in source [marker-id or time in ms]" 
            "" 
@@ -563,7 +574,7 @@ If <segmentation> is an integer value (chop-size), this value is considered the 
       
       (iae-lib::iae_set_gain *iae (coerce gain 'double-float))
       (iae-lib::iae_set_positionvar *iae 0.0d0)
-
+      
       ;;; mode-specific
       (if (integerp position)
           (iae-lib::iae_set_markerindex *iae position)
@@ -571,6 +582,16 @@ If <segmentation> is an integer value (chop-size), this value is considered the 
       
       (when other-iae-params
         (make-iae-param-calls *iae other-iae-params))
+      
+      (when outputgains
+        (let ((gains (cffi::foreign-alloc :float :initial-contents (loop for elt in outputgains collect (coerce elt 'double-float)))))
+          (iae-lib::iae_set_outputchannelgain *iae (length outputgains) gains)
+          (cffi-sys:foreign-free gains)))
+      
+      (when outputdelays
+        (let ((delays (cffi::foreign-alloc :float :initial-contents (loop for elt in outputdelays collect (coerce elt 'double-float)))))
+          (iae-lib::iae_set_outputchannelgain *iae (length outputdelays) delays)
+          (cffi-sys:foreign-free delays)))
       
       ;;; generates the grain
       (iae-lib::iae_trigger *iae)
@@ -585,7 +606,7 @@ If <segmentation> is an integer value (chop-size), this value is considered the 
 
 
 ;;; A mix of IAE-KNN and IAE-SYNTH
-(defmethod! iae-synth-desc ((self iae::IAE) descriptor value weight dur &key (gain 1.0) (attack 10) (release 10) other-iae-params)
+(defmethod! iae-synth-desc ((self iae::IAE) descriptor value weight dur &key (gain 1.0) (attack 10) (release 10) outputgains outputdelays other-iae-params)
   
   :indoc '("An IAE instance" "descriptor number(s)" "requested value(s)" "weight(s)" "duration [ms]" "gain" "attack time [ms]" "release time [ms]")
   :initvals '(nil 0 0.0 1.0 200 1.0 10 10)
@@ -617,6 +638,16 @@ If <segmentation> is an integer value (chop-size), this value is considered the 
       
       (when other-iae-params
         (make-iae-param-calls *iae other-iae-params))
+      
+      (when outputgains
+        (let ((gains (cffi::foreign-alloc :float :initial-contents (loop for elt in outputgains collect (coerce elt 'double-float)))))
+          (iae-lib::iae_set_outputchannelgain *iae (length outputgains) gains)
+          (cffi-sys:foreign-free gains)))
+      
+      (when outputdelays
+        (let ((delays (cffi::foreign-alloc :float :initial-contents (loop for elt in outputdelays collect (coerce elt 'double-float)))))
+          (iae-lib::iae_set_outputchannelgain *iae (length outputdelays) delays)
+          (cffi-sys:foreign-free delays)))
       
       ;;; mode-specific
       (when (descriptors self)
