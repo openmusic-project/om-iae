@@ -186,6 +186,11 @@ If <segmentation> is an integer value (chop-size), this value is considered the 
          ; (iae-lib::iae_pipo_param_set_int *iae "ircamdescriptor.hopsize" 0 512)
           (iae-lib::iae_pipo_param_set_int *iae "mfcc.hopsize" 0 512)
           
+
+          (unless (find "mean" (cdr seg-list) :test #'string-equal :key #'car)
+            (setf seg-list (append seg-list
+                                   '(("mean" 1)))))
+          
           (loop for param in (cdr seg-list) do
                 ;;; set, e.g. "chop.size" etc.
                 (let ((param-name (concatenate 'string (car seg-list) "." (car param))))
