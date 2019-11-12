@@ -461,7 +461,7 @@ If <segmentation> is an integer value (chop-size), this value is considered the 
 ;;; KNN
 ;;;=========================
 
-(defmethod! iae-knn ((self iae::IAE) descriptor value weight k &oprional radius)
+(defmethod! iae-knn ((self iae::IAE) descriptor value weight k &optional radius)
   
   :indoc '("An IAE instance" "descriptor number(s)" "requested value(s)" "weight(s)" "number of soultions" "max radius of the search domain")
   :initvals '(nil 0 0.0 1.0 3 nil)
