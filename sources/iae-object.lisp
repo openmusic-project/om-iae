@@ -338,9 +338,10 @@ If <segmentation> is an integer value (chop-size), this value is considered the 
 ;;; PARAMETERS
 ;;;==================================
 
-(defclass! IAE-PARAMS (om::osc-bundle) 
+(defclass! IAE-BUNDLE (om::osc-bundle) 
   ((om::messages :accessor om::messages :initarg :messages :initform nil 
-                 :documentation "list of (param value(s))")))
+                 :documentation "list of (param value(s))"))
+  (:documentation "A utility-class to store and edit a set of IAE parameters."))
 
 (defmethod! iae-param-set (&key (advance 5.0 advance-supplied-p)
                                 (attack 5.0 attack-supplied-p)
@@ -425,8 +426,6 @@ If <segmentation> is an integer value (chop-size), this value is considered the 
     ))
   )
 
-
-(fboundp (intern (string-upcase "iae_set_period") :iae-lib))
 
 (defun make-iae-param-calls (iae* param-list)
   (loop for param in param-list
@@ -541,10 +540,10 @@ iae-lib::iae_set_reverse
   (when (iaeengine-ptr self)
     (let* ((*iae (iaeengine-ptr self))
            
-           (graindur (print (if (and (or (null dur) (zerop dur))
+           (graindur (if (and (or (null dur) (zerop dur))
                               (integerp position))  ;; mode "marker"
                          (iae-lib::iae_get_SegmentDuration *iae source position)
-                       dur)))
+                       dur))
            
            (nsamples (ceiling (* graindur (iae::samplerate self) 0.001)))
            (omsnd (make-instance 'om::om-internal-sound :n-channels (channels self) :smpl-type :float
@@ -565,10 +564,7 @@ iae-lib::iae_set_reverse
       (iae-lib::iae_set_attack *iae (coerce attack 'double-float) 0.0d0)
       (iae-lib::iae_set_release *iae (coerce release 'double-float) 0.0d0)
       (iae-lib::iae_set_period *iae -0.0d0 0.0d0)
-
-      (when other-iae-params
-        (make-iae-param-calls *iae other-iae-params))
-      
+  
       (if (or (null dur) (zerop dur))
           (iae-lib::iae_set_duration *iae 0.0d0 1.0d0) ;;; duration of the segment
         (iae-lib::iae_set_duration *iae (coerce dur 'double-float) 0.0d0))
@@ -580,6 +576,9 @@ iae-lib::iae_set_reverse
       (if (integerp position)
           (iae-lib::iae_set_markerindex *iae position)
         (iae-lib::iae_set_position *iae (coerce position 'double-float) 0.0d0))
+      
+      (when other-iae-params
+        (make-iae-param-calls *iae other-iae-params))
       
       ;;; generates the grain
       (iae-lib::iae_trigger *iae)

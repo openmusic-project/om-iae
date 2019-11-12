@@ -276,13 +276,13 @@
 (defmethod make-grain-from-frame ((self iae::IAE-Container) (frame iae::IAE-grain))
   (when (iae-obj self)
     (iae::iae-synth (iae-obj self) (source frame) (iae::pos frame) (iae::duration frame)
-                    (iae-params frame))))
+                    :other-iae-params (iae-params frame))))
 
 (defmethod make-grain-from-frame ((self iae::IAE-Container) (frame iae::IAE-request))
  (when (iae-obj self)
    (iae::iae-synth-desc (iae-obj self) 
                         (iae::descriptor frame) (iae::value frame) (iae::weight frame) (iae::duration frame)
-                        (iae-params frame))))
+                        :other-iae-params (iae-params frame))))
 
 
 
@@ -300,7 +300,7 @@
                                   (om::data-stream-get-frames object) 
                                   :key 'om::date)
             do 
-            (make-iae-param-calls (iae-obj object) (iae-params object)) ;; "global params"
+            (make-iae-param-calls (iaeengine-ptr (iae-obj object)) (iae-params object)) ;; "global params"
             (iae-add-grain object
                            (make-grain-from-frame object frame)
                            (duration frame) (om::date frame))

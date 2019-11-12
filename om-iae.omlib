@@ -15,7 +15,7 @@
   (:pathname (:directory (:relative "sources")) (:name "iae-container"))
   )
  (:symbols 
-  (:classes "iae::IAE" "iae::IAE-Container" "iae::IAE-Grain" "iae::IAE-Request")
+  (:classes "iae::IAE" "iae::IAE-Container" "iae::IAE-Grain" "iae::IAE-Request" "iae::IAE-Bundle")
   (:functions 
    "iae::ircam-descriptors-names" "iae::iae-descriptors"
    "iae::get-segment-descriptors" "iae::get-sound-descriptors"
