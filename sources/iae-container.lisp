@@ -176,7 +176,7 @@
 
 
 ;;; (0 100) is the reference range
-(defmethod om::y-range-for-object ((self iae::IAE-Container)) '(-10 1000))
+(defmethod om::y-range-for-object ((self iae::IAE-Container)) '(-10 110))
   
 #|
   (let ((reference-descriptor 
@@ -203,19 +203,19 @@
 (defmethod om::get-frame-area ((frame iae::IAE-grain) editor)
   (let ((panel (om::active-panel editor))
         (container (om::object-value editor)))
+    
     (values ;; x
             (om::x-to-pix panel (om::date frame))
             ;; y
             (- (om::h panel)
                (om::y-to-pix panel (* 100 (/ (om::get-frame-posy frame) 
-                                             (or (cadadr (find -1 (value-ranges container) :key #'car))
+                                             (or (second (second (find -1 (value-ranges container) :key #'car)))
                                                  (max-dur container))))))
             ;; w
             (max 3 (om::dx-to-dpix panel (om::get-frame-graphic-duration frame)))
             ;; h
             (min -3 (om::dy-to-dpix panel (- (om::get-frame-sizey frame))))  ;; !! upwards
             )))
-
 
 
 ;;; SPECIFIC GRAPHICAL ATTRIBUTES FOR DESCRIPTOR GRAINS
@@ -230,19 +230,25 @@
 (defmethod om::get-frame-area ((frame iae::IAE-request) editor)
   (let ((panel (om::active-panel editor))
         (container (om::object-value editor)))
+    
     (values ;; x
             (om::x-to-pix panel (om::date frame))
             ;; y
-            (- (om::h panel)
-               (om::y-to-pix panel (* 100 (/ (om::get-frame-posy frame) 
-                                             (or (cadadr (find (car (om::list! (iae::descriptor frame)))
-                                                               (value-ranges container) :key #'car)) 
-                                                 (max-dur container))))))
-            ;; w
-            (max 3 (om::dx-to-dpix panel (om::get-frame-graphic-duration frame)))
-            ;; h
-            (min -3 (om::dy-to-dpix panel (- (om::get-frame-sizey frame))))  ;; !! upwards
-            )))
+            (let* ((range-y (cadr (find (car (om::list! (iae::descriptor frame)))
+                                        (value-ranges container) :key #'car)))
+                   (min-y (first range-y))
+                   (max-y (second range-y)))
+              
+              (if (= min-y max-y) (setf max-y (1+ min-y))) ;; avoid /0
+              
+              (- (om::h panel)
+                 (om::y-to-pix panel (* 100  (/ (- (om::get-frame-posy frame) min-y)
+                                                (- max-y min-y))))))
+              ;; w
+              (max 3 (om::dx-to-dpix panel (om::get-frame-graphic-duration frame)))
+              ;; h
+              (min -3 (om::dy-to-dpix panel (- (om::get-frame-sizey frame))))  ;; !! upwards
+              )))
 
 
 ;;;===============================
