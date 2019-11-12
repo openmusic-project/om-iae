@@ -129,9 +129,9 @@ If <segmentation> is an integer value (chop-size), this value is considered the 
   (om::om-print-dbg "Initializing IAE for ~A" (list self) "IAE")
   (setf (iae::iaeengine-ptr self) 
         (iae-lib::iae_new (iae::samplerate self) 512 (iae::channels self) 1
-                          10000d0 100d0 ;; millisecond 
-                          4800d0 ;; midicents
-                          0.2d0 10000.0d0
+                          10000d0 100d0 ;; maxgrainduration, maxdelayduration (millisecond) 
+                          4800d0 ;; maxtransposition (midicents)
+                          0.2d0 10000.0d0 ;; minperiod, maxperiod
                           ))
   )
     
@@ -330,6 +330,127 @@ If <segmentation> is an integer value (chop-size), this value is considered the 
         )))
 
 
+;;;==================================
+;;; PARAMETERS
+;;;==================================
+
+(defclass! IAE-PARAMS (om::osc-bundle) 
+  ((om::messages :accessor om::messages :initarg :messages :initform nil 
+                 :documentation "list of (param value(s))")))
+
+(defmethod! iae-param-set (&key (advance 5.0 advance-supplied-p)
+                                (attack 5.0 attack-supplied-p)
+                                (cyclic nil cyclic-supplied-p)
+                                (duplicatechannels t duplicatechannels-supplied-p)
+                                (duration 0.0 duration-supplied-p)
+                                (durationvar '(0.0 0.0) durationvar-supplied-p)
+                                (filterfreq 5000.0 filterfreq-supplied-p)
+                                (filterfreqvar 0.0 filterfreqvar-supplied-p)
+                                (filtergain 0.0 filtergain-supplied-p)
+                                (filtermode 0 filtermode-supplied-p)
+                                (filterq 0.0 filterq-supplied-p)
+                                (filterqvar 0.0 filterqvar-supplied-p)
+                                (level 0.0 level-supplied-p)
+                                (levelvar 0.0 levelvar-supplied-p)
+                                (microtiming t microtiming-supplied-p)
+                                (offset 5.0 offset-supplied-p)
+                                (outputdelays nil outputdelays-supplied-p)
+                                (outputgains nil outputgains-supplied-p)
+                                (period '(0.0 1.0) period-supplied-p)
+                                (periodvar '(0.0 0.0) periodvar-supplied-p)
+                                (positionvar 0.0 positionvar-supplied-p)
+                                (release 5.0 release-supplied-p)
+                                (resampling 0.0 resampling-supplied-p)
+                                (resamplingvar 0.0 resamplingvar-supplied-p)
+                                (reverse nil reverse-supplied-p))
+  :initvals '(5.0 ; advance
+              (5.0 0.0) ; attack
+              nil ; cyclic
+              t ; duplicatechannels
+              (0.0 1.0) ; duration
+              (0.0 0.0) ; durationvar
+              5000.0 ; filterfreq
+              0.0 ; filterfreqvar
+              0.0 ; filtergain
+              0 ; filtermode
+              0.0 ; filterq
+              0.0 ; filterqvar
+              0.0 ; level
+              0.0 ; levelvar
+              t ; microtiming
+              5.0 ; offset 
+              nil ; outputdelays
+              nil ; outputgains 
+              (0.0 1.0) ; period
+              (0.0 0.0) ; periodvar
+              0.0 ; positionvar
+              (5.0 0.0) ; release 
+              0.0 ; resampling
+              0.0 ; resamplingvar
+              nil ; reverse
+              )
+  :doc "A utility-function to set IAE parameters in IAE-PARAMS"
+  (remove 
+   nil
+   (list 
+    (when advance-supplied-p (list "advance" advance)) 
+    (when attack-supplied-p (list "attack" attack)) 
+    (when cyclic-supplied-p (list "cyclic" cyclic)) 
+    (when duplicatechannels-supplied-p (list "duplicatechannels" duplicatechannels)) 
+    (when duration-supplied-p (list "duration" duration)) 
+    (when durationvar-supplied-p (list "durationvar" durationvar)) 
+    (when filterfreq-supplied-p (list "filterfreq" filterfreq)) 
+    (when filterfreqvar-supplied-p (list "filterfreqvar" filterfreqvar)) 
+    (when filtergain-supplied-p (list "filtergain" filtergain)) 
+    (when filtermode-supplied-p (list "filtermode" filtermode)) 
+    (when filterq-supplied-p (list "filterq" filterq)) 
+    (when filterqvar-supplied-p (list "filterqvar" filterqvar)) 
+    (when level-supplied-p (list "level" level)) 
+    (when levelvar-supplied-p (list "levelvar" levelvar)) 
+    (when microtiming-supplied-p (list "microtiming" microtiming)) 
+    (when offset-supplied-p (list "offset" offset)) 
+    (when outputdelays-supplied-p (list "outputdelays" outputdelays)) 
+    (when outputgains-supplied-p (list "outputgains" outputgains)) 
+    (when period-supplied-p (list "period" period)) 
+    (when periodvar-supplied-p (list "periodvar" periodvar)) 
+    (when positionvar-supplied-p (list "positionvar" positionvar)) 
+    (when release-supplied-p (list "release" release)) 
+    (when resampling-supplied-p (list "resampling" resampling)) 
+    (when resamplingvar-supplied-p (list "resamplingvar" resamplingvar))
+    (when reverse-supplied-p (list "reverse" reverse))
+    ))
+  )
+
+
+(fboundp (intern (string-upcase "iae_set_period") :iae-lib))
+
+(defun format-iae-param-calls (iae* param-list)
+  (loop for param in param-list
+        do
+        (let ((func (intern (string-upcase (concatenate 'string "iae_set_" (car param))) :iae-lib)))
+          
+          (if (fboundp func)
+
+              (cond
+               ((consp (cadr param))
+                (apply func (cons iae* (loop for p in (cadr param) collect (coerce p 'double-float)))))
+               ((floatp (cadr param))
+                (apply func (list iae* (coerce (cadr param) 'double-float))))
+               (t ;;; int , boolean
+                (apply func (list iae* (cadr param)))))
+
+              (om::om-beep-msg "IAE-PARAMS: function ~A does not exist" func))
+          )
+        ))
+
+
+#|
+iae-lib::iae_set_outputdelays
+iae-lib::iae_set_outputgains
+iae-lib::iae_set_reverse
+|#
+
+
 ;;;=========================
 ;;; KNN
 ;;;=========================
@@ -393,6 +514,7 @@ If <segmentation> is an integer value (chop-size), this value is considered the 
 ;;; SYNTH
 ;;;=========================
 
+  
 ;;; Returns a sound buffer with a grain from given pos in IAE
 (defmethod! iae-synth ((self iae::IAE) source position dur &key (gain 1.0) (attack 10) (release 10) (other-iae-params))
   :indoc '("An IAE instance" "source number" 
@@ -434,12 +556,15 @@ If <segmentation> is an integer value (chop-size), this value is considered the 
         (iae-lib::iae_set_sourceindex *iae source))
       
       ;;; general params
-      (iae-lib::iae_set_Cyclic *iae nil)
-      (iae-lib::iae_set_CenteredGrains *iae nil)
-      (iae-lib::iae_set_Attack *iae (coerce attack 'double-float) 0.0d0)
-      (iae-lib::iae_set_Release *iae (coerce release 'double-float) 0.0d0)
+      (iae-lib::iae_set_cyclic *iae nil)
+      (iae-lib::iae_set_centeredGrains *iae nil)
+      (iae-lib::iae_set_attack *iae (coerce attack 'double-float) 0.0d0)
+      (iae-lib::iae_set_release *iae (coerce release 'double-float) 0.0d0)
       (iae-lib::iae_set_period *iae -0.0d0 0.0d0)
 
+      (when other-iae-params
+        (format-iae-param-calls *iae other-iae-params))
+      
       (if (or (null dur) (zerop dur))
           (iae-lib::iae_set_duration *iae 0.0d0 1.0d0) ;;; duration of the segment
         (iae-lib::iae_set_duration *iae (coerce dur 'double-float) 0.0d0))
