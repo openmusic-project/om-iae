@@ -446,14 +446,6 @@ If <segmentation> is an integer value (chop-size), this value is considered the 
           )
         ))
 
-#|
-;;; missing:
-iae-lib::iae_set_outputdelays
-iae-lib::iae_set_outputgains
-iae-lib::iae_set_reverse
-|#
-
-
 ;;;=========================
 ;;; KNN
 ;;;=========================

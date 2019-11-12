@@ -199,6 +199,13 @@
 (cffi::defcfun ("iae_set_Play" iae_set_Play) :VOID (SELF :POINTER) (P :BOOLEAN))
 (cffi::defcfun ("iae_get_Play" iae_get_Play) :BOOLEAN (SELF :POINTER) (P :POINTER))
 
+(cffi::defcfun ("iae_set_Reverse" iae_set_Reverse) :VOID (SELF :POINTER) (P :BOOLEAN))
+(cffi::defcfun ("iae_get_Reverse" iae_get_Reverse) :BOOLEAN (SELF :POINTER) (P :POINTER))
 
 
+(cffi::defcfun ("iae_set_OutputChannelGain" iae_set_OutputChannelGain) :INT (SELF :POINTER) (LEN :INT) (P :POINTER))
+(cffi::defcfun ("iae_get_OutputChannelGain" iae_get_OutputChannelGain) :BOOLEAN (SELF :POINTER) (P :POINTER))
+
+(cffi::defcfun ("iae_set_OutputChannelDelay" iae_set_OutputChannelDelay) :INT (SELF :POINTER) (LEN :INT) (P :POINTER))
+(cffi::defcfun ("iae_get_OutputChannelDelay" iae_get_OutputChannelDelay) :BOOLEAN (SELF :POINTER) (P :POINTER))
 
