@@ -179,6 +179,7 @@
 
 (defmethod om::data-frame-text-description ((self iae::IAE-grain)) 
   `("IAE GRAIN:" ,(format nil "~D in source ~A" (iae::pos self) (iae::source self))))
+
 (defmethod om::data-frame-text-description ((self iae::IAE-request)) 
   `("IAE REQUEST:" ,(format nil "desc. ~A : ~D" (iae::descriptor self) (iae::value self))))
 
@@ -197,7 +198,7 @@
     (list (- posy-min margin) (+ posy-max margin))))
 |#
 
-;;; GRAPHICAT ATTRIBUTES FOR GRANULAR GRAINS
+;;; GRAPHICAL ATTRIBUTES FOR GRANULAR GRAINS
 
 (defmethod om::get-frame-color ((self iae::IAE-grain)) 
   (oa::om-make-color-alpha (om::get-midi-channel-color (1+ (source self))) 0.5))
@@ -263,14 +264,14 @@
 ;;; AUDIO RENDERING
 ;;;===============================
 
-;;; add an audio grain in the IAE-container's buffer-player by copying from an existing audio buffer (coming out of IAE synth)
-(defmethod iae-add-grain ((iae-c iae-container) (snd om::om-internal-sound) (dur integer) (at integer))
+;;; add an audio grain in the IAE-container's buffer-player by copying from an existing audio buffer (coming out of IAE-synth)
+(defmethod iae-add-grain ((iae-c iae-container) (snd om::om-internal-sound) (at integer))
   (when (iae::buffer-player iae-c)
     (let* ((bp (iae::buffer-player iae-c))
            (iae (iae-obj iae-c))
            (nch (iae::channels iae))
            (pos (round (* at (om::bp-sample-rate bp)) 1000))
-           (size (round (* dur (om::bp-sample-rate bp)) 1000))
+           (size (om::n-samples snd))
            (max-size (om::bp-size bp)))
       (dotimes (c nch)
         (dotimes (i size)
@@ -348,9 +349,11 @@
                                   :key 'om::date)
             do 
             (make-iae-param-calls (iaeengine-ptr (iae-obj object)) (iae-params object)) ;; "global params"
-            (iae-add-grain object
-                           (make-grain-from-frame object frame)
-                           (duration frame) (om::date frame))
+            
+            (iae-add-grain 
+             object
+             (make-grain-from-frame object frame)
+             (om::date frame))
             )
     
     (om::om-print "Error playing IAE-container: no IAE engine loaded!"))

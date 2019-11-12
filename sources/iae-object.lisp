@@ -550,7 +550,7 @@ If <segmentation> is an integer value (chop-size), this value is considered the 
            
            (nsamples (ceiling (* graindur (iae::samplerate self) 0.001)))
            (omsnd (make-instance 'om::om-internal-sound :n-channels (channels self) :smpl-type :float
-                                 :n-samples nsamples :sample-rate 44100))
+                                 :n-samples nsamples :sample-rate (iae::samplerate self)))
            (**samples (om::make-audio-buffer (channels self) nsamples)))
 
 ;   Granular = 0,    asynchronous granular synthesis
@@ -617,7 +617,7 @@ If <segmentation> is an integer value (chop-size), this value is considered the 
     (let* ((*iae (iaeengine-ptr self))
            (nsamples (ceiling (* dur (iae::samplerate self) 0.001)))
            (omsnd (make-instance 'om::om-internal-sound :n-channels (channels self) :smpl-type :float
-                                 :n-samples nsamples :sample-rate 44100))
+                                 :n-samples nsamples :sample-rate (iae::samplerate self)))
            (**samples (om::make-audio-buffer (channels self) nsamples))
            ;; (framedescbuffer (fli::allocate-foreign-object :type :float :nelems (length (descriptors self))))
            )
