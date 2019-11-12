@@ -285,7 +285,35 @@
                         :other-iae-params (iae-params frame))))
 
 
+;;; VIRTUAL RUN / DUMP:
+(om::defmethod! iae-dump ((self iae::IAE-Container))
+  
+  :doc "Generates a sound from the IAE-Containers contents and settings"
+  
+  (let* ((iae (iae-obj self))
+         (nch (iae::channels iae))
+         (sr (iae::samplerate iae))
+         (size (round (* (iae::max-dur self) sr) 1000))
+         (init-buffer (om::bp-buffer (iae::buffer-player self)))
+         (out-buffer (om::make-audio-buffer nch size :float)))
+    
+    (om::get-computation-list-for-play self)
+    
+    (dotimes (ch nch)
+      (dotimes (smp size)
+        (setf (cffi::mem-aref (cffi::mem-aref out-buffer :pointer ch) :float smp)
+              (cffi::mem-aref (cffi::mem-aref init-buffer :pointer ch) :float smp))))
+    
+    (make-instance 'sound 
+                   :buffer (om::make-om-sound-buffer-GC :ptr out-buffer :nch nch)
+                   :n-samples size
+                   :n-channels nch
+                   :sample-rate sr
+                   :smpl-type :float)
+    ))
+ 
 
+;;; PLAYER:
 ;;; reports actions to audio player
 (defmethod om::get-action-list-for-play ((object iae::IAE-Container) interval &optional parent)
   (om::external-player-actions object interval parent))
@@ -296,7 +324,7 @@
   
   (if (iae-obj object)
     
-      (loop for frame in (remove-if #'(lambda (date) (or (< date (car interval)) (>= date (cadr interval))))
+      (loop for frame in (remove-if #'(lambda (date) (and interval (or (< date (car interval)) (>= date (cadr interval)))))
                                   (om::data-stream-get-frames object) 
                                   :key 'om::date)
             do 
