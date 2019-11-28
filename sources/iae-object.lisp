@@ -692,7 +692,7 @@ If <segmentation> is an integer value (chop-size), this value is considered the 
 ;;;=========================
 
 (defmethod om::display-modes-for-object ((self iae::iae))
-  '(:hidden :text :mini-view))
+  '(:mini-view :text :hidden))
 
 ;;; do that better with IDs etc.
 (defmethod om::get-cache-display-for-draw ((self iae::IAE) box)
