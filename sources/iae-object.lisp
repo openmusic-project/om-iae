@@ -284,7 +284,7 @@ If <segmentation> is an integer value (chop-size), this value is considered the 
   (descriptors self))
 
 
-(om::defmethod! get-sound-descriptors ((self iae) src-index &optional (t1 0) (t2 nil))
+(om::defmethod! get-sound-descriptors ((self iae) src-index &optional (t1 0) (t2 nil) normalized)
   
   :indoc '("An IAE instance" "source index" "min time" "max time")
   :initvals '(nil 0 0 nil)
@@ -304,12 +304,16 @@ If <segmentation> is an integer value (chop-size), this value is considered the 
                 collect
                 (cons (- curr-time t1)
                       (loop for x from 0 to (1- numdesc) collect 
-                            (fli:dereference framedescbuffer :index x :type :float)))))
+                            (let ((val (fli:dereference framedescbuffer :index x :type :float)))
+                            (if normalized
+                                (iae-lib::iae_conv_descriptor_to_minmax *iae x val)
+                              val))))
+                ))
       (fli:free-foreign-object framedescbuffer))
     ))
 
 
-(defmethod! get-segment-descriptors ((self iae::IAE) (src-index integer) (seg-index integer))
+(defmethod! get-segment-descriptors ((self iae::IAE) (src-index integer) (seg-index integer) normalized)
   
   :indoc '("An IAE instance" "source index" "segment index in source")
   :initvals '(nil 0 0)
@@ -326,7 +330,11 @@ If <segmentation> is an integer value (chop-size), this value is considered the 
         (unwind-protect 
             (let* ((time (iae-lib::iae_get_descriptor_data *iae src-index seg-index framedescbuffer))
                    (data (loop for i from 0 to (1- n) collect
-                               (cffi::mem-aref framedescbuffer :float i))))
+                               (let ((val (cffi::mem-aref framedescbuffer :float i)))
+                                 (if normalized
+                                     (iae-lib::iae_conv_descriptor_to_minmax *iae x val)
+                                   val))
+                               )))
               (list time data))
 
           (cffi::foreign-free framedescbuffer))
