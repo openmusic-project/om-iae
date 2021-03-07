@@ -260,7 +260,7 @@ If <segmentation> is an integer value (chop-size), this value is considered the 
 ;;;==============================================================================
 
 (defmethod om::additional-class-attributes ((self iae::IAE)) 
-  '(iae::channels iae::pipo-module iae::segmentation))
+  '(iae::channels iae::pipo-module iae::segmentation iae::samplerate))
 
 ;;;======================================================
 ;;; READ FROM IAE
