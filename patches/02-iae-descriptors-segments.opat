@@ -1,11 +1,12 @@
 
 (:patch
- (:om-version 1.14E-4)
  (:name "02-iae-descriptors-segments")
  (:doc "")
  (:info
   (:created "2017/12/22 16:32:44")
-  (:modified "2019/10/04 11:09:43"))
+  (:modified "2021/03/07 11:17:05")
+  (:by "om-sharp")
+  (:version 1.0201))
  (:window (:size (849 863)) (:position (794 100)))
  (:grid nil)
  (:lock nil)
@@ -24,11 +25,9 @@
    (:roundness nil)
    (:text-font (:font (:face "Verdana") (:size 10) (:style :italic)))
    (:align :center)
-   (:name nil)
    (:display :mini-view)
    (:showname t)
    (:show-markers t)
-   (:group-id nil)
    (:lock :locked)
    (:lambda nil)
    (:inputs
@@ -52,102 +51,7 @@
      (:class sound)
      (:slots
       ((:onset 0)
-       (:duration 2565)
-       (:interpol (:number-or-nil (:number 50) (:t-or-nil nil)))
-       (:default-frame-type marker-frame)
-       (:frames
-        (:list
-         (:object
-          (:class marker-frame)
-          (:slots
-           ((:onset 15)
-            (:item-time nil)
-            (:item-internal-time 15)
-            (:item-type :master)
-            (:attributes nil)
-            (:label nil))))
-         (:object
-          (:class marker-frame)
-          (:slots
-           ((:onset 125)
-            (:item-time nil)
-            (:item-internal-time 125)
-            (:item-type 125)
-            (:attributes nil)
-            (:label nil))))
-         (:object
-          (:class marker-frame)
-          (:slots
-           ((:onset 306)
-            (:item-time nil)
-            (:item-internal-time 306)
-            (:item-type 306)
-            (:attributes nil)
-            (:label nil))))
-         (:object
-          (:class marker-frame)
-          (:slots
-           ((:onset 514)
-            (:item-time nil)
-            (:item-internal-time 514)
-            (:item-type 514)
-            (:attributes nil)
-            (:label nil))))
-         (:object
-          (:class marker-frame)
-          (:slots
-           ((:onset 782)
-            (:item-time nil)
-            (:item-internal-time 782)
-            (:item-type 782)
-            (:attributes nil)
-            (:label nil))))
-         (:object
-          (:class marker-frame)
-          (:slots
-           ((:onset 1084)
-            (:item-time nil)
-            (:item-internal-time 1084)
-            (:item-type 1084)
-            (:attributes nil)
-            (:label nil))))
-         (:object
-          (:class marker-frame)
-          (:slots
-           ((:onset 1462)
-            (:item-time nil)
-            (:item-internal-time 1462)
-            (:item-type 1462)
-            (:attributes nil)
-            (:label nil))))
-         (:object
-          (:class marker-frame)
-          (:slots
-           ((:onset 1775)
-            (:item-time nil)
-            (:item-internal-time 1775)
-            (:item-type 1775)
-            (:attributes nil)
-            (:label nil))))
-         (:object
-          (:class marker-frame)
-          (:slots
-           ((:onset 2217)
-            (:item-time nil)
-            (:item-internal-time 2217)
-            (:item-type 2217)
-            (:attributes nil)
-            (:label nil))))
-         (:object
-          (:class marker-frame)
-          (:slots
-           ((:onset 2565)
-            (:item-time nil)
-            (:item-internal-time 2565)
-            (:item-type :master)
-            (:attributes nil)
-            (:label nil))))))
-       (:buffer nil)
+       (:duration 2825.4422)
        (:n-samples 124602)
        (:n-channels 1)
        (:sample-rate 44100)
@@ -155,24 +59,23 @@
        (:sample-size 16)))
      (:add-slots
       ((:markers (:list 15 125 306 514 782 1084 1462 1775 2217 2565))
+       (:gain 1.0)
+       (:access-from-file nil)
        (:file-pathname
         (:pathname
          (:directory
-          (:absolute
-           "Users"
-           "bresson"
+          (:relative
+           :up
+           :up
+           :up
+           :up
            "_SHARED-FILES"
            "IN-FILES"
            "SOUNDFILES"))
          (:device :unspecific)
-         (:host nil)
+         (:host :unspecific)
          (:name "Bassclarinet1")
-         (:type "aif")))
-       (:sample-rate 44100)
-       (:n-channels 1)
-       (:n-samples 124602)
-       (:gain 1.0)
-       (:access-from-file nil)))))
+         (:type "aif")))))))
    (:id 0))
   (:box
    (:type :object)
@@ -188,10 +91,8 @@
    (:roundness nil)
    (:text-font (:font (:face "Verdana") (:size 10) (:style :italic)))
    (:align :center)
-   (:name nil)
    (:display :mini-view)
    (:showname nil)
-   (:group-id nil)
    (:lock nil)
    (:lambda nil)
    (:inputs
@@ -473,20 +374,7 @@
           38.18107
           29.01868
           30.192336
-          33.659077)))))
-     (:add-slots
-      ((:field-names
-        (:list
-         "t"
-         "Frequency"
-         "Energy"
-         "Periodicity"
-         "AC1"
-         "Loudness"
-         "Centroid"
-         "Spread"
-         "Skewness"
-         "Kurtosis"))))))
+          33.659077)))))))
    (:id 1))
   (:box
    (:type :function)
@@ -495,13 +383,14 @@
    (:name "mat-trans")
    (:x 233)
    (:y 515)
-   (:w 88)
-   (:h 30)
+   (:w 92)
+   (:h 29)
    (:color nil)
    (:border nil)
    (:roundness nil)
    (:text-font nil)
    (:align nil)
+   (:icon :left)
    (:lock nil)
    (:lambda nil)
    (:inputs
@@ -513,7 +402,7 @@
    (:outputs (:output (:name "out") (:reactive t)))
    (:id 2))
   (:box
-   (:library "om-iae")
+   (:library "iae")
    (:type :object)
    (:reference (:symbol "IAE" "IAE"))
    (:group-id nil)
@@ -527,10 +416,8 @@
    (:roundness nil)
    (:text-font (:font (:face "Verdana") (:size 10) (:style :italic)))
    (:align :center)
-   (:name nil)
    (:display :mini-view)
    (:showname nil)
-   (:group-id nil)
    (:lock :eval-once)
    (:lambda nil)
    (:inputs
@@ -565,102 +452,7 @@
           (:class sound)
           (:slots
            ((:onset 0)
-            (:duration 2565)
-            (:interpol (:number-or-nil (:number 50) (:t-or-nil nil)))
-            (:default-frame-type marker-frame)
-            (:frames
-             (:list
-              (:object
-               (:class marker-frame)
-               (:slots
-                ((:onset 15)
-                 (:item-time nil)
-                 (:item-internal-time 15)
-                 (:item-type :master)
-                 (:attributes nil)
-                 (:label nil))))
-              (:object
-               (:class marker-frame)
-               (:slots
-                ((:onset 125)
-                 (:item-time nil)
-                 (:item-internal-time 125)
-                 (:item-type 125)
-                 (:attributes nil)
-                 (:label nil))))
-              (:object
-               (:class marker-frame)
-               (:slots
-                ((:onset 306)
-                 (:item-time nil)
-                 (:item-internal-time 306)
-                 (:item-type 306)
-                 (:attributes nil)
-                 (:label nil))))
-              (:object
-               (:class marker-frame)
-               (:slots
-                ((:onset 514)
-                 (:item-time nil)
-                 (:item-internal-time 514)
-                 (:item-type 514)
-                 (:attributes nil)
-                 (:label nil))))
-              (:object
-               (:class marker-frame)
-               (:slots
-                ((:onset 782)
-                 (:item-time nil)
-                 (:item-internal-time 782)
-                 (:item-type 782)
-                 (:attributes nil)
-                 (:label nil))))
-              (:object
-               (:class marker-frame)
-               (:slots
-                ((:onset 1084)
-                 (:item-time nil)
-                 (:item-internal-time 1084)
-                 (:item-type 1084)
-                 (:attributes nil)
-                 (:label nil))))
-              (:object
-               (:class marker-frame)
-               (:slots
-                ((:onset 1462)
-                 (:item-time nil)
-                 (:item-internal-time 1462)
-                 (:item-type 1462)
-                 (:attributes nil)
-                 (:label nil))))
-              (:object
-               (:class marker-frame)
-               (:slots
-                ((:onset 1775)
-                 (:item-time nil)
-                 (:item-internal-time 1775)
-                 (:item-type 1775)
-                 (:attributes nil)
-                 (:label nil))))
-              (:object
-               (:class marker-frame)
-               (:slots
-                ((:onset 2217)
-                 (:item-time nil)
-                 (:item-internal-time 2217)
-                 (:item-type 2217)
-                 (:attributes nil)
-                 (:label nil))))
-              (:object
-               (:class marker-frame)
-               (:slots
-                ((:onset 2565)
-                 (:item-time nil)
-                 (:item-internal-time 2565)
-                 (:item-type :master)
-                 (:attributes nil)
-                 (:label nil))))))
-            (:buffer nil)
+            (:duration 2825.4422)
             (:n-samples 124602)
             (:n-channels 1)
             (:sample-rate 44100)
@@ -669,25 +461,25 @@
           (:add-slots
            ((:markers
              (:list 15 125 306 514 782 1084 1462 1775 2217 2565))
+            (:gain 1.0)
+            (:access-from-file nil)
             (:file-pathname
              (:pathname
               (:directory
-               (:absolute
-                "Users"
-                "bresson"
+               (:relative
+                :up
+                :up
+                :up
+                :up
                 "_SHARED-FILES"
                 "IN-FILES"
                 "SOUNDFILES"))
               (:device :unspecific)
-              (:host nil)
+              (:host :unspecific)
               (:name "Bassclarinet1")
-              (:type "aif")))
-            (:sample-rate 44100)
-            (:n-channels 1)
-            (:n-samples 124602)
-            (:gain 1.0)
-            (:access-from-file nil))))))))
-     (:add-slots ((:channels 1) (:pipo-module "descr") (:chop nil)))))
+              (:type "aif"))))))))))
+     (:add-slots
+      ((:channels 1) (:pipo-module "descr") (:segmentation nil)))))
    (:id 3))
   (:box
    (:type :function)
@@ -696,13 +488,14 @@
    (:name "descriptors")
    (:x 125)
    (:y 272)
-   (:w 93)
-   (:h 30)
+   (:w 98)
+   (:h 29)
    (:color nil)
    (:border nil)
    (:roundness nil)
    (:text-font nil)
    (:align nil)
+   (:icon :left)
    (:lock nil)
    (:lambda nil)
    (:inputs
@@ -714,20 +507,21 @@
    (:outputs (:output (:name "out") (:reactive nil)))
    (:id 4))
   (:box
-   (:library "om-iae")
+   (:library "iae")
    (:type :function)
    (:reference (:symbol "GET-SOUND-DESCRIPTORS" "IAE"))
    (:group-id nil)
    (:name "get-sound-descriptors")
    (:x 464)
    (:y 277)
-   (:w 149)
-   (:h 30)
+   (:w 161)
+   (:h 29)
    (:color nil)
    (:border nil)
    (:roundness nil)
    (:text-font nil)
    (:align nil)
+   (:icon :left)
    (:lock nil)
    (:lambda :lambda)
    (:inputs
@@ -777,7 +571,7 @@
    (:x 452)
    (:y 206)
    (:w 191)
-   (:h 38)
+   (:h 53)
    (:fgcolor nil)
    (:bgcolor nil)
    (:border nil)
@@ -794,13 +588,14 @@
    (:name "cdr")
    (:x 713)
    (:y 170)
-   (:w 54)
-   (:h 30)
+   (:w 55)
+   (:h 29)
    (:color nil)
    (:border nil)
    (:roundness nil)
    (:text-font nil)
    (:align nil)
+   (:icon :left)
    (:lock nil)
    (:lambda nil)
    (:inputs
@@ -818,13 +613,14 @@
    (:name "butlast")
    (:x 619)
    (:y 170)
-   (:w 72)
-   (:h 30)
+   (:w 75)
+   (:h 29)
    (:color nil)
    (:border nil)
    (:roundness nil)
    (:text-font nil)
    (:align nil)
+   (:icon :left)
    (:lock nil)
    (:lambda nil)
    (:inputs
@@ -839,7 +635,7 @@
    (:x 659)
    (:y 201)
    (:w 61)
-   (:h 20)
+   (:h 38)
    (:fgcolor nil)
    (:bgcolor nil)
    (:border nil)
@@ -852,7 +648,7 @@
    (:x 746)
    (:y 201)
    (:w 61)
-   (:h 20)
+   (:h 38)
    (:fgcolor nil)
    (:bgcolor nil)
    (:border nil)
@@ -868,13 +664,14 @@
    (:name "mapcar")
    (:x 623)
    (:y 320)
-   (:w 75)
-   (:h 30)
+   (:w 77)
+   (:h 29)
    (:color nil)
    (:border nil)
    (:roundness nil)
    (:text-font nil)
    (:align nil)
+   (:icon :left)
    (:lock nil)
    (:lambda nil)
    (:inputs
@@ -909,10 +706,8 @@
    (:roundness nil)
    (:text-font (:font (:face "Verdana") (:size 10) (:style :italic)))
    (:align :center)
-   (:name "...")
    (:display :hidden)
    (:showname nil)
-   (:group-id nil)
    (:lock :locked)
    (:lambda nil)
    (:inputs
@@ -3374,13 +3169,14 @@
    (:name "nth")
    (:x 616)
    (:y 478)
-   (:w 55)
-   (:h 30)
+   (:w 56)
+   (:h 29)
    (:color nil)
    (:border nil)
    (:roundness nil)
    (:text-font nil)
    (:align nil)
+   (:icon :left)
    (:lock nil)
    (:lambda nil)
    (:inputs
@@ -3424,13 +3220,14 @@
    (:name "cons")
    (:x 128)
    (:y 344)
-   (:w 61)
-   (:h 30)
+   (:w 63)
+   (:h 29)
    (:color nil)
    (:border nil)
    (:roundness nil)
    (:text-font nil)
    (:align nil)
+   (:icon :left)
    (:lock nil)
    (:lambda nil)
    (:inputs
@@ -3448,7 +3245,7 @@
    (:id 16))
   (:box
    (:type :value)
-   (:reference simple-base-string)
+   (:reference (:symbol "SIMPLE-TEXT-STRING" "LISPWORKS"))
    (:group-id nil)
    (:name "value box")
    (:x 130)
@@ -3468,7 +3265,7 @@
    (:id 17))
   (:box
    (:type :value)
-   (:reference simple-base-string)
+   (:reference (:symbol "SIMPLE-TEXT-STRING" "LISPWORKS"))
    (:group-id nil)
    (:name "value box")
    (:x 337)
@@ -3501,6 +3298,7 @@
    (:min-value 0)
    (:max-value 8)
    (:increment 1)
+   (:decimals 0)
    (:orientation :horizontal)
    (:inputs)
    (:outputs (:output (:name "value") (:reactive t)))
@@ -3543,83 +3341,23 @@
      "Kurtosis"))
    (:id 20)))
  (:connections
-  (:connection
-   (:from (:box 0 :out 0))
-   (:to (:box 3 :in 1))
-   (:attributes (:color nil :style nil :modif nil)))
-  (:connection
-   (:from (:box 0 :out 1))
-   (:to (:box 9 :in 0))
-   (:attributes (:color nil :style nil :modif nil)))
-  (:connection
-   (:from (:box 0 :out 1))
-   (:to (:box 8 :in 0))
-   (:attributes (:color nil :style nil :modif nil)))
-  (:connection
-   (:from (:box 2 :out 0))
-   (:to (:box 1 :in 1))
-   (:attributes (:color nil :style nil :modif nil)))
-  (:connection
-   (:from (:box 3 :out 0))
-   (:to (:box 4 :in 0))
-   (:attributes (:color nil :style nil :modif nil)))
-  (:connection
-   (:from (:box 3 :out 0))
-   (:to (:box 5 :in 0))
-   (:attributes (:color nil :style nil :modif nil)))
-  (:connection
-   (:from (:box 4 :out 0))
-   (:to (:box 16 :in 1))
-   (:attributes (:color nil :style nil :modif nil)))
-  (:connection
-   (:from (:box 5 :out 0))
-   (:to (:box 12 :in 0))
-   (:attributes (:color nil :style nil :modif nil)))
-  (:connection
-   (:from (:box 6 :out 0))
-   (:to (:box 5 :in 1))
-   (:attributes (:color nil :style nil :modif nil)))
-  (:connection
-   (:from (:box 8 :out 0))
-   (:to (:box 12 :in 2))
-   (:attributes (:color nil :style nil :modif nil)))
-  (:connection
-   (:from (:box 9 :out 0))
-   (:to (:box 12 :in 1))
-   (:attributes (:color nil :style nil :modif nil)))
-  (:connection
-   (:from (:box 12 :out 0))
-   (:to (:box 13 :in 1))
-   (:attributes (:color nil :style nil :modif nil)))
-  (:connection
-   (:from (:box 13 :out 1))
-   (:to (:box 14 :in 1))
-   (:attributes (:color nil :style nil :modif nil)))
-  (:connection
-   (:from (:box 14 :out 0))
-   (:to (:box 2 :in 0))
-   (:attributes (:color nil :style nil :modif nil)))
-  (:connection
-   (:from (:box 15 :out 0))
-   (:to (:box 14 :in 0))
-   (:attributes (:color nil :style nil :modif nil)))
-  (:connection
-   (:from (:box 16 :out 0))
-   (:to (:box 20 :in 0))
-   (:attributes (:color nil :style nil :modif nil)))
-  (:connection
-   (:from (:box 17 :out 0))
-   (:to (:box 16 :in 0))
-   (:attributes (:color nil :style nil :modif nil)))
-  (:connection
-   (:from (:box 18 :out 0))
-   (:to (:box 3 :in 2))
-   (:attributes (:color nil :style nil :modif nil)))
-  (:connection
-   (:from (:box 19 :out 0))
-   (:to (:box 15 :in 0))
-   (:attributes (:color nil :style nil :modif nil)))
-  (:connection
-   (:from (:box 20 :out 0))
-   (:to (:box 1 :in 2))
-   (:attributes (:color nil :style nil :modif nil)))))
+  (:connection (:from (:box 0 :out 0)) (:to (:box 3 :in 1)))
+  (:connection (:from (:box 0 :out 1)) (:to (:box 9 :in 0)))
+  (:connection (:from (:box 0 :out 1)) (:to (:box 8 :in 0)))
+  (:connection (:from (:box 2 :out 0)) (:to (:box 1 :in 1)))
+  (:connection (:from (:box 3 :out 0)) (:to (:box 4 :in 0)))
+  (:connection (:from (:box 3 :out 0)) (:to (:box 5 :in 0)))
+  (:connection (:from (:box 4 :out 0)) (:to (:box 16 :in 1)))
+  (:connection (:from (:box 5 :out 0)) (:to (:box 12 :in 0)))
+  (:connection (:from (:box 6 :out 0)) (:to (:box 5 :in 1)))
+  (:connection (:from (:box 8 :out 0)) (:to (:box 12 :in 2)))
+  (:connection (:from (:box 9 :out 0)) (:to (:box 12 :in 1)))
+  (:connection (:from (:box 12 :out 0)) (:to (:box 13 :in 1)))
+  (:connection (:from (:box 13 :out 1)) (:to (:box 14 :in 1)))
+  (:connection (:from (:box 14 :out 0)) (:to (:box 2 :in 0)))
+  (:connection (:from (:box 15 :out 0)) (:to (:box 14 :in 0)))
+  (:connection (:from (:box 16 :out 0)) (:to (:box 20 :in 0)))
+  (:connection (:from (:box 17 :out 0)) (:to (:box 16 :in 0)))
+  (:connection (:from (:box 18 :out 0)) (:to (:box 3 :in 2)))
+  (:connection (:from (:box 19 :out 0)) (:to (:box 15 :in 0)))
+  (:connection (:from (:box 20 :out 0)) (:to (:box 1 :in 2)))))

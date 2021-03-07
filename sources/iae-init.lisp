@@ -1,7 +1,6 @@
 
 ;============================================================================
-; OM-IAE (ISMM Audio Engine)
-; Author: Jean Bresson, Diemo Schwarz
+; OM# IAE (ISMM Audio Engine)
 ;============================================================================
 ;
 ;   This program is free software. For information on usage 
@@ -25,7 +24,7 @@
 (defun load-iae-lib ()
   (let ((libpath (merge-pathnames 
                   "lib/mac/iaeom.framework/iaeom" 
-                  (om::mypathname (om::find-library "om-iae")))))
+                  (om::mypathname (om::find-library "iae")))))
     (om-fi::om-load-foreign-library
            "LIBIAEOM"
            `((:macosx ,libpath)

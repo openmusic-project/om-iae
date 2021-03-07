@@ -1,6 +1,5 @@
 ;============================================================================
-; OM-IAE (ISMM Audio Engine)
-; Author: Jean Bresson, Diemo Schwarz
+; OM# IAE (ISMM Audio Engine)
 ;============================================================================
 ;
 ;   This program is free software. For information on usage 

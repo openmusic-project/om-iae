@@ -1,9 +1,7 @@
 
 ;;;===================================================
-;;;
-;;; OM-IAE (ISMM Audio Engine)
+;;; OM# IAE (ISMM Audio Engine)
 ;;; Jean Bresson, Diemo Schwarz
-;;;
 ;;;===================================================
 
 (:om-lib
@@ -23,5 +21,5 @@
    "iae::iae-synth" "iae::iae-synth-desc" 
    "iae::iae-dump"
    ))
- (:author "J. Bresson, D. Schwarz (2016-2019)")
- (:doc "Use Ircam's ISMM Audio Engine (IAE) in OM7."))
+ (:author "J. Bresson, D. Schwarz (2016-2020)")
+ (:doc "Binding and control of Ircam's ISMM Audio Engine (IAE) in OM#."))

@@ -1,11 +1,12 @@
 
 (:patch
- (:om-version 7.0)
  (:name "04-iae-granular-synthesis")
  (:doc "")
  (:info
   (:created "2016/01/20 12:32:57")
-  (:modified "2019/10/04 11:10:36"))
+  (:modified "2021/03/07 11:18:07")
+  (:by "om-sharp")
+  (:version 1.0201))
  (:window (:size (888 570)) (:position (777 449)))
  (:grid nil)
  (:lock nil)
@@ -70,7 +71,7 @@
   (:comment
    (:x 154.669921875D0)
    (:y 304)
-   (:w 29)
+   (:w 38)
    (:h 20)
    (:fgcolor (:color 0.0 0.0 0.0 1.0))
    (:bgcolor nil)
@@ -94,11 +95,9 @@
    (:roundness nil)
    (:text-font (:font (:face "Verdana") (:size 10) (:style :italic)))
    (:align :center)
-   (:name "SOUND")
    (:display :mini-view)
    (:showname nil)
    (:show-markers t)
-   (:group-id 0)
    (:lock nil)
    (:lambda nil)
    (:inputs
@@ -116,10 +115,6 @@
      (:slots
       ((:onset 0)
        (:duration 0)
-       (:interpol (:number-or-nil (:number 50) (:t-or-nil nil)))
-       (:default-frame-type marker-frame)
-       (:frames nil)
-       (:buffer nil)
        (:n-samples nil)
        (:n-channels nil)
        (:sample-rate nil)
@@ -127,12 +122,9 @@
        (:sample-size 16)))
      (:add-slots
       ((:markers nil)
-       (:file-pathname nil)
-       (:sample-rate nil)
-       (:n-channels nil)
-       (:n-samples nil)
        (:gain 1.0)
-       (:access-from-file nil)))))
+       (:access-from-file nil)
+       (:file-pathname nil)))))
    (:id 4))
   (:box
    (:type :object)
@@ -148,11 +140,9 @@
    (:roundness nil)
    (:text-font (:font (:face "Verdana") (:size 10) (:style :italic)))
    (:align :center)
-   (:name "SOUND")
    (:display :mini-view)
    (:showname nil)
    (:show-markers t)
-   (:group-id 0)
    (:lock :locked)
    (:lambda nil)
    (:inputs
@@ -169,11 +159,7 @@
      (:class sound)
      (:slots
       ((:onset 0)
-       (:duration 0)
-       (:interpol (:number-or-nil (:number 50) (:t-or-nil nil)))
-       (:default-frame-type act-bundle)
-       (:frames nil)
-       (:buffer nil)
+       (:duration 2825.4422)
        (:n-samples 124602)
        (:n-channels 1)
        (:sample-rate 44100)
@@ -181,24 +167,23 @@
        (:sample-size 16)))
      (:add-slots
       ((:markers nil)
+       (:gain 1.0)
+       (:access-from-file nil)
        (:file-pathname
         (:pathname
          (:directory
-          (:absolute
-           "Users"
-           "bresson"
+          (:relative
+           :up
+           :up
+           :up
+           :up
            "_SHARED-FILES"
            "IN-FILES"
            "SOUNDFILES"))
          (:device :unspecific)
-         (:host nil)
+         (:host :unspecific)
          (:name "Bassclarinet1")
-         (:type "aif")))
-       (:sample-rate 44100)
-       (:n-channels 1)
-       (:n-samples 124602)
-       (:gain 1.0)
-       (:access-from-file nil)))))
+         (:type "aif")))))))
    (:id 5))
   (:box
    (:type :object)
@@ -214,11 +199,9 @@
    (:roundness nil)
    (:text-font (:font (:face "Verdana") (:size 10) (:style :italic)))
    (:align :center)
-   (:name "SOUND")
    (:display :mini-view)
    (:showname nil)
    (:show-markers t)
-   (:group-id 0)
    (:lock :locked)
    (:lambda nil)
    (:inputs
@@ -235,11 +218,7 @@
      (:class sound)
      (:slots
       ((:onset 0)
-       (:duration 0)
-       (:interpol (:number-or-nil (:number 50) (:t-or-nil nil)))
-       (:default-frame-type marker-frame)
-       (:frames nil)
-       (:buffer nil)
+       (:duration 3202.9375)
        (:n-samples 153741)
        (:n-channels 1)
        (:sample-rate 48000)
@@ -247,24 +226,23 @@
        (:sample-size 24)))
      (:add-slots
       ((:markers nil)
+       (:gain 1.0)
+       (:access-from-file nil)
        (:file-pathname
         (:pathname
          (:directory
-          (:absolute
-           "Users"
-           "bresson"
+          (:relative
+           :up
+           :up
+           :up
+           :up
            "_SHARED-FILES"
            "IN-FILES"
            "SOUNDFILES"))
          (:device :unspecific)
-         (:host nil)
+         (:host :unspecific)
          (:name "basmba")
-         (:type "aiff")))
-       (:sample-rate 48000)
-       (:n-channels 1)
-       (:n-samples 153741)
-       (:gain 1.0)
-       (:access-from-file nil)))))
+         (:type "aiff")))))))
    (:id 6))
   (:box
    (:type :function)
@@ -274,12 +252,13 @@
    (:x 270)
    (:y 145)
    (:w 109.1025390625D0)
-   (:h 30)
+   (:h 29)
    (:color (:color 0.9 0.9 0.9 1.0))
    (:border 1.5)
    (:roundness nil)
    (:text-font nil)
    (:align :left)
+   (:icon :left)
    (:lock nil)
    (:lambda nil)
    (:inputs
@@ -307,11 +286,9 @@
    (:roundness nil)
    (:text-font (:font (:face "Verdana") (:size 10) (:style :italic)))
    (:align :center)
-   (:name "SOUND")
    (:display :mini-view)
    (:showname nil)
    (:show-markers t)
-   (:group-id 0)
    (:lock :locked)
    (:lambda nil)
    (:inputs
@@ -328,11 +305,7 @@
      (:class sound)
      (:slots
       ((:onset 0)
-       (:duration 0)
-       (:interpol (:number-or-nil (:number 50) (:t-or-nil nil)))
-       (:default-frame-type act-bundle)
-       (:frames nil)
-       (:buffer nil)
+       (:duration 5047.778)
        (:n-samples 222607)
        (:n-channels 1)
        (:sample-rate 44100)
@@ -340,24 +313,23 @@
        (:sample-size 16)))
      (:add-slots
       ((:markers nil)
+       (:gain 1.0)
+       (:access-from-file nil)
        (:file-pathname
         (:pathname
          (:directory
-          (:absolute
-           "Users"
-           "bresson"
+          (:relative
+           :up
+           :up
+           :up
+           :up
            "_SHARED-FILES"
            "IN-FILES"
            "SOUNDFILES"))
          (:device :unspecific)
-         (:host nil)
+         (:host :unspecific)
          (:name "drumloop")
-         (:type "aif")))
-       (:sample-rate 44100)
-       (:n-channels 1)
-       (:n-samples 222607)
-       (:gain 1.0)
-       (:access-from-file nil)))))
+         (:type "aif")))))))
    (:id 8))
   (:box
    (:type :object)
@@ -373,11 +345,9 @@
    (:roundness nil)
    (:text-font (:font (:face "Verdana") (:size 10) (:style :italic)))
    (:align :center)
-   (:name "SOUND")
    (:display :mini-view)
    (:showname nil)
    (:show-markers t)
-   (:group-id 0)
    (:lock :locked)
    (:lambda nil)
    (:inputs
@@ -394,11 +364,7 @@
      (:class sound)
      (:slots
       ((:onset 0)
-       (:duration 0)
-       (:interpol (:number-or-nil (:number 50) (:t-or-nil nil)))
-       (:default-frame-type act-bundle)
-       (:frames nil)
-       (:buffer nil)
+       (:duration 5943.855)
        (:n-samples 262124)
        (:n-channels 1)
        (:sample-rate 44100)
@@ -406,30 +372,29 @@
        (:sample-size 16)))
      (:add-slots
       ((:markers nil)
+       (:gain 1.0)
+       (:access-from-file nil)
        (:file-pathname
         (:pathname
          (:directory
-          (:absolute
-           "Users"
-           "bresson"
+          (:relative
+           :up
+           :up
+           :up
+           :up
            "_SHARED-FILES"
            "IN-FILES"
            "SOUNDFILES"))
          (:device :unspecific)
-         (:host nil)
+         (:host :unspecific)
          (:name "guitar-lick")
-         (:type "aif")))
-       (:sample-rate 44100)
-       (:n-channels 1)
-       (:n-samples 262124)
-       (:gain 1.0)
-       (:access-from-file nil)))))
+         (:type "aif")))))))
    (:id 9))
   (:comment
    (:x 63)
    (:y 294)
    (:w 45)
-   (:h 29)
+   (:h 32)
    (:fgcolor (:color 0.0 0.0 0.0 1.0))
    (:bgcolor nil)
    (:border nil)
@@ -441,7 +406,7 @@
   (:comment
    (:x 111.97265625D0)
    (:y 303)
-   (:w 30)
+   (:w 38)
    (:h 20)
    (:fgcolor (:color 0.0 0.0 0.0 1.0))
    (:bgcolor nil)
@@ -455,7 +420,7 @@
    (:x 495.94677734375D0)
    (:y 78)
    (:w 107.0D0)
-   (:h 31)
+   (:h 32)
    (:fgcolor (:color 0.0 0.0 0.0 1.0))
    (:bgcolor nil)
    (:border nil)
@@ -467,20 +432,21 @@
 (database)")
    (:id 12))
   (:box
-   (:library "om-iae")
+   (:library "iae")
    (:type :function)
    (:reference (:symbol "IAE-DESCRIPTORS" "IAE"))
    (:group-id nil)
    (:name "iae-descriptors")
    (:x 693)
    (:y 311)
-   (:w 111)
-   (:h 30)
+   (:w 120)
+   (:h 29)
    (:color nil)
    (:border nil)
    (:roundness nil)
    (:text-font nil)
    (:align nil)
+   (:icon :left)
    (:lock nil)
    (:lambda nil)
    (:inputs
@@ -506,6 +472,7 @@
    (:multiple-selection nil)
    (:cell-height 12)
    (:cell-font (:font (:face "Calibri") (:size 12) (:style :plain)))
+   (:output-mode :value)
    (:inputs
     (:input (:type :key) (:name "items") (:value nil) (:reactive nil)))
    (:outputs (:output (:name "value") (:reactive nil)))
@@ -524,7 +491,7 @@
    (:selection (:list 7))
    (:id 14))
   (:box
-   (:library "om-iae")
+   (:library "iae")
    (:type :object)
    (:reference (:symbol "IAE" "IAE"))
    (:group-id nil)
@@ -538,10 +505,8 @@
    (:roundness nil)
    (:text-font (:font (:face "Calibri") (:size 12) (:style :italic)))
    (:align :center)
-   (:name nil)
    (:display :mini-view)
    (:showname nil)
-   (:group-id nil)
    (:lock nil)
    (:lambda nil)
    (:inputs
@@ -576,11 +541,7 @@
           (:class sound)
           (:slots
            ((:onset 0)
-            (:duration 0)
-            (:interpol (:number-or-nil (:number 50) (:t-or-nil nil)))
-            (:default-frame-type act-bundle)
-            (:frames nil)
-            (:buffer nil)
+            (:duration 2825.4422)
             (:n-samples 124602)
             (:n-channels 1)
             (:sample-rate 44100)
@@ -588,33 +549,28 @@
             (:sample-size 16)))
           (:add-slots
            ((:markers nil)
+            (:gain 1.0)
+            (:access-from-file nil)
             (:file-pathname
              (:pathname
               (:directory
-               (:absolute
-                "Users"
-                "bresson"
+               (:relative
+                :up
+                :up
+                :up
+                :up
                 "_SHARED-FILES"
                 "IN-FILES"
                 "SOUNDFILES"))
               (:device :unspecific)
-              (:host nil)
+              (:host :unspecific)
               (:name "Bassclarinet1")
-              (:type "aif")))
-            (:sample-rate 44100)
-            (:n-channels 1)
-            (:n-samples 124602)
-            (:gain 1.0)
-            (:access-from-file nil))))
+              (:type "aif"))))))
          (:object
           (:class sound)
           (:slots
            ((:onset 0)
-            (:duration 0)
-            (:interpol (:number-or-nil (:number 50) (:t-or-nil nil)))
-            (:default-frame-type marker-frame)
-            (:frames nil)
-            (:buffer nil)
+            (:duration 3202.9375)
             (:n-samples 153741)
             (:n-channels 1)
             (:sample-rate 48000)
@@ -622,33 +578,28 @@
             (:sample-size 24)))
           (:add-slots
            ((:markers nil)
+            (:gain 1.0)
+            (:access-from-file nil)
             (:file-pathname
              (:pathname
               (:directory
-               (:absolute
-                "Users"
-                "bresson"
+               (:relative
+                :up
+                :up
+                :up
+                :up
                 "_SHARED-FILES"
                 "IN-FILES"
                 "SOUNDFILES"))
               (:device :unspecific)
-              (:host nil)
+              (:host :unspecific)
               (:name "basmba")
-              (:type "aiff")))
-            (:sample-rate 48000)
-            (:n-channels 1)
-            (:n-samples 153741)
-            (:gain 1.0)
-            (:access-from-file nil))))
+              (:type "aiff"))))))
          (:object
           (:class sound)
           (:slots
            ((:onset 0)
-            (:duration 0)
-            (:interpol (:number-or-nil (:number 50) (:t-or-nil nil)))
-            (:default-frame-type act-bundle)
-            (:frames nil)
-            (:buffer nil)
+            (:duration 5047.778)
             (:n-samples 222607)
             (:n-channels 1)
             (:sample-rate 44100)
@@ -656,33 +607,28 @@
             (:sample-size 16)))
           (:add-slots
            ((:markers nil)
+            (:gain 1.0)
+            (:access-from-file nil)
             (:file-pathname
              (:pathname
               (:directory
-               (:absolute
-                "Users"
-                "bresson"
+               (:relative
+                :up
+                :up
+                :up
+                :up
                 "_SHARED-FILES"
                 "IN-FILES"
                 "SOUNDFILES"))
               (:device :unspecific)
-              (:host nil)
+              (:host :unspecific)
               (:name "drumloop")
-              (:type "aif")))
-            (:sample-rate 44100)
-            (:n-channels 1)
-            (:n-samples 222607)
-            (:gain 1.0)
-            (:access-from-file nil))))
+              (:type "aif"))))))
          (:object
           (:class sound)
           (:slots
            ((:onset 0)
-            (:duration 0)
-            (:interpol (:number-or-nil (:number 50) (:t-or-nil nil)))
-            (:default-frame-type act-bundle)
-            (:frames nil)
-            (:buffer nil)
+            (:duration 5943.855)
             (:n-samples 262124)
             (:n-channels 1)
             (:sample-rate 44100)
@@ -690,29 +636,29 @@
             (:sample-size 16)))
           (:add-slots
            ((:markers nil)
+            (:gain 1.0)
+            (:access-from-file nil)
             (:file-pathname
              (:pathname
               (:directory
-               (:absolute
-                "Users"
-                "bresson"
+               (:relative
+                :up
+                :up
+                :up
+                :up
                 "_SHARED-FILES"
                 "IN-FILES"
                 "SOUNDFILES"))
               (:device :unspecific)
-              (:host nil)
+              (:host :unspecific)
               (:name "guitar-lick")
-              (:type "aif")))
-            (:sample-rate 44100)
-            (:n-channels 1)
-            (:n-samples 262124)
-            (:gain 1.0)
-            (:access-from-file nil))))))))
-     (:add-slots ((:channels 1) (:pipo-module "descr") (:chop nil)))))
+              (:type "aif"))))))))))
+     (:add-slots
+      ((:channels 1) (:pipo-module "descr") (:segmentation nil)))))
    (:id 15))
   (:box
    (:type :value)
-   (:reference simple-base-string)
+   (:reference (:symbol "SIMPLE-TEXT-STRING" "LISPWORKS"))
    (:group-id nil)
    (:name "value box")
    (:x 402)
@@ -731,7 +677,7 @@
    (:value "descr")
    (:id 16))
   (:box
-   (:library "om-iae")
+   (:library "iae")
    (:type :function)
    (:reference (:symbol "IAE-SYNTH" "IAE"))
    (:group-id nil)
@@ -739,12 +685,13 @@
    (:x 59)
    (:y 385)
    (:w 149)
-   (:h 30)
+   (:h 29)
    (:color nil)
    (:border nil)
    (:roundness nil)
    (:text-font nil)
    (:align nil)
+   (:icon :left)
    (:lock nil)
    (:lambda nil)
    (:inputs
@@ -760,7 +707,7 @@
      (:reactive nil))
     (:input
      (:type :standard)
-     (:name "POS")
+     (:name "POSITION")
      (:value nil)
      (:reactive nil))
     (:input
@@ -774,7 +721,7 @@
    (:x 48)
    (:y 25)
    (:w 172)
-   (:h 29)
+   (:h 25)
    (:fgcolor nil)
    (:bgcolor nil)
    (:border (:number-or-nil (:number 0.0) (:t-or-nil t)))
@@ -790,7 +737,7 @@
    (:x 466.94677734375D0)
    (:y 191)
    (:w 107.0D0)
-   (:h 31)
+   (:h 32)
    (:fgcolor (:color 0.0 0.0 0.0 1.0))
    (:bgcolor nil)
    (:border nil)
@@ -803,7 +750,7 @@
    (:x 203)
    (:y 361)
    (:w 146)
-   (:h 44)
+   (:h 42)
    (:fgcolor nil)
    (:bgcolor nil)
    (:border (:number-or-nil (:number 0.0) (:t-or-nil t)))
@@ -832,20 +779,21 @@
    (:text "Synthesize a grain by request of a descriptor value")
    (:id 21))
   (:box
-   (:library "om-iae")
+   (:library "iae")
    (:type :function)
    (:reference (:symbol "IAE-SYNTH-DESC" "IAE"))
    (:group-id nil)
    (:name "iae-synth-desc")
    (:x 399)
    (:y 411)
-   (:w 109)
-   (:h 30)
+   (:w 120)
+   (:h 29)
    (:color nil)
    (:border nil)
    (:roundness nil)
    (:text-font nil)
    (:align nil)
+   (:icon :left)
    (:lock nil)
    (:lambda nil)
    (:inputs
@@ -950,11 +898,9 @@
    (:roundness nil)
    (:text-font (:font (:face "Verdana") (:size 10) (:style :italic)))
    (:align :center)
-   (:name "SOUND")
    (:display :mini-view)
    (:showname nil)
    (:show-markers t)
-   (:group-id 0)
    (:lock nil)
    (:lambda nil)
    (:inputs
@@ -971,38 +917,22 @@
      (:class sound)
      (:slots
       ((:onset 0)
-       (:duration 0)
-       (:interpol (:number-or-nil (:number 50) (:t-or-nil nil)))
-       (:default-frame-type marker-frame)
-       (:frames nil)
-       (:buffer nil)
-       (:n-samples nil)
-       (:n-channels nil)
-       (:sample-rate nil)
+       (:duration 500.02087)
+       (:n-samples 24001)
+       (:n-channels 1)
+       (:sample-rate 48000)
        (:smpl-type :float)
        (:sample-size 16)))
      (:add-slots
       ((:markers nil)
-       (:file-pathname nil)
-       (:sample-rate nil)
-       (:n-channels nil)
-       (:n-samples nil)
        (:gain 1.0)
-       (:access-from-file nil)))))
+       (:access-from-file nil)
+       (:file-pathname nil)))))
    (:id 26)))
  (:connections
-  (:connection
-   (:from (:box 0 :out 0))
-   (:to (:box 17 :in 3))
-   (:attributes (:color nil :style nil :modif nil)))
-  (:connection
-   (:from (:box 1 :out 0))
-   (:to (:box 17 :in 2))
-   (:attributes (:color nil :style nil :modif nil)))
-  (:connection
-   (:from (:box 2 :out 0))
-   (:to (:box 17 :in 1))
-   (:attributes (:color nil :style nil :modif nil)))
+  (:connection (:from (:box 0 :out 0)) (:to (:box 17 :in 3)))
+  (:connection (:from (:box 1 :out 0)) (:to (:box 17 :in 2)))
+  (:connection (:from (:box 2 :out 0)) (:to (:box 17 :in 1)))
   (:connection
    (:from (:box 5 :out 0))
    (:to (:box 7 :in 0))
@@ -1013,10 +943,7 @@
    (:to (:box 7 :in 1))
    (:attributes
     (:color (:color 0.3 0.3 0.3 1.0) :style nil :modif nil)))
-  (:connection
-   (:from (:box 7 :out 0))
-   (:to (:box 15 :in 1))
-   (:attributes (:color nil :style nil :modif nil)))
+  (:connection (:from (:box 7 :out 0)) (:to (:box 15 :in 1)))
   (:connection
    (:from (:box 8 :out 0))
    (:to (:box 7 :in 2))
@@ -1027,43 +954,13 @@
    (:to (:box 7 :in 3))
    (:attributes
     (:color (:color 0.3 0.3 0.3 1.0) :style nil :modif nil)))
-  (:connection
-   (:from (:box 13 :out 0))
-   (:to (:box 14 :in 0))
-   (:attributes (:color nil :style nil :modif nil)))
-  (:connection
-   (:from (:box 15 :out 0))
-   (:to (:box 13 :in 0))
-   (:attributes (:color nil :style nil :modif nil)))
-  (:connection
-   (:from (:box 15 :out 0))
-   (:to (:box 17 :in 0))
-   (:attributes (:color nil :style nil :modif nil)))
-  (:connection
-   (:from (:box 15 :out 0))
-   (:to (:box 22 :in 0))
-   (:attributes (:color nil :style nil :modif nil)))
-  (:connection
-   (:from (:box 16 :out 0))
-   (:to (:box 15 :in 2))
-   (:attributes (:color nil :style nil :modif nil)))
-  (:connection
-   (:from (:box 17 :out 0))
-   (:to (:box 4 :in 0))
-   (:attributes (:color nil :style nil :modif nil)))
-  (:connection
-   (:from (:box 22 :out 0))
-   (:to (:box 26 :in 0))
-   (:attributes (:color nil :style nil :modif nil)))
-  (:connection
-   (:from (:box 23 :out 0))
-   (:to (:box 22 :in 1))
-   (:attributes (:color nil :style nil :modif nil)))
-  (:connection
-   (:from (:box 24 :out 0))
-   (:to (:box 22 :in 2))
-   (:attributes (:color nil :style nil :modif nil)))
-  (:connection
-   (:from (:box 25 :out 0))
-   (:to (:box 22 :in 4))
-   (:attributes (:color nil :style nil :modif nil)))))
+  (:connection (:from (:box 13 :out 0)) (:to (:box 14 :in 0)))
+  (:connection (:from (:box 15 :out 0)) (:to (:box 13 :in 0)))
+  (:connection (:from (:box 15 :out 0)) (:to (:box 17 :in 0)))
+  (:connection (:from (:box 15 :out 0)) (:to (:box 22 :in 0)))
+  (:connection (:from (:box 16 :out 0)) (:to (:box 15 :in 2)))
+  (:connection (:from (:box 17 :out 0)) (:to (:box 4 :in 0)))
+  (:connection (:from (:box 22 :out 0)) (:to (:box 26 :in 0)))
+  (:connection (:from (:box 23 :out 0)) (:to (:box 22 :in 1)))
+  (:connection (:from (:box 24 :out 0)) (:to (:box 22 :in 2)))
+  (:connection (:from (:box 25 :out 0)) (:to (:box 22 :in 4)))))

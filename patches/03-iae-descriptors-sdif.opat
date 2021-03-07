@@ -1,12 +1,13 @@
 
 (:patch
- (:om-version 1.14E-4)
  (:name "03-iae-descriptors-sdif")
  (:doc "")
  (:info
   (:created "2017/12/22 16:32:44")
-  (:modified "2019/10/04 11:09:55"))
- (:window (:size (975 867)) (:position (477 124)))
+  (:modified "2021/03/07 11:17:27")
+  (:by "om-sharp")
+  (:version 1.0201))
+ (:window (:size (880 809)) (:position (477 124)))
  (:grid nil)
  (:lock nil)
  (:boxes
@@ -16,7 +17,7 @@
    (:group-id nil)
    (:name nil)
    (:x 31)
-   (:y 108)
+   (:y 38)
    (:w 130)
    (:h 53)
    (:color nil)
@@ -24,11 +25,9 @@
    (:roundness nil)
    (:text-font (:font (:face "Verdana") (:size 10) (:style :italic)))
    (:align :center)
-   (:name nil)
    (:display :mini-view)
    (:showname nil)
    (:show-markers t)
-   (:group-id nil)
    (:lock :locked)
    (:lambda nil)
    (:inputs
@@ -52,11 +51,7 @@
      (:class sound)
      (:slots
       ((:onset 0)
-       (:duration 0)
-       (:interpol (:number-or-nil (:number 50) (:t-or-nil nil)))
-       (:default-frame-type marker-frame)
-       (:frames nil)
-       (:buffer nil)
+       (:duration 5377.483)
        (:n-samples 237147)
        (:n-channels 1)
        (:sample-rate 44100)
@@ -64,25 +59,24 @@
        (:sample-size 16)))
      (:add-slots
       ((:markers nil)
+       (:gain 1.0)
+       (:access-from-file nil)
        (:file-pathname
         (:pathname
          (:directory
-          (:absolute
-           "Users"
-           "bresson"
+          (:relative
+           :up
+           :up
+           :up
+           :up
            "_SHARED-FILES"
            "WORKSPACES"
            "my-workspace"
            "in-files"))
          (:device :unspecific)
-         (:host nil)
+         (:host :unspecific)
          (:name "Bassclarinet1")
-         (:type "aif")))
-       (:sample-rate 44100)
-       (:n-channels 1)
-       (:n-samples 237147)
-       (:gain 1.0)
-       (:access-from-file nil)))))
+         (:type "aif")))))))
    (:id 0))
   (:box
    (:type :object)
@@ -90,7 +84,7 @@
    (:group-id nil)
    (:name nil)
    (:x 71.0D0)
-   (:y 556)
+   (:y 486)
    (:w 141)
    (:h 59)
    (:color nil)
@@ -98,10 +92,8 @@
    (:roundness nil)
    (:text-font (:font (:face "Verdana") (:size 10) (:style :italic)))
    (:align :center)
-   (:name nil)
    (:display :hidden)
    (:showname nil)
-   (:group-id nil)
    (:lock nil)
    (:lambda nil)
    (:inputs
@@ -116,16 +108,8 @@
    (:value
     (:object
      (:class sdiffile)
-     (:slots nil)
      (:add-slots
-      ((:file-pathname
-        (:pathname
-         (:directory (:absolute "Users" "bresson" "OM" "out-files"))
-         (:device :unspecific)
-         (:host nil)
-         (:name "descriptors")
-         (:type "sdif")))
-       (:file-map
+      ((:file-map
         (:list
          (:fstream-desc
           (:id 0)
@@ -150,22 +134,30 @@
              (:rmax 1)
              (:tmin 0.011632652953267098D0)
              (:tmax 5.352222124114633D0)
-             (:nf 231)))))))))))
+             (:nf 231)))))))
+       (:file-pathname
+        (:pathname
+         (:directory (:relative :up :up :up :up "OM" "out-files"))
+         (:device :unspecific)
+         (:host :unspecific)
+         (:name "descriptors")
+         (:type "sdif")))))))
    (:id 1))
   (:box
    (:type :function)
    (:reference outfile)
    (:group-id nil)
    (:name "outfile")
-   (:x 147)
-   (:y 3056/7)
-   (:w 70)
-   (:h 30)
+   (:x 146)
+   (:y 2566/7)
+   (:w 72)
+   (:h 29)
    (:color nil)
    (:border nil)
    (:roundness nil)
    (:text-font nil)
    (:align nil)
+   (:icon :left)
    (:lock nil)
    (:lambda nil)
    (:inputs
@@ -181,15 +173,16 @@
    (:reference getsdifdata)
    (:group-id nil)
    (:name "getsdifdata")
-   (:x 589)
-   (:y 388)
+   (:x 509)
+   (:y 318)
    (:w 193)
-   (:h 30)
+   (:h 29)
    (:color nil)
    (:border nil)
    (:roundness nil)
    (:text-font nil)
    (:align nil)
+   (:icon :left)
    (:lock nil)
    (:lambda nil)
    (:inputs
@@ -240,11 +233,11 @@
    (:id 3))
   (:box
    (:type :value)
-   (:reference simple-base-string)
+   (:reference (:symbol "SIMPLE-TEXT-STRING" "LISPWORKS"))
    (:group-id nil)
    (:name "value box")
-   (:x 372)
-   (:y 263)
+   (:x 385.808837890625D0)
+   (:y 193)
    (:w 53)
    (:h 30)
    (:color
@@ -263,8 +256,8 @@
    (:reference 2d-array)
    (:group-id nil)
    (:name nil)
-   (:x 607)
-   (:y 565)
+   (:x 530)
+   (:y 495)
    (:w 261)
    (:h 253)
    (:color nil)
@@ -272,10 +265,8 @@
    (:roundness nil)
    (:text-font (:font (:face "Verdana") (:size 10) (:style :italic)))
    (:align :center)
-   (:name nil)
    (:display :mini-view)
    (:showname nil)
-   (:group-id nil)
    (:lock nil)
    (:lambda nil)
    (:inputs
@@ -2404,34 +2395,23 @@
           1.0
           1.0
           1.0
-          1.0)))))
-     (:add-slots
-      ((:field-names
-        (:list
-         "TotalEnergy"
-         "FundamentalFrequency"
-         "SpectralCentroid"
-         "Loudness"
-         "Sharpness"
-         "Spread"
-         "HarmonicEnergy"
-         "Inharmonicity"
-         "Noisiness"))))))
+          1.0)))))))
    (:id 5))
   (:box
    (:type :function)
    (:reference flat)
    (:group-id nil)
    (:name "flat")
-   (:x 626)
-   (:y 452)
-   (:w 54)
-   (:h 30)
+   (:x 546)
+   (:y 382)
+   (:w 55)
+   (:h 29)
    (:color nil)
    (:border nil)
    (:roundness nil)
    (:text-font nil)
    (:align nil)
+   (:icon :left)
    (:lock nil)
    (:lambda nil)
    (:inputs
@@ -2452,8 +2432,8 @@
    (:reference fixnum)
    (:group-id nil)
    (:name "value box")
-   (:x 640)
-   (:y 420)
+   (:x 561)
+   (:y 350)
    (:w 32)
    (:h 30)
    (:color
@@ -2472,15 +2452,16 @@
    (:reference mat-trans)
    (:group-id nil)
    (:name "mat-trans")
-   (:x 604)
-   (:y 484)
-   (:w 88)
-   (:h 30)
+   (:x 522)
+   (:y 414)
+   (:w 92)
+   (:h 29)
    (:color nil)
    (:border nil)
    (:roundness nil)
    (:text-font nil)
    (:align nil)
+   (:icon :left)
    (:lock nil)
    (:lambda nil)
    (:inputs
@@ -2496,15 +2477,16 @@
    (:reference sdiftypedescription)
    (:group-id nil)
    (:name "sdiftypedescription")
-   (:x 751)
-   (:y 484)
-   (:w 133)
-   (:h 30)
+   (:x 671)
+   (:y 414)
+   (:w 140)
+   (:h 29)
    (:color nil)
    (:border nil)
    (:roundness nil)
    (:text-font nil)
    (:align nil)
+   (:icon :left)
    (:lock nil)
    (:lambda nil)
    (:inputs
@@ -2522,9 +2504,9 @@
    (:id 9))
   (:comment
    (:x 342)
-   (:y 35)
+   (:y 20)
    (:w 233)
-   (:h 30)
+   (:h 25)
    (:fgcolor nil)
    (:bgcolor nil)
    (:border (:number-or-nil (:number 0.0) (:t-or-nil t)))
@@ -2537,13 +2519,13 @@
    (:text "Save/Read the contenst of IAE as SDIF")
    (:id 10))
   (:box
-   (:library "om-iae")
+   (:library "iae")
    (:type :object)
    (:reference (:symbol "IAE" "IAE"))
    (:group-id nil)
    (:name nil)
    (:x 31)
-   (:y 203)
+   (:y 133)
    (:w 187)
    (:h 59)
    (:color nil)
@@ -2551,10 +2533,8 @@
    (:roundness nil)
    (:text-font (:font (:face "Verdana") (:size 10) (:style :italic)))
    (:align :center)
-   (:name nil)
    (:display :mini-view)
    (:showname nil)
-   (:group-id nil)
    (:lock nil)
    (:lambda nil)
    (:inputs
@@ -2599,13 +2579,15 @@
           (:name "Bassclarinet1")
           (:type "aif"))))))
      (:add-slots
-      ((:channels 1) (:pipo-module "ircamdescriptor") (:chop nil)))))
+      ((:channels 1)
+       (:pipo-module "ircamdescriptor")
+       (:segmentation nil)))))
    (:id 11))
   (:comment
-   (:x 678)
-   (:y 329)
+   (:x 598)
+   (:y 259)
    (:w 194)
-   (:h 22)
+   (:h 38)
    (:fgcolor nil)
    (:bgcolor nil)
    (:border nil)
@@ -2616,11 +2598,11 @@
    (:id 12))
   (:box
    (:type :value)
-   (:reference simple-base-string)
+   (:reference (:symbol "SIMPLE-TEXT-STRING" "LISPWORKS"))
    (:group-id nil)
    (:name "value box")
    (:x 123)
-   (:y 164)
+   (:y 94)
    (:w 105)
    (:h 30)
    (:color
@@ -2636,9 +2618,9 @@
    (:id 13))
   (:comment
    (:x 197)
-   (:y 128)
+   (:y 58)
    (:w 116)
-   (:h 33)
+   (:h 53)
    (:fgcolor nil)
    (:bgcolor nil)
    (:border nil)
@@ -2651,10 +2633,9 @@
    (:type :abstraction)
    (:reference
     (:patch
-     (:om-version 0.0111)
      (:name "make-sdifframes")
      (:doc "")
-     (:info (:created nil) (:modified nil))
+     (:info (:created nil) (:modified nil) (:by nil) (:version nil))
      (:window (:size (646 446)) (:position (10 61)))
      (:grid nil)
      (:lock nil)
@@ -2745,10 +2726,8 @@
        (:text-font
         (:font (:face "Verdana") (:size 10) (:style :italic)))
        (:align :center)
-       (:name nil)
        (:display :hidden)
        (:showname nil)
-       (:group-id nil)
        (:lock nil)
        (:lambda nil)
        (:inputs
@@ -2806,13 +2785,14 @@
        (:name "car")
        (:x 133)
        (:y 126)
-       (:w 53)
+       (:w 54)
        (:h 30)
        (:color nil)
        (:border nil)
        (:roundness nil)
        (:text-font nil)
        (:align nil)
+       (:icon :left)
        (:lock nil)
        (:lambda nil)
        (:inputs
@@ -2830,13 +2810,14 @@
        (:name "ms->sec")
        (:x 118)
        (:y 169)
-       (:w 82)
+       (:w 86)
        (:h 30)
        (:color nil)
        (:border nil)
        (:roundness nil)
        (:text-font nil)
        (:align nil)
+       (:icon :left)
        (:lock nil)
        (:lambda nil)
        (:inputs
@@ -2862,10 +2843,8 @@
        (:text-font
         (:font (:face "Verdana") (:size 10) (:style :italic)))
        (:align :center)
-       (:name nil)
        (:display :hidden)
        (:showname nil)
-       (:group-id nil)
        (:lock nil)
        (:lambda nil)
        (:inputs
@@ -2893,8 +2872,7 @@
        (:value
         (:object
          (:class sdifmatrix)
-         (:slots ((:field-names nil) (:data nil) (:matrixtype nil)))
-         (:add-slots ((:field-names nil)))))
+         (:slots ((:field-names nil) (:data nil) (:matrixtype nil)))))
        (:id 6))
       (:box
        (:type :function)
@@ -2903,13 +2881,14 @@
        (:name "list")
        (:x 313)
        (:y 262)
-       (:w 53)
+       (:w 54)
        (:h 30)
        (:color nil)
        (:border nil)
        (:roundness nil)
        (:text-font nil)
        (:align nil)
+       (:icon :left)
        (:lock nil)
        (:lambda nil)
        (:inputs
@@ -2927,13 +2906,14 @@
        (:name "cdr")
        (:x 468)
        (:y 123)
-       (:w 54)
+       (:w 55)
        (:h 30)
        (:color nil)
        (:border nil)
        (:roundness nil)
        (:text-font nil)
        (:align nil)
+       (:icon :left)
        (:lock nil)
        (:lambda nil)
        (:inputs
@@ -2951,13 +2931,14 @@
        (:name "mapcar")
        (:x 449)
        (:y 167)
-       (:w 75)
+       (:w 77)
        (:h 30)
        (:color nil)
        (:border nil)
        (:roundness nil)
        (:text-font nil)
        (:align nil)
+       (:icon :left)
        (:lock nil)
        (:lambda nil)
        (:inputs
@@ -2996,59 +2977,23 @@
        (:value list)
        (:id 10)))
      (:connections
-      (:connection
-       (:from (:box 0 :out 0))
-       (:to (:box 4 :in 0))
-       (:attributes (:color nil :style nil :modif nil)))
-      (:connection
-       (:from (:box 0 :out 0))
-       (:to (:box 8 :in 0))
-       (:attributes (:color nil :style nil :modif nil)))
-      (:connection
-       (:from (:box 2 :out 0))
-       (:to (:box 6 :in 1))
-       (:attributes (:color nil :style nil :modif nil)))
-      (:connection
-       (:from (:box 2 :out 0))
-       (:to (:box 3 :in 1))
-       (:attributes (:color nil :style nil :modif nil)))
-      (:connection
-       (:from (:box 3 :out 0))
-       (:to (:box 1 :in 0))
-       (:attributes (:color nil :style nil :modif nil)))
-      (:connection
-       (:from (:box 4 :out 0))
-       (:to (:box 5 :in 0))
-       (:attributes (:color nil :style nil :modif nil)))
-      (:connection
-       (:from (:box 5 :out 0))
-       (:to (:box 3 :in 2))
-       (:attributes (:color nil :style nil :modif nil)))
-      (:connection
-       (:from (:box 6 :out 0))
-       (:to (:box 7 :in 0))
-       (:attributes (:color nil :style nil :modif nil)))
-      (:connection
-       (:from (:box 7 :out 0))
-       (:to (:box 3 :in 4))
-       (:attributes (:color nil :style nil :modif nil)))
-      (:connection
-       (:from (:box 8 :out 0))
-       (:to (:box 9 :in 1))
-       (:attributes (:color nil :style nil :modif nil)))
-      (:connection
-       (:from (:box 9 :out 0))
-       (:to (:box 6 :in 2))
-       (:attributes (:color nil :style nil :modif nil)))
-      (:connection
-       (:from (:box 10 :out 0))
-       (:to (:box 9 :in 0))
-       (:attributes (:color nil :style nil :modif nil))))))
+      (:connection (:from (:box 0 :out 0)) (:to (:box 4 :in 0)))
+      (:connection (:from (:box 0 :out 0)) (:to (:box 8 :in 0)))
+      (:connection (:from (:box 2 :out 0)) (:to (:box 6 :in 1)))
+      (:connection (:from (:box 2 :out 0)) (:to (:box 3 :in 1)))
+      (:connection (:from (:box 3 :out 0)) (:to (:box 1 :in 0)))
+      (:connection (:from (:box 4 :out 0)) (:to (:box 5 :in 0)))
+      (:connection (:from (:box 5 :out 0)) (:to (:box 3 :in 2)))
+      (:connection (:from (:box 6 :out 0)) (:to (:box 7 :in 0)))
+      (:connection (:from (:box 7 :out 0)) (:to (:box 3 :in 4)))
+      (:connection (:from (:box 8 :out 0)) (:to (:box 9 :in 1)))
+      (:connection (:from (:box 9 :out 0)) (:to (:box 6 :in 2)))
+      (:connection (:from (:box 10 :out 0)) (:to (:box 9 :in 0))))))
    (:group-id nil)
    (:name "make-sdifframes")
    (:x 0)
-   (:y 2601/7)
-   (:w 123)
+   (:y 2104/7)
+   (:w 130)
    (:h 36)
    (:color nil)
    (:border nil)
@@ -3056,7 +3001,6 @@
    (:text-font nil)
    (:align :center)
    (:display :hidden)
-   (:group-id nil)
    (:lock nil)
    (:lambda :lambda)
    (:pre-delay 0)
@@ -3078,15 +3022,16 @@
    (:reference mapcar)
    (:group-id nil)
    (:name "mapcar")
-   (:x 78.808837890625D0)
-   (:y 2867/7)
-   (:w 75)
-   (:h 30)
+   (:x 76.808837890625D0)
+   (:y 2370/7)
+   (:w 77)
+   (:h 29)
    (:color nil)
    (:border nil)
    (:roundness nil)
    (:text-font nil)
    (:align nil)
+   (:icon :left)
    (:lock nil)
    (:lambda nil)
    (:inputs
@@ -3108,14 +3053,15 @@
    (:group-id nil)
    (:name "write-sdif-file")
    (:x 71.0D0)
-   (:y 3651/7)
+   (:y 3161/7)
    (:w 232)
-   (:h 30)
+   (:h 29)
    (:color nil)
    (:border nil)
    (:roundness nil)
    (:text-font nil)
    (:align nil)
+   (:icon :left)
    (:lock nil)
    (:lambda nil)
    (:inputs
@@ -3137,15 +3083,16 @@
    (:reference sdif-types-from-field-names)
    (:group-id nil)
    (:name "sdif-types-from-field-names")
-   (:x 259.808837890625D0)
-   (:y 479)
-   (:w 179)
-   (:h 30)
+   (:x 260.0D0)
+   (:y 409)
+   (:w 196)
+   (:h 29)
    (:color nil)
    (:border nil)
    (:roundness nil)
    (:text-font nil)
    (:align nil)
+   (:icon :left)
    (:lock nil)
    (:lambda nil)
    (:inputs
@@ -3171,8 +3118,8 @@
    (:reference fixnum)
    (:group-id 0)
    (:name "vb")
-   (:x 218.808837890625D0)
-   (:y 2384/7)
+   (:x 228.0D0)
+   (:y 1894/7)
    (:w 32)
    (:h 30)
    (:color (:color 0.9 0.9 0.9 1.0))
@@ -3186,20 +3133,21 @@
    (:value 0)
    (:id 19))
   (:box
-   (:library "om-iae")
+   (:library "iae")
    (:type :function)
    (:reference (:symbol "GET-SOUND-DESCRIPTORS" "IAE"))
    (:group-id nil)
    (:name "get-sound-descriptors")
    (:x 133.0D0)
-   (:y 2643/7)
-   (:w 149)
-   (:h 30)
+   (:y 2153/7)
+   (:w 161)
+   (:h 29)
    (:color nil)
    (:border nil)
    (:roundness nil)
    (:text-font nil)
    (:align nil)
+   (:icon :left)
    (:lock nil)
    (:lambda nil)
    (:inputs
@@ -3220,15 +3168,16 @@
    (:reference (:symbol "DESCRIPTORS" "IAE"))
    (:group-id nil)
    (:name "descriptors")
-   (:x 246.0D0)
-   (:y 3056/7)
-   (:w 93)
-   (:h 30)
+   (:x 245.0D0)
+   (:y 2566/7)
+   (:w 98)
+   (:h 29)
    (:color nil)
    (:border nil)
    (:roundness nil)
    (:text-font nil)
    (:align nil)
+   (:icon :left)
    (:lock nil)
    (:lambda nil)
    (:inputs
@@ -3241,11 +3190,11 @@
    (:id 21))
   (:box
    (:type :value)
-   (:reference simple-base-string)
+   (:reference (:symbol "SIMPLE-TEXT-STRING" "LISPWORKS"))
    (:group-id nil)
    (:name "value box")
    (:x 130)
-   (:y 479)
+   (:y 409)
    (:w 103)
    (:h 30)
    (:color
@@ -3261,9 +3210,9 @@
    (:id 22))
   (:comment
    (:x 346)
-   (:y 211)
+   (:y 141)
    (:w 103)
-   (:h 33)
+   (:h 53)
    (:fgcolor nil)
    (:bgcolor nil)
    (:border nil)
@@ -3273,10 +3222,7 @@
    (:text "Arbitrary type name for SDIF data")
    (:id 23)))
  (:connections
-  (:connection
-   (:from (:box 0 :out 1))
-   (:to (:box 11 :in 1))
-   (:attributes (:color nil :style nil :modif nil)))
+  (:connection (:from (:box 0 :out 1)) (:to (:box 11 :in 1)))
   (:connection
    (:from (:box 1 :out 0))
    (:to (:box 3 :in 0))
@@ -3290,50 +3236,17 @@
    (:to (:box 17 :in 1))
    (:attributes
     (:color (:color 0.2 0.4 0.5 1.0) :style nil :modif nil)))
-  (:connection
-   (:from (:box 3 :out 0))
-   (:to (:box 6 :in 0))
-   (:attributes (:color nil :style nil :modif nil)))
-  (:connection
-   (:from (:box 4 :out 0))
-   (:to (:box 3 :in 2))
-   (:attributes (:color nil :style nil :modif nil)))
-  (:connection
-   (:from (:box 4 :out 0))
-   (:to (:box 3 :in 3))
-   (:attributes (:color nil :style nil :modif nil)))
-  (:connection
-   (:from (:box 4 :out 0))
-   (:to (:box 9 :in 1))
-   (:attributes (:color nil :style nil :modif nil)))
-  (:connection
-   (:from (:box 4 :out 0))
-   (:to (:box 18 :in 2))
-   (:attributes (:color nil :style nil :modif nil)))
-  (:connection
-   (:from (:box 4 :out 0))
-   (:to (:box 18 :in 1))
-   (:attributes (:color nil :style nil :modif nil)))
-  (:connection
-   (:from (:box 4 :out 0))
-   (:to (:box 15 :in 1))
-   (:attributes (:color nil :style nil :modif nil)))
-  (:connection
-   (:from (:box 6 :out 0))
-   (:to (:box 8 :in 0))
-   (:attributes (:color nil :style nil :modif nil)))
-  (:connection
-   (:from (:box 7 :out 0))
-   (:to (:box 6 :in 1))
-   (:attributes (:color nil :style nil :modif nil)))
-  (:connection
-   (:from (:box 8 :out 0))
-   (:to (:box 5 :in 1))
-   (:attributes (:color nil :style nil :modif nil)))
-  (:connection
-   (:from (:box 9 :out 0))
-   (:to (:box 5 :in 2))
-   (:attributes (:color nil :style nil :modif nil)))
+  (:connection (:from (:box 3 :out 0)) (:to (:box 6 :in 0)))
+  (:connection (:from (:box 4 :out 0)) (:to (:box 3 :in 2)))
+  (:connection (:from (:box 4 :out 0)) (:to (:box 3 :in 3)))
+  (:connection (:from (:box 4 :out 0)) (:to (:box 9 :in 1)))
+  (:connection (:from (:box 4 :out 0)) (:to (:box 18 :in 2)))
+  (:connection (:from (:box 4 :out 0)) (:to (:box 18 :in 1)))
+  (:connection (:from (:box 4 :out 0)) (:to (:box 15 :in 1)))
+  (:connection (:from (:box 6 :out 0)) (:to (:box 8 :in 0)))
+  (:connection (:from (:box 7 :out 0)) (:to (:box 6 :in 1)))
+  (:connection (:from (:box 8 :out 0)) (:to (:box 5 :in 1)))
+  (:connection (:from (:box 9 :out 0)) (:to (:box 5 :in 2)))
   (:connection
    (:from (:box 11 :out 0))
    (:to (:box 20 :in 0))
@@ -3344,40 +3257,16 @@
    (:to (:box 21 :in 0))
    (:attributes
     (:color (:color 0.2 0.4 0.5 1.0) :style nil :modif nil)))
-  (:connection
-   (:from (:box 13 :out 0))
-   (:to (:box 11 :in 2))
-   (:attributes (:color nil :style nil :modif nil)))
-  (:connection
-   (:from (:box 15 :out 0))
-   (:to (:box 16 :in 0))
-   (:attributes (:color nil :style nil :modif nil)))
-  (:connection
-   (:from (:box 16 :out 0))
-   (:to (:box 17 :in 0))
-   (:attributes (:color nil :style nil :modif nil)))
+  (:connection (:from (:box 13 :out 0)) (:to (:box 11 :in 2)))
+  (:connection (:from (:box 15 :out 0)) (:to (:box 16 :in 0)))
+  (:connection (:from (:box 16 :out 0)) (:to (:box 17 :in 0)))
   (:connection
    (:from (:box 17 :out 0))
    (:to (:box 1 :in 0))
    (:attributes
     (:color (:color 0.2 0.4 0.5 1.0) :style nil :modif nil)))
-  (:connection
-   (:from (:box 18 :out 0))
-   (:to (:box 17 :in 2))
-   (:attributes (:color nil :style nil :modif nil)))
-  (:connection
-   (:from (:box 19 :out 0))
-   (:to (:box 20 :in 1))
-   (:attributes (:color nil :style nil :modif nil)))
-  (:connection
-   (:from (:box 20 :out 0))
-   (:to (:box 16 :in 1))
-   (:attributes (:color nil :style nil :modif nil)))
-  (:connection
-   (:from (:box 21 :out 0))
-   (:to (:box 18 :in 0))
-   (:attributes (:color nil :style nil :modif nil)))
-  (:connection
-   (:from (:box 22 :out 0))
-   (:to (:box 2 :in 0))
-   (:attributes (:color nil :style nil :modif nil)))))
+  (:connection (:from (:box 18 :out 0)) (:to (:box 17 :in 2)))
+  (:connection (:from (:box 19 :out 0)) (:to (:box 20 :in 1)))
+  (:connection (:from (:box 20 :out 0)) (:to (:box 16 :in 1)))
+  (:connection (:from (:box 21 :out 0)) (:to (:box 18 :in 0)))
+  (:connection (:from (:box 22 :out 0)) (:to (:box 2 :in 0)))))
